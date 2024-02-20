@@ -5,14 +5,24 @@
 //  Created by Volodymyr Myroniuk on 20.02.2024.
 //
 
-import Foundation
+import UIKit
 
 final class SceneRouter {
-    let viewController = SceneViewController()
+    private let view: SceneViewController
+    private let presenter: ScenePresenter
+    
+    var viewController: UIViewController { view }
+    
+    init() {
+        view = SceneViewController()
+        presenter = ScenePresenter()
+        
+        presenter.view = view
+    }
 }
 
 extension SceneRouter: ToolbarRouterDelegate {
     func didChangeShapeType(to shapeType: ShapeType) {
-        print("shape type changed to \(shapeType)")
+        presenter.changeShapeType(to: shapeType)
     }
 }

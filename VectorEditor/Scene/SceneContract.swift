@@ -9,9 +9,17 @@ import Foundation
 
 // MARK: - Entity
 
+struct ScenePresenterState {
+    let shapeType: ShapeType
+}
+
 // MARK: - Router
 
 // MARK: - View
+
+protocol SceneViewProtocol: AnyObject {
+    func update(state: ScenePresenterState)
+}
 
 // MARK: - Presenter
 

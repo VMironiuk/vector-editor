@@ -7,4 +7,12 @@
 
 import UIKit
 
-class SceneViewController: UIViewController {}
+class SceneViewController: UIViewController {
+    private var sceneView: SceneView? { view as? SceneView }
+}
+
+extension SceneViewController: SceneViewProtocol {
+    func update(state: ScenePresenterState) {
+        sceneView?.shapeType = state.shapeType
+    }
+}

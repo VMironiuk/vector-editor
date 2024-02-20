@@ -8,12 +8,12 @@
 import UIKit
 
 final class SceneView: UIView {
-    private var shapeType: ShapeType = .rect
     private var startPoint: CGPoint?
     
     private var rects: [CGRect] = []
     private var circleCenterPoints: [CGPoint] = []
-
+    
+    var shapeType: ShapeType?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard touches.count == 1 else { return }
@@ -21,7 +21,11 @@ final class SceneView: UIView {
     }
     
     override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard touches.count == 1, let startPoint = startPoint, let endPoint = touches.first?.location(in: self) else { return }
+        guard shapeType == .rect,
+              touches.count == 1,
+              let startPoint = startPoint,
+              let endPoint = touches.first?.location(in: self) else { return }
+        
         let rect = CGRect.make(p1: startPoint, p2: endPoint)
         if rects.isEmpty {
             rects.append(rect)
@@ -34,6 +38,8 @@ final class SceneView: UIView {
     }
     
     override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        guard let shapeType = shapeType else { return }
+        
         switch shapeType {
         case .rect:
             guard touches.count == 1, let startPoint = startPoint, let endPoint = touches.first?.location(in: self) else { return }
@@ -49,18 +55,14 @@ final class SceneView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        switch shapeType {
-        case .rect:
-            let context = UIGraphicsGetCurrentContext()
+        let context = UIGraphicsGetCurrentContext()
+        context?.setFillColor(UIColor.red.cgColor)
+        context?.fill(rects)
+
+        circleCenterPoints.forEach { point in
             context?.setFillColor(UIColor.red.cgColor)
-            context?.fill(rects)
-        case .circle:
-            let context = UIGraphicsGetCurrentContext()
-            circleCenterPoints.forEach { point in
-                context?.setFillColor(UIColor.red.cgColor)
-                let rect = CGRect(x: point.x, y: point.y, width: 50, height: 50)
-                context?.fillEllipse(in: rect)
-            }
+            let rect = CGRect(x: point.x, y: point.y, width: 50, height: 50)
+            context?.fillEllipse(in: rect)
         }
     }
 }
