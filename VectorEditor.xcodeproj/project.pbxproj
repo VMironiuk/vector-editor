@@ -13,6 +13,15 @@
 		2EB3502C2B848B7F00C07EB5 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EB3502A2B848B7F00C07EB5 /* Main.storyboard */; };
 		2EB3502E2B848B8000C07EB5 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2EB3502D2B848B8000C07EB5 /* Assets.xcassets */; };
 		2EB350312B848B8000C07EB5 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2EB3502F2B848B8000C07EB5 /* LaunchScreen.storyboard */; };
+		2EB350392B84921200C07EB5 /* ToolbarContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350382B84921200C07EB5 /* ToolbarContract.swift */; };
+		2EB3503F2B8492B200C07EB5 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3503D2B8492B200C07EB5 /* ToolbarViewController.swift */; };
+		2EB350422B8492E800C07EB5 /* ToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EB350412B8492E800C07EB5 /* ToolbarView.xib */; };
+		2EB350442B8495C600C07EB5 /* SidebarContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350432B8495C600C07EB5 /* SidebarContract.swift */; };
+		2EB350462B8495EF00C07EB5 /* SidebarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350452B8495EF00C07EB5 /* SidebarViewController.swift */; };
+		2EB350482B84960800C07EB5 /* SidebarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EB350472B84960800C07EB5 /* SidebarView.xib */; };
+		2EB3504B2B8496B900C07EB5 /* SceneContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3504A2B8496B900C07EB5 /* SceneContract.swift */; };
+		2EB3504D2B8496CD00C07EB5 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */; };
+		2EB3504F2B8496E500C07EB5 /* SceneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EB3504E2B8496E500C07EB5 /* SceneView.xib */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -24,6 +33,15 @@
 		2EB3502D2B848B8000C07EB5 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2EB350302B848B8000C07EB5 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2EB350322B848B8000C07EB5 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2EB350382B84921200C07EB5 /* ToolbarContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarContract.swift; sourceTree = "<group>"; };
+		2EB3503D2B8492B200C07EB5 /* ToolbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
+		2EB350412B8492E800C07EB5 /* ToolbarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarView.xib; sourceTree = "<group>"; };
+		2EB350432B8495C600C07EB5 /* SidebarContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarContract.swift; sourceTree = "<group>"; };
+		2EB350452B8495EF00C07EB5 /* SidebarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarViewController.swift; sourceTree = "<group>"; };
+		2EB350472B84960800C07EB5 /* SidebarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SidebarView.xib; sourceTree = "<group>"; };
+		2EB3504A2B8496B900C07EB5 /* SceneContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneContract.swift; sourceTree = "<group>"; };
+		2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
+		2EB3504E2B8496E500C07EB5 /* SceneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SceneView.xib; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,8 +81,41 @@
 				2EB3502D2B848B8000C07EB5 /* Assets.xcassets */,
 				2EB3502F2B848B8000C07EB5 /* LaunchScreen.storyboard */,
 				2EB350322B848B8000C07EB5 /* Info.plist */,
+				2EB3503C2B84927A00C07EB5 /* Toolbar */,
+				2EB350492B8496A100C07EB5 /* Sidebar */,
+				2EB350502B84971A00C07EB5 /* Scene */,
 			);
 			path = VectorEditor;
+			sourceTree = "<group>";
+		};
+		2EB3503C2B84927A00C07EB5 /* Toolbar */ = {
+			isa = PBXGroup;
+			children = (
+				2EB350382B84921200C07EB5 /* ToolbarContract.swift */,
+				2EB3503D2B8492B200C07EB5 /* ToolbarViewController.swift */,
+				2EB350412B8492E800C07EB5 /* ToolbarView.xib */,
+			);
+			path = Toolbar;
+			sourceTree = "<group>";
+		};
+		2EB350492B8496A100C07EB5 /* Sidebar */ = {
+			isa = PBXGroup;
+			children = (
+				2EB350432B8495C600C07EB5 /* SidebarContract.swift */,
+				2EB350452B8495EF00C07EB5 /* SidebarViewController.swift */,
+				2EB350472B84960800C07EB5 /* SidebarView.xib */,
+			);
+			path = Sidebar;
+			sourceTree = "<group>";
+		};
+		2EB350502B84971A00C07EB5 /* Scene */ = {
+			isa = PBXGroup;
+			children = (
+				2EB3504A2B8496B900C07EB5 /* SceneContract.swift */,
+				2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */,
+				2EB3504E2B8496E500C07EB5 /* SceneView.xib */,
+			);
+			path = Scene;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -126,7 +177,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EB350312B848B8000C07EB5 /* LaunchScreen.storyboard in Resources */,
+				2EB3504F2B8496E500C07EB5 /* SceneView.xib in Resources */,
+				2EB350482B84960800C07EB5 /* SidebarView.xib in Resources */,
 				2EB3502E2B848B8000C07EB5 /* Assets.xcassets in Resources */,
+				2EB350422B8492E800C07EB5 /* ToolbarView.xib in Resources */,
 				2EB3502C2B848B7F00C07EB5 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,9 +192,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EB3504D2B8496CD00C07EB5 /* SceneViewController.swift in Sources */,
 				2EB350292B848B7E00C07EB5 /* ViewController.swift in Sources */,
+				2EB350392B84921200C07EB5 /* ToolbarContract.swift in Sources */,
+				2EB3504B2B8496B900C07EB5 /* SceneContract.swift in Sources */,
+				2EB350442B8495C600C07EB5 /* SidebarContract.swift in Sources */,
 				2EB350252B848B7E00C07EB5 /* AppDelegate.swift in Sources */,
+				2EB3503F2B8492B200C07EB5 /* ToolbarViewController.swift in Sources */,
 				2EB350272B848B7E00C07EB5 /* SceneDelegate.swift in Sources */,
+				2EB350462B8495EF00C07EB5 /* SidebarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
