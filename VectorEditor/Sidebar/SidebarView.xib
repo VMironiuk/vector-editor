@@ -10,6 +10,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="SidebarViewController" customModule="VectorEditor" customModuleProvider="target">
             <connections>
+                <outlet property="tableView" destination="XqB-4F-bZx" id="PMP-WI-d88"/>
                 <outlet property="view" destination="iN0-l3-epB" id="H2f-Uw-kJy"/>
             </connections>
         </placeholder>
@@ -21,6 +22,10 @@
                 <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="XqB-4F-bZx">
                     <rect key="frame" x="0.0" y="0.0" width="445" height="1076"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    <connections>
+                        <outlet property="dataSource" destination="-1" id="njO-et-JlG"/>
+                        <outlet property="delegate" destination="-1" id="7TQ-xE-uZC"/>
+                    </connections>
                 </tableView>
             </subviews>
             <viewLayoutGuide key="safeArea" id="vUN-kp-3ea"/>

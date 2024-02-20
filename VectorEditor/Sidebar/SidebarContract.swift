@@ -9,9 +9,17 @@ import Foundation
 
 // MARK: - Entity
 
+struct SidebarPresenterState {
+    let shapes: [String]
+}
+
 // MARK: - Router
 
 // MARK: - View
+
+protocol SidebarViewProtocol: AnyObject {
+    func update(state: SidebarPresenterState)
+}
 
 // MARK: - Presenter
 

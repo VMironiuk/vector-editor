@@ -7,13 +7,20 @@
 
 import UIKit
 
+protocol SceneViewDelegate: AnyObject {
+    func sceneViewDidAddShape(_ view: SceneView)
+}
+
 final class SceneView: UIView {
     private var startPoint: CGPoint?
+    private var isMoving = false
     
     private var rects: [CGRect] = []
     private var circleCenterPoints: [CGPoint] = []
     
     var shapeType: ShapeType?
+    
+    weak var delegate: SceneViewDelegate?
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard touches.count == 1 else { return }
@@ -27,10 +34,11 @@ final class SceneView: UIView {
               let endPoint = touches.first?.location(in: self) else { return }
         
         let rect = CGRect.make(p1: startPoint, p2: endPoint)
-        if rects.isEmpty {
-            rects.append(rect)
+       
+        if isMoving {
+            rects[rects.count - 1] = rect
         } else {
-            rects.removeLast()
+            isMoving = true
             rects.append(rect)
         }
 
@@ -42,12 +50,14 @@ final class SceneView: UIView {
         
         switch shapeType {
         case .rect:
-            guard touches.count == 1, let startPoint = startPoint, let endPoint = touches.first?.location(in: self) else { return }
-            rects.append(CGRect.make(p1: startPoint, p2: endPoint))
+            guard isMoving else { return }
+            isMoving = false
+            delegate?.sceneViewDidAddShape(self)
             
         case .circle:
             guard touches.count == 1, let point = touches.first?.location(in: self) else { return }
             circleCenterPoints.append(CGPoint(x: point.x - 25, y: point.y - 25))
+            delegate?.sceneViewDidAddShape(self)
         }
                 
         setNeedsDisplay()
