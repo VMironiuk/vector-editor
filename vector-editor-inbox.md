@@ -5,8 +5,9 @@
 
 [✅] Toolbar should imform Scene about selected shape
 
-[] Draw circle
-[] Draw rect
+[] Draw circle on tap
+[] Draw rect on pan
+
 [] Inform Sidebar about new shape on Scene
 [] Inform Scene about shape removal from Sidebar
 [] Implement document

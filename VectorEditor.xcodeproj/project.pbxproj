@@ -27,6 +27,7 @@
 		2EB350562B849CCB00C07EB5 /* SceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350552B849CCB00C07EB5 /* SceneRouter.swift */; };
 		2EB350582B849F6000C07EB5 /* ToolbarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350572B849F6000C07EB5 /* ToolbarPresenter.swift */; };
 		2EB3505C2B84A32100C07EB5 /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3505B2B84A32100C07EB5 /* ShapeType.swift */; };
+		2EB3505E2B84AECC00C07EB5 /* SceneView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3505D2B84AECC00C07EB5 /* SceneView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -52,6 +53,7 @@
 		2EB350552B849CCB00C07EB5 /* SceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRouter.swift; sourceTree = "<group>"; };
 		2EB350572B849F6000C07EB5 /* ToolbarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPresenter.swift; sourceTree = "<group>"; };
 		2EB3505B2B84A32100C07EB5 /* ShapeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
+		2EB3505D2B84AECC00C07EB5 /* SceneView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -128,6 +130,7 @@
 				2EB3504A2B8496B900C07EB5 /* SceneContract.swift */,
 				2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */,
 				2EB3504E2B8496E500C07EB5 /* SceneView.xib */,
+				2EB3505D2B84AECC00C07EB5 /* SceneView.swift */,
 				2EB350552B849CCB00C07EB5 /* SceneRouter.swift */,
 			);
 			path = Scene;
@@ -218,6 +221,7 @@
 				2EB350562B849CCB00C07EB5 /* SceneRouter.swift in Sources */,
 				2EB350542B849C3400C07EB5 /* SidebarRouter.swift in Sources */,
 				2EB350272B848B7E00C07EB5 /* SceneDelegate.swift in Sources */,
+				2EB3505E2B84AECC00C07EB5 /* SceneView.swift in Sources */,
 				2EB350522B8498FD00C07EB5 /* ToolbarRouter.swift in Sources */,
 				2EB350582B849F6000C07EB5 /* ToolbarPresenter.swift in Sources */,
 				2EB350462B8495EF00C07EB5 /* SidebarViewController.swift in Sources */,
