@@ -1,7 +1,7 @@
 [] Compose UI
     [✅] UI for Toolbar
     [✅] UI for Sidebar
-    [] UI for Scene
+    [✅] UI for Scene
 
 [] Toolbar should imform Scene about selected shape
 [] Draw circle

@@ -22,6 +22,9 @@
 		2EB3504B2B8496B900C07EB5 /* SceneContract.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3504A2B8496B900C07EB5 /* SceneContract.swift */; };
 		2EB3504D2B8496CD00C07EB5 /* SceneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */; };
 		2EB3504F2B8496E500C07EB5 /* SceneView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EB3504E2B8496E500C07EB5 /* SceneView.xib */; };
+		2EB350522B8498FD00C07EB5 /* ToolbarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350512B8498FD00C07EB5 /* ToolbarRouter.swift */; };
+		2EB350542B849C3400C07EB5 /* SidebarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350532B849C3400C07EB5 /* SidebarRouter.swift */; };
+		2EB350562B849CCB00C07EB5 /* SceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350552B849CCB00C07EB5 /* SceneRouter.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -42,6 +45,9 @@
 		2EB3504A2B8496B900C07EB5 /* SceneContract.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneContract.swift; sourceTree = "<group>"; };
 		2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneViewController.swift; sourceTree = "<group>"; };
 		2EB3504E2B8496E500C07EB5 /* SceneView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = SceneView.xib; sourceTree = "<group>"; };
+		2EB350512B8498FD00C07EB5 /* ToolbarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarRouter.swift; sourceTree = "<group>"; };
+		2EB350532B849C3400C07EB5 /* SidebarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarRouter.swift; sourceTree = "<group>"; };
+		2EB350552B849CCB00C07EB5 /* SceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRouter.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -94,6 +100,7 @@
 				2EB350382B84921200C07EB5 /* ToolbarContract.swift */,
 				2EB3503D2B8492B200C07EB5 /* ToolbarViewController.swift */,
 				2EB350412B8492E800C07EB5 /* ToolbarView.xib */,
+				2EB350512B8498FD00C07EB5 /* ToolbarRouter.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -104,6 +111,7 @@
 				2EB350432B8495C600C07EB5 /* SidebarContract.swift */,
 				2EB350452B8495EF00C07EB5 /* SidebarViewController.swift */,
 				2EB350472B84960800C07EB5 /* SidebarView.xib */,
+				2EB350532B849C3400C07EB5 /* SidebarRouter.swift */,
 			);
 			path = Sidebar;
 			sourceTree = "<group>";
@@ -114,6 +122,7 @@
 				2EB3504A2B8496B900C07EB5 /* SceneContract.swift */,
 				2EB3504C2B8496CD00C07EB5 /* SceneViewController.swift */,
 				2EB3504E2B8496E500C07EB5 /* SceneView.xib */,
+				2EB350552B849CCB00C07EB5 /* SceneRouter.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -199,7 +208,10 @@
 				2EB350442B8495C600C07EB5 /* SidebarContract.swift in Sources */,
 				2EB350252B848B7E00C07EB5 /* AppDelegate.swift in Sources */,
 				2EB3503F2B8492B200C07EB5 /* ToolbarViewController.swift in Sources */,
+				2EB350562B849CCB00C07EB5 /* SceneRouter.swift in Sources */,
+				2EB350542B849C3400C07EB5 /* SidebarRouter.swift in Sources */,
 				2EB350272B848B7E00C07EB5 /* SceneDelegate.swift in Sources */,
+				2EB350522B8498FD00C07EB5 /* ToolbarRouter.swift in Sources */,
 				2EB350462B8495EF00C07EB5 /* SidebarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
