@@ -19,8 +19,13 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
+        setupRouters()
     }
-    
+}
+
+// MARK: - Setup UI
+
+private extension ViewController {
     private func setupUI() {
         setupToolbar()
         setupSidebar()
@@ -61,3 +66,10 @@ class ViewController: UIViewController {
     }
 }
 
+// MARK: - Setup Routers
+
+private extension ViewController {
+    private func setupRouters() {
+        toolbarRouter.delegate = sceneRouter
+    }
+}

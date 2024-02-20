@@ -10,3 +10,9 @@ import Foundation
 final class SceneRouter {
     let viewController = SceneViewController()
 }
+
+extension SceneRouter: ToolbarRouterDelegate {
+    func didChangeShapeType(to shapeType: ShapeType) {
+        print("shape type changed to \(shapeType)")
+    }
+}

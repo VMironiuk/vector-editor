@@ -25,6 +25,8 @@
 		2EB350522B8498FD00C07EB5 /* ToolbarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350512B8498FD00C07EB5 /* ToolbarRouter.swift */; };
 		2EB350542B849C3400C07EB5 /* SidebarRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350532B849C3400C07EB5 /* SidebarRouter.swift */; };
 		2EB350562B849CCB00C07EB5 /* SceneRouter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350552B849CCB00C07EB5 /* SceneRouter.swift */; };
+		2EB350582B849F6000C07EB5 /* ToolbarPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350572B849F6000C07EB5 /* ToolbarPresenter.swift */; };
+		2EB3505C2B84A32100C07EB5 /* ShapeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3505B2B84A32100C07EB5 /* ShapeType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -48,6 +50,8 @@
 		2EB350512B8498FD00C07EB5 /* ToolbarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarRouter.swift; sourceTree = "<group>"; };
 		2EB350532B849C3400C07EB5 /* SidebarRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SidebarRouter.swift; sourceTree = "<group>"; };
 		2EB350552B849CCB00C07EB5 /* SceneRouter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneRouter.swift; sourceTree = "<group>"; };
+		2EB350572B849F6000C07EB5 /* ToolbarPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarPresenter.swift; sourceTree = "<group>"; };
+		2EB3505B2B84A32100C07EB5 /* ShapeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +91,7 @@
 				2EB3502D2B848B8000C07EB5 /* Assets.xcassets */,
 				2EB3502F2B848B8000C07EB5 /* LaunchScreen.storyboard */,
 				2EB350322B848B8000C07EB5 /* Info.plist */,
+				2EB3505B2B84A32100C07EB5 /* ShapeType.swift */,
 				2EB3503C2B84927A00C07EB5 /* Toolbar */,
 				2EB350492B8496A100C07EB5 /* Sidebar */,
 				2EB350502B84971A00C07EB5 /* Scene */,
@@ -101,6 +106,7 @@
 				2EB3503D2B8492B200C07EB5 /* ToolbarViewController.swift */,
 				2EB350412B8492E800C07EB5 /* ToolbarView.xib */,
 				2EB350512B8498FD00C07EB5 /* ToolbarRouter.swift */,
+				2EB350572B849F6000C07EB5 /* ToolbarPresenter.swift */,
 			);
 			path = Toolbar;
 			sourceTree = "<group>";
@@ -206,12 +212,14 @@
 				2EB350392B84921200C07EB5 /* ToolbarContract.swift in Sources */,
 				2EB3504B2B8496B900C07EB5 /* SceneContract.swift in Sources */,
 				2EB350442B8495C600C07EB5 /* SidebarContract.swift in Sources */,
+				2EB3505C2B84A32100C07EB5 /* ShapeType.swift in Sources */,
 				2EB350252B848B7E00C07EB5 /* AppDelegate.swift in Sources */,
 				2EB3503F2B8492B200C07EB5 /* ToolbarViewController.swift in Sources */,
 				2EB350562B849CCB00C07EB5 /* SceneRouter.swift in Sources */,
 				2EB350542B849C3400C07EB5 /* SidebarRouter.swift in Sources */,
 				2EB350272B848B7E00C07EB5 /* SceneDelegate.swift in Sources */,
 				2EB350522B8498FD00C07EB5 /* ToolbarRouter.swift in Sources */,
+				2EB350582B849F6000C07EB5 /* ToolbarPresenter.swift in Sources */,
 				2EB350462B8495EF00C07EB5 /* SidebarViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

@@ -7,4 +7,14 @@
 
 import UIKit
 
-class ToolbarViewController: UIViewController {}
+class ToolbarViewController: UIViewController {
+    weak var eventHandler: ToolbarViewEventHandler?
+    
+    @IBAction private func rectButtonTapped(_ sender: UIButton) {
+        eventHandler?.onRectButtonTapped()
+    }
+    
+    @IBAction private func circleButtonTapped(_ sender: UIButton) {
+        eventHandler?.onCircleButtonTapped()
+    }
+}

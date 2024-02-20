@@ -34,6 +34,9 @@
                             </constraints>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="filled" title="Rect"/>
+                            <connections>
+                                <action selector="rectButtonTapped:" destination="-1" eventType="touchUpInside" id="VtB-rq-Oac"/>
+                            </connections>
                         </button>
                         <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="BRh-dR-FWA">
                             <rect key="frame" x="705" y="0.0" width="75" height="34"/>
@@ -42,6 +45,9 @@
                             </constraints>
                             <state key="normal" title="Button"/>
                             <buttonConfiguration key="configuration" style="filled" title="Circle"/>
+                            <connections>
+                                <action selector="circleButtonTapped:" destination="-1" eventType="touchUpInside" id="eJV-pN-1JJ"/>
+                            </connections>
                         </button>
                     </subviews>
                 </stackView>
