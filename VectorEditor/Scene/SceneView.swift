@@ -65,14 +65,21 @@ final class SceneView: UIView {
     }
     
     override func draw(_ rect: CGRect) {
-        let context = UIGraphicsGetCurrentContext()
-        context?.setFillColor(UIColor.red.cgColor)
-        context?.fill(rects)
-
+        guard let context = UIGraphicsGetCurrentContext() else { return }
+        drawRects(in: context)
+        drawCircles(in: context)
+    }
+    
+    private func drawRects(in context: CGContext) {
+        context.setFillColor(UIColor.red.cgColor)
+        context.fill(rects)
+    }
+    
+    private func drawCircles(in context: CGContext) {
         circleCenterPoints.forEach { point in
-            context?.setFillColor(UIColor.red.cgColor)
+            context.setFillColor(UIColor.red.cgColor)
             let rect = CGRect(x: point.x, y: point.y, width: 50, height: 50)
-            context?.fillEllipse(in: rect)
+            context.fillEllipse(in: rect)
         }
     }
 }
