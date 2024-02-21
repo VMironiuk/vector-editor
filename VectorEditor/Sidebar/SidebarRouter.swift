@@ -22,7 +22,7 @@ final class SidebarRouter {
 }
 
 extension SidebarRouter: SceneRouterDelegate {
-    func didAddShape(_ shapeType: ShapeType) {
-        presenter.addShape(shapeType)
+    func didAddShape(_ shape: ShapeProtocol) {
+        presenter.addShape(shape)
     }
 }

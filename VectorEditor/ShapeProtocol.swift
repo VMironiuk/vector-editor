@@ -6,3 +6,9 @@
 //
 
 import Foundation
+
+protocol ShapeProtocol {
+    var id: UUID { get }
+    var type: ShapeType { get }
+    var createdAt: Date { get }
+}

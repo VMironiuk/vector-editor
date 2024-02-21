@@ -10,7 +10,14 @@ import UIKit
 class SidebarViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
-    private var shapes: [ShapeType] = []
+    private var shapes: [ShapeItem] = []
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        
+        let shapeCellNib = UINib(nibName: "ShapeCell", bundle: .main)
+        tableView.register(shapeCellNib, forCellReuseIdentifier: "ShapeCell")
+    }
 }
 
 extension SidebarViewController: SidebarViewProtocol {
@@ -26,8 +33,11 @@ extension SidebarViewController: UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = UITableViewCell()
-        cell.textLabel?.text = "\(shapes[indexPath.row])"
+        let shape = shapes[indexPath.row]
+        let cell = tableView.dequeueReusableCell(withIdentifier: "ShapeCell", for: indexPath) as! ShapeCell
+        cell.shapeImage.image = nil
+        cell.shapeName.text = shape.name
+        cell.shapeCreatedAt.text = shape.createdAt
         return cell
     }
 }

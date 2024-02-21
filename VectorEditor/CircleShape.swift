@@ -1,5 +1,5 @@
 //
-//  RectShape.swift
+//  CircleShape.swift
 //  VectorEditor
 //
 //  Created by Volodymyr Myroniuk on 21.02.2024.
@@ -7,15 +7,15 @@
 
 import Foundation
 
-struct RectShape: ShapeProtocol {
-    let rect: CGRect
+struct CircleShape: ShapeProtocol {
+    let point: CGPoint
     let id: UUID
     let createdAt: Date
 
-    var type: ShapeType { .rect }
+    var type: ShapeType { .circle }
     
-    init(rect: CGRect) {
-        self.rect = rect
+    init(point: CGPoint) {
+        self.point = point
         id = UUID()
         createdAt = .now
     }

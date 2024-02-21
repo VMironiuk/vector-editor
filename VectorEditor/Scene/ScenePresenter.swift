@@ -17,7 +17,7 @@ final class ScenePresenter {
 }
 
 extension ScenePresenter: SceneViewEventHandler {
-    func onShapeAdded(_ shapeType: ShapeType) {
-        delegate?.didAddShape(shapeType)
+    func onShapeAdded(_ shape: ShapeProtocol) {
+        delegate?.didAddShape(shape)
     }
 }

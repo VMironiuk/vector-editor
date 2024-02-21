@@ -10,7 +10,7 @@ import Foundation
 // MARK: - Entity
 
 struct SidebarPresenterState {
-    let shapes: [ShapeType]
+    let shapes: [ShapeItem]
 }
 
 // MARK: - Router

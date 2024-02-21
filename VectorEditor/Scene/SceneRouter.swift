@@ -32,7 +32,7 @@ extension SceneRouter: ToolbarRouterDelegate {
 }
 
 extension SceneRouter: ScenePresenterDelegate {
-    func didAddShape(_ shapeType: ShapeType) {
-        delegate?.didAddShape(shapeType)
+    func didAddShape(_ shape: ShapeProtocol) {
+        delegate?.didAddShape(shape)
     }
 }

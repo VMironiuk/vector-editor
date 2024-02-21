@@ -8,16 +8,15 @@
 import UIKit
 
 protocol SceneViewDelegate: AnyObject {
-    func sceneView(_ view: SceneView, didAddShape shapeType: ShapeType)
+    func sceneView(_ view: SceneView, didAddShape shape: ShapeProtocol)
 }
 
 final class SceneView: UIView {
+    private var shapes: [ShapeProtocol] = []
+    
     private var startPoint: CGPoint?
     private var isMoving = false
-    
-    private var rects: [CGRect] = []
-    private var circleCenterPoints: [CGPoint] = []
-    
+       
     var shapeType: ShapeType?
     
     weak var delegate: SceneViewDelegate?
@@ -34,12 +33,13 @@ final class SceneView: UIView {
               let endPoint = touches.first?.location(in: self) else { return }
         
         let rect = CGRect.make(p1: startPoint, p2: endPoint)
-       
-        if isMoving {
-            rects[rects.count - 1] = rect
+        let shape = RectShape(rect: rect)
+        
+        if isMoving, !shapes.isEmpty, shapes.last?.type == .rect {
+            shapes[shapes.count - 1] = shape
         } else {
             isMoving = true
-            rects.append(rect)
+            shapes.append(shape)
         }
 
         setNeedsDisplay()
@@ -50,14 +50,15 @@ final class SceneView: UIView {
         
         switch shapeType {
         case .rect:
-            guard isMoving else { return }
+            guard isMoving, let shape = shapes.last, shape.type == .rect else { return }
             isMoving = false
-            delegate?.sceneView(self, didAddShape: .rect)
+            delegate?.sceneView(self, didAddShape: shape)
             
         case .circle:
             guard touches.count == 1, let point = touches.first?.location(in: self) else { return }
-            circleCenterPoints.append(CGPoint(x: point.x - 25, y: point.y - 25))
-            delegate?.sceneView(self, didAddShape: .circle)
+            let shape = CircleShape(point: CGPoint(x: point.x - 25, y: point.y - 25))
+            shapes.append(shape)
+            delegate?.sceneView(self, didAddShape: shape)
         }
                 
         setNeedsDisplay()
@@ -71,12 +72,14 @@ final class SceneView: UIView {
     }
     
     private func drawRects(in context: CGContext) {
+        let rects = shapes.filter { $0.type == .rect }.map { ($0 as! RectShape).rect }
         context.setFillColor(UIColor.red.cgColor)
         context.fill(rects)
     }
     
     private func drawCircles(in context: CGContext) {
-        circleCenterPoints.forEach { point in
+        let points = shapes.filter { $0.type == .circle }.map { ($0 as! CircleShape).point }
+        points.forEach { point in
             context.setFillColor(UIColor.red.cgColor)
             let rect = CGRect(x: point.x, y: point.y, width: 50, height: 50)
             context.fillEllipse(in: rect)
