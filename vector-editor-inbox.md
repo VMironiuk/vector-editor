@@ -11,5 +11,5 @@
 [✅] Display shape type and date created at for Sidebar items
 [✅] Implement items removing from Sidebar
 [✅] Inform Scene about shape removal from Sidebar
-[] Move drawing logic away from scene view
+[✅] Move drawing logic away from scene view
 [] Implement document

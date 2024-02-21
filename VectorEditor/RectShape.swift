@@ -6,9 +6,10 @@
 //
 
 import Foundation
+import CoreGraphics
 
 struct RectShape: ShapeProtocol {
-    let rect: CGRect
+    private let rect: CGRect
     let id: UUID
     let createdAt: Date
 
@@ -18,5 +19,10 @@ struct RectShape: ShapeProtocol {
         self.rect = rect
         id = UUID()
         createdAt = .now
+    }
+    
+    func draw(in context: CGContext) {
+        context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
+        context.fill([rect])
     }
 }

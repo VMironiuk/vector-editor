@@ -17,18 +17,8 @@ final class SceneInteractor {
     weak var delegate: SceneInteractorDelegate?
     
     private var drawingHandler: (CGContext) -> Void {
-        let rects = shapes.filter { $0.type == .rect }.map { ($0 as! RectShape).rect }
-        let points = shapes.filter { $0.type == .circle }.map { ($0 as! CircleShape).point }
-        
-        return { context in
-            context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
-            context.fill(rects)
-
-            points.forEach { point in
-                context.setFillColor(CGColor(red: 1, green: 0, blue: 0, alpha: 1))
-                let rect = CGRect(x: point.x, y: point.y, width: 50, height: 50)
-                context.fillEllipse(in: rect)
-            }
+        { [weak self] context in
+            self?.shapes.forEach { $0.draw(in: context) }
         }
     }
 }
