@@ -31,6 +31,12 @@ extension SceneRouter: ToolbarRouterDelegate {
     }
 }
 
+extension SceneRouter: SidebarRouterDelegate {
+    func didRemoveShape(id: UUID) {
+        presenter.removeShape(with: id)
+    }
+}
+
 extension SceneRouter: ScenePresenterDelegate {
     func didAddShape(_ shape: ShapeProtocol) {
         delegate?.didAddShape(shape)

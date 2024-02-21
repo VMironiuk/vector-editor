@@ -12,6 +12,8 @@ class SidebarViewController: UIViewController {
     
     private var shapes: [ShapeItem] = []
     
+    weak var eventHandler: SidebarViewEventHandler?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -39,5 +41,14 @@ extension SidebarViewController: UITableViewDataSource {
         cell.shapeName.text = shape.name
         cell.shapeCreatedAt.text = shape.createdAt
         return cell
+    }
+    
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        guard editingStyle == .delete else { return }
+        
+        let shapeId = shapes[indexPath.row].id
+        shapes.remove(at: indexPath.row)
+        tableView.deleteRows(at: [indexPath], with: .automatic)
+        eventHandler?.onShapeRemoved(id: shapeId)
     }
 }

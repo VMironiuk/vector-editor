@@ -11,6 +11,7 @@ final class SidebarPresenter {
     private var presenterState = SidebarPresenterState(shapes: [])
     
     weak var view: SidebarViewProtocol?
+    weak var delegate: SidebarPresenterDelegate?
     
     func addShape(_ shape: ShapeProtocol) {
         var shapes = presenterState.shapes
@@ -47,5 +48,11 @@ final class SidebarPresenter {
     
     private func shapeCreatedAt(from date: Date) -> String {
         date.formatted(date: .numeric, time: .standard)
+    }
+}
+
+extension SidebarPresenter: SidebarViewEventHandler {
+    func onShapeRemoved(id: UUID) {
+        delegate?.didRemoveShape(id: id)
     }
 }

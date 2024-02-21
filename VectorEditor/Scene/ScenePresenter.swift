@@ -14,6 +14,10 @@ final class ScenePresenter {
     func changeShapeType(to shapeType: ShapeType) {
         view?.update(state: ScenePresenterState(shapeType: shapeType))
     }
+    
+    func removeShape(with id: UUID) {
+        view?.removeShape(with: id)
+    }
 }
 
 extension ScenePresenter: SceneViewEventHandler {

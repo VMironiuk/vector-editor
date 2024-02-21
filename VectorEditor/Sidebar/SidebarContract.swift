@@ -15,6 +15,14 @@ struct SidebarPresenterState {
 
 // MARK: - Router
 
+protocol SidebarRouterDelegate: AnyObject {
+    func didRemoveShape(id: UUID)
+}
+
+protocol SidebarPresenterDelegate: AnyObject {
+    func didRemoveShape(id: UUID)
+}
+
 // MARK: - View
 
 protocol SidebarViewProtocol: AnyObject {
@@ -22,5 +30,9 @@ protocol SidebarViewProtocol: AnyObject {
 }
 
 // MARK: - Presenter
+
+protocol SidebarViewEventHandler: AnyObject {
+    func onShapeRemoved(id: UUID)
+}
 
 // MARK: - Interactor

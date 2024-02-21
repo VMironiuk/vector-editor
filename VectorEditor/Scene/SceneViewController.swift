@@ -23,6 +23,10 @@ extension SceneViewController: SceneViewProtocol {
     func update(state: ScenePresenterState) {
         sceneView?.shapeType = state.shapeType
     }
+    
+    func removeShape(with id: UUID) {
+        sceneView?.removeShape(with: id)
+    }
 }
 
 extension SceneViewController: SceneViewDelegate {

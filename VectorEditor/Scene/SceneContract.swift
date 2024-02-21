@@ -27,6 +27,7 @@ protocol ScenePresenterDelegate: AnyObject {
 
 protocol SceneViewProtocol: AnyObject {
     func update(state: ScenePresenterState)
+    func removeShape(with id: UUID)
 }
 
 // MARK: - Presenter

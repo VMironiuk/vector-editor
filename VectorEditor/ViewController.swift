@@ -72,5 +72,6 @@ private extension ViewController {
     private func setupRouters() {
         toolbarRouter.delegate = sceneRouter
         sceneRouter.delegate = sidebarRouter
+        sidebarRouter.delegate = sceneRouter
     }
 }

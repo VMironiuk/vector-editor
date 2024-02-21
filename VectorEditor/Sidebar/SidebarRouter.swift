@@ -13,11 +13,21 @@ final class SidebarRouter {
     
     var viewController: UIViewController { view }
     
+    weak var delegate: SidebarRouterDelegate?
+    
     init() {
         view = SidebarViewController()
         presenter = SidebarPresenter()
         
         presenter.view = view
+        presenter.delegate = self
+        view.eventHandler = presenter
+    }
+}
+
+extension SidebarRouter: SidebarPresenterDelegate {
+    func didRemoveShape(id: UUID) {
+        delegate?.didRemoveShape(id: id)
     }
 }
 

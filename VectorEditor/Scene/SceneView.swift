@@ -21,6 +21,12 @@ final class SceneView: UIView {
     
     weak var delegate: SceneViewDelegate?
     
+    func removeShape(with id: UUID) {
+        guard let index = (shapes.firstIndex { $0.id == id }) else { return }
+        shapes.remove(at: index)
+        setNeedsDisplay()
+    }
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard touches.count == 1 else { return }
         startPoint = touches.first?.location(in: self)
