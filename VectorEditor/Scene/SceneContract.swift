@@ -16,11 +16,11 @@ struct ScenePresenterState {
 // MARK: - Router
 
 protocol SceneRouterDelegate: AnyObject {
-    func didAddShape()
+    func didAddShape(_ shapeType: ShapeType)
 }
 
 protocol ScenePresenterDelegate: AnyObject {
-    func didAddShape()
+    func didAddShape(_ shapeType: ShapeType)
 }
 
 // MARK: - View
@@ -32,7 +32,7 @@ protocol SceneViewProtocol: AnyObject {
 // MARK: - Presenter
 
 protocol SceneViewEventHandler: AnyObject {
-    func onShapeAdded()
+    func onShapeAdded(_ shapeType: ShapeType)
 }
 
 // MARK: - Interactor

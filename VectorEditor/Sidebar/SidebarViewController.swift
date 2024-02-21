@@ -10,7 +10,7 @@ import UIKit
 class SidebarViewController: UIViewController {
     @IBOutlet private weak var tableView: UITableView!
     
-    private var shapes: [String] = []
+    private var shapes: [ShapeType] = []
 }
 
 extension SidebarViewController: SidebarViewProtocol {
@@ -27,7 +27,7 @@ extension SidebarViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = UITableViewCell()
-        cell.textLabel?.text = shapes[indexPath.row]
+        cell.textLabel?.text = "\(shapes[indexPath.row])"
         return cell
     }
 }

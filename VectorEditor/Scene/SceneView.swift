@@ -8,7 +8,7 @@
 import UIKit
 
 protocol SceneViewDelegate: AnyObject {
-    func sceneViewDidAddShape(_ view: SceneView)
+    func sceneView(_ view: SceneView, didAddShape shapeType: ShapeType)
 }
 
 final class SceneView: UIView {
@@ -52,12 +52,12 @@ final class SceneView: UIView {
         case .rect:
             guard isMoving else { return }
             isMoving = false
-            delegate?.sceneViewDidAddShape(self)
+            delegate?.sceneView(self, didAddShape: .rect)
             
         case .circle:
             guard touches.count == 1, let point = touches.first?.location(in: self) else { return }
             circleCenterPoints.append(CGPoint(x: point.x - 25, y: point.y - 25))
-            delegate?.sceneViewDidAddShape(self)
+            delegate?.sceneView(self, didAddShape: .circle)
         }
                 
         setNeedsDisplay()

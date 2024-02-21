@@ -26,7 +26,7 @@ extension SceneViewController: SceneViewProtocol {
 }
 
 extension SceneViewController: SceneViewDelegate {
-    func sceneViewDidAddShape(_ view: SceneView) {
-        eventHandler?.onShapeAdded()
+    func sceneView(_ view: SceneView, didAddShape shapeType: ShapeType) {
+        eventHandler?.onShapeAdded(shapeType)
     }
 }

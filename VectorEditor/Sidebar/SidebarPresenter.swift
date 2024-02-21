@@ -12,9 +12,9 @@ final class SidebarPresenter {
     
     weak var view: SidebarViewProtocol?
     
-    func addShape() {
+    func addShape(_ shapeType: ShapeType) {
         var shapes = presenterState.shapes
-        shapes.append("shape")
+        shapes.append(shapeType)
         presenterState = SidebarPresenterState(shapes: shapes)
         
         view?.update(state: presenterState)
