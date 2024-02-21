@@ -10,6 +10,7 @@ import UIKit
 final class SceneRouter {
     private let view: SceneViewController
     private let presenter: ScenePresenter
+    private let interactor: SceneInteractor
     
     var viewController: UIViewController { view }
     
@@ -18,22 +19,25 @@ final class SceneRouter {
     init() {
         view = SceneViewController()
         presenter = ScenePresenter()
+        interactor = SceneInteractor()
         
         presenter.view = view
         presenter.delegate = self
+        presenter.interactor = interactor
         view.eventHandler = presenter
+        interactor.delegate = presenter
     }
 }
 
 extension SceneRouter: ToolbarRouterDelegate {
     func didChangeShapeType(to shapeType: ShapeType) {
-        presenter.changeShapeType(to: shapeType)
+        interactor.changeShapeType(to: shapeType)
     }
 }
 
 extension SceneRouter: SidebarRouterDelegate {
     func didRemoveShape(id: UUID) {
-        presenter.removeShape(with: id)
+        interactor.removeShape(with: id)
     }
 }
 

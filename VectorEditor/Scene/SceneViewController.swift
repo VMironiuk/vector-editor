@@ -21,16 +21,20 @@ class SceneViewController: UIViewController {
 
 extension SceneViewController: SceneViewProtocol {
     func update(state: ScenePresenterState) {
-        sceneView?.shapeType = state.shapeType
-    }
-    
-    func removeShape(with id: UUID) {
-        sceneView?.removeShape(with: id)
+        sceneView?.redraw(with: state.drawingHandler)
     }
 }
 
 extension SceneViewController: SceneViewDelegate {
-    func sceneView(_ view: SceneView, didAddShape shape: ShapeProtocol) {
-        eventHandler?.onShapeAdded(shape)
+    func sceneView(_ view: SceneView, touchBeganWithPoint point: CGPoint) {
+        eventHandler?.onTouchBegan(with: point)
+    }
+    
+    func sceneView(_ view: SceneView, touchMovedWithPoint point: CGPoint) {
+        eventHandler?.onTouchMoved(with: point)
+    }
+    
+    func sceneView(_ view: SceneView, touchEndedWithPoint point: CGPoint) {
+        eventHandler?.onTouchEnded(with: point)
     }
 }

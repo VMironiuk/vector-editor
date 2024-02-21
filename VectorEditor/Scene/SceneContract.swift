@@ -6,11 +6,14 @@
 //
 
 import Foundation
+import CoreGraphics
 
 // MARK: - Entity
 
+typealias DrawingHandler = (CGContext) -> Void
+
 struct ScenePresenterState {
-    let shapeType: ShapeType
+    let drawingHandler: DrawingHandler
 }
 
 // MARK: - Router
@@ -27,13 +30,27 @@ protocol ScenePresenterDelegate: AnyObject {
 
 protocol SceneViewProtocol: AnyObject {
     func update(state: ScenePresenterState)
-    func removeShape(with id: UUID)
 }
 
 // MARK: - Presenter
 
 protocol SceneViewEventHandler: AnyObject {
-    func onShapeAdded(_ shape: ShapeProtocol)
+    func onTouchBegan(with point: CGPoint)
+    func onTouchMoved(with point: CGPoint)
+    func onTouchEnded(with point: CGPoint)
+}
+
+protocol SceneInteractorDelegate: AnyObject {
+    func didUpdateDrawingHandler(_ drawingHandler: @escaping DrawingHandler)
+    func didAddShape(_ shape: ShapeProtocol)
 }
 
 // MARK: - Interactor
+
+protocol SceneInteractorProtocol: AnyObject {
+    func changeShapeType(to shapeType: ShapeType)
+    func handleTouchBegan(with point: CGPoint)
+    func handleTouchMoved(with point: CGPoint)
+    func handleTouchEnded(with point: CGPoint)
+    func removeShape(with id: UUID)
+}

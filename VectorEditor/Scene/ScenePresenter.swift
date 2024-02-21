@@ -9,19 +9,30 @@ import Foundation
 
 final class ScenePresenter {
     weak var view: SceneViewProtocol?
+    weak var interactor: SceneInteractorProtocol?
     weak var delegate: ScenePresenterDelegate?
-    
-    func changeShapeType(to shapeType: ShapeType) {
-        view?.update(state: ScenePresenterState(shapeType: shapeType))
-    }
-    
-    func removeShape(with id: UUID) {
-        view?.removeShape(with: id)
-    }
 }
 
 extension ScenePresenter: SceneViewEventHandler {
-    func onShapeAdded(_ shape: ShapeProtocol) {
+    func onTouchBegan(with point: CGPoint) {
+        interactor?.handleTouchBegan(with: point)
+    }
+    
+    func onTouchMoved(with point: CGPoint) {
+        interactor?.handleTouchMoved(with: point)
+    }
+    
+    func onTouchEnded(with point: CGPoint) {
+        interactor?.handleTouchEnded(with: point)
+    }
+}
+
+extension ScenePresenter: SceneInteractorDelegate {
+    func didUpdateDrawingHandler(_ drawingHandler: @escaping DrawingHandler) {
+        view?.update(state: ScenePresenterState(drawingHandler: drawingHandler))
+    }
+    
+    func didAddShape(_ shape: ShapeProtocol) {
         delegate?.didAddShape(shape)
     }
 }

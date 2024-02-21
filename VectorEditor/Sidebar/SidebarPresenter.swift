@@ -53,6 +53,13 @@ final class SidebarPresenter {
 
 extension SidebarPresenter: SidebarViewEventHandler {
     func onShapeRemoved(id: UUID) {
-        delegate?.didRemoveShape(id: id)
+        var shapes = presenterState.shapes
+        if let index = shapes.firstIndex(where: { $0.id == id }) {
+            shapes.remove(at: index)
+            presenterState = SidebarPresenterState(shapes: shapes)
+            
+            view?.update(state: presenterState)
+            delegate?.didRemoveShape(id: id)
+        }
     }
 }

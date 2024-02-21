@@ -36,6 +36,7 @@
 		2EB3506A2B85E2BD00C07EB5 /* ShapeItem.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350692B85E2BD00C07EB5 /* ShapeItem.swift */; };
 		2EB3506D2B85E4DE00C07EB5 /* ShapeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB3506B2B85E4DE00C07EB5 /* ShapeCell.swift */; };
 		2EB3506E2B85E4DE00C07EB5 /* ShapeCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2EB3506C2B85E4DE00C07EB5 /* ShapeCell.xib */; };
+		2EB350712B85FC5600C07EB5 /* SceneInteractor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EB350702B85FC5600C07EB5 /* SceneInteractor.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -70,6 +71,7 @@
 		2EB350692B85E2BD00C07EB5 /* ShapeItem.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeItem.swift; sourceTree = "<group>"; };
 		2EB3506B2B85E4DE00C07EB5 /* ShapeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeCell.swift; sourceTree = "<group>"; };
 		2EB3506C2B85E4DE00C07EB5 /* ShapeCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ShapeCell.xib; sourceTree = "<group>"; };
+		2EB350702B85FC5600C07EB5 /* SceneInteractor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneInteractor.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				2EB3505D2B84AECC00C07EB5 /* SceneView.swift */,
 				2EB350552B849CCB00C07EB5 /* SceneRouter.swift */,
 				2EB3505F2B84D93F00C07EB5 /* ScenePresenter.swift */,
+				2EB350702B85FC5600C07EB5 /* SceneInteractor.swift */,
 			);
 			path = Scene;
 			sourceTree = "<group>";
@@ -251,6 +254,7 @@
 				2EB350602B84D93F00C07EB5 /* ScenePresenter.swift in Sources */,
 				2EB3505C2B84A32100C07EB5 /* ShapeType.swift in Sources */,
 				2EB350252B848B7E00C07EB5 /* AppDelegate.swift in Sources */,
+				2EB350712B85FC5600C07EB5 /* SceneInteractor.swift in Sources */,
 				2EB3503F2B8492B200C07EB5 /* ToolbarViewController.swift in Sources */,
 				2EB3506D2B85E4DE00C07EB5 /* ShapeCell.swift in Sources */,
 				2EB350662B85DB0200C07EB5 /* RectShape.swift in Sources */,
