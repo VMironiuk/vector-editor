@@ -23,7 +23,8 @@ final class SidebarPresenter {
     private func shapeItem(from shape: ShapeProtocol) -> ShapeItem {
         let name = shapeName(from: shape.type)
         let image = shapeImage(from: shape.type)
-        return ShapeItem(id: shape.id, name: name, createdAt: shape.createdAt.description, image: image)
+        let createdAt = shapeCreatedAt(from: shape.createdAt)
+        return ShapeItem(id: shape.id, name: name, createdAt: createdAt, image: image)
     }
     
     private func shapeName(from shapeType: ShapeType) -> String {
@@ -42,5 +43,9 @@ final class SidebarPresenter {
         case .circle:
             return UIImage(named: "Ellipse")
         }
+    }
+    
+    private func shapeCreatedAt(from date: Date) -> String {
+        date.formatted(date: .numeric, time: .standard)
     }
 }
