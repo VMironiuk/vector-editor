@@ -35,7 +35,7 @@ extension SidebarViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let shape = shapes[indexPath.row]
         let cell = tableView.dequeueReusableCell(withIdentifier: "ShapeCell", for: indexPath) as! ShapeCell
-        cell.shapeImage.image = nil
+        cell.shapeImage.image = shape.image
         cell.shapeName.text = shape.name
         cell.shapeCreatedAt.text = shape.createdAt
         return cell
