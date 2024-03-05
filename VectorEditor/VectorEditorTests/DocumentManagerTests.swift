@@ -8,22 +8,6 @@
 import XCTest
 import VectorEditor
 
-final class DocumentManager {
-    private let store: DocumentStoreProtocol
-    
-    init(store: DocumentStoreProtocol) {
-        self.store = store
-    }
-    
-    func load() {
-        store.load()
-    }
-    
-    func save() {
-        store.save()
-    }
-}
-
 final class DocumentManagerTests: XCTestCase {
     func test_init_doesNotLoadOrSave() {
         let store = DocumentStoreSpy()

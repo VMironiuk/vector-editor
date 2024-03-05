@@ -11,6 +11,7 @@
 		2EA484A32B97305F0080C233 /* VectorEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA484972B97305E0080C233 /* VectorEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EA484AF2B973E8A0080C233 /* DocumentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */; };
 		2EA484B12B9741CE0080C233 /* DocumentStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */; };
+		2EA484B32B9742250080C233 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B22B9742250080C233 /* DocumentManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -29,6 +30,7 @@
 		2EA4849C2B97305F0080C233 /* VectorEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManagerTests.swift; sourceTree = "<group>"; };
 		2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStoreProtocol.swift; sourceTree = "<group>"; };
+		2EA484B22B9742250080C233 /* DocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 			children = (
 				2EA484972B97305E0080C233 /* VectorEditor.h */,
 				2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */,
+				2EA484B22B9742250080C233 /* DocumentManager.swift */,
 			);
 			path = VectorEditor;
 			sourceTree = "<group>";
@@ -195,6 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA484B32B9742250080C233 /* DocumentManager.swift in Sources */,
 				2EA484B12B9741CE0080C233 /* DocumentStoreProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
