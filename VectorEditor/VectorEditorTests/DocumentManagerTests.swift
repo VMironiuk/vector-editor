@@ -6,11 +6,7 @@
 //
 
 import XCTest
-
-protocol DocumentStoreProtocol {
-    func load()
-    func save()
-}
+import VectorEditor
 
 final class DocumentManager {
     private let store: DocumentStoreProtocol

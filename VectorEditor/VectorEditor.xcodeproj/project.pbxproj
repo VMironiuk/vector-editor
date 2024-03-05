@@ -10,6 +10,7 @@
 		2EA4849D2B97305F0080C233 /* VectorEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA484942B97305E0080C233 /* VectorEditor.framework */; };
 		2EA484A32B97305F0080C233 /* VectorEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA484972B97305E0080C233 /* VectorEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2EA484AF2B973E8A0080C233 /* DocumentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */; };
+		2EA484B12B9741CE0080C233 /* DocumentStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -27,6 +28,7 @@
 		2EA484972B97305E0080C233 /* VectorEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorEditor.h; sourceTree = "<group>"; };
 		2EA4849C2B97305F0080C233 /* VectorEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManagerTests.swift; sourceTree = "<group>"; };
+		2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStoreProtocol.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -70,6 +72,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA484972B97305E0080C233 /* VectorEditor.h */,
+				2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */,
 			);
 			path = VectorEditor;
 			sourceTree = "<group>";
@@ -144,6 +147,7 @@
 				TargetAttributes = {
 					2EA484932B97305E0080C233 = {
 						CreatedOnToolsVersion = 15.2;
+						LastSwiftMigration = 1520;
 					};
 					2EA4849B2B97305F0080C233 = {
 						CreatedOnToolsVersion = 15.2;
@@ -191,6 +195,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA484B12B9741CE0080C233 /* DocumentStoreProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -340,6 +345,7 @@
 		2EA484A72B97305F0080C233 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -364,6 +370,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
 			};
 			name = Debug;
@@ -371,6 +378,7 @@
 		2EA484A82B97305F0080C233 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -402,6 +410,7 @@
 		2EA484AA2B97305F0080C233 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8U849676MP;
@@ -417,6 +426,7 @@
 		2EA484AB2B97305F0080C233 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 1;
 				DEVELOPMENT_TEAM = 8U849676MP;
