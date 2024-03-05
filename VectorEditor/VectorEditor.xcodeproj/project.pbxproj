@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		2EA4849D2B97305F0080C233 /* VectorEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA484942B97305E0080C233 /* VectorEditor.framework */; };
 		2EA484A32B97305F0080C233 /* VectorEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA484972B97305E0080C233 /* VectorEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2EA484AD2B9730A80080C233 /* DocumentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484AC2B9730A80080C233 /* DocumentStoreTests.swift */; };
+		2EA484AF2B973E8A0080C233 /* DocumentManagerTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -26,7 +26,7 @@
 		2EA484942B97305E0080C233 /* VectorEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA484972B97305E0080C233 /* VectorEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorEditor.h; sourceTree = "<group>"; };
 		2EA4849C2B97305F0080C233 /* VectorEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EA484AC2B9730A80080C233 /* DocumentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStoreTests.swift; sourceTree = "<group>"; };
+		2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManagerTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -77,7 +77,7 @@
 		2EA484A02B97305F0080C233 /* VectorEditorTests */ = {
 			isa = PBXGroup;
 			children = (
-				2EA484AC2B9730A80080C233 /* DocumentStoreTests.swift */,
+				2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */,
 			);
 			path = VectorEditorTests;
 			sourceTree = "<group>";
@@ -198,7 +198,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EA484AD2B9730A80080C233 /* DocumentStoreTests.swift in Sources */,
+				2EA484AF2B973E8A0080C233 /* DocumentManagerTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
