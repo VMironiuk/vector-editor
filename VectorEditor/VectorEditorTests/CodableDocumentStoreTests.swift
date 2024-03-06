@@ -25,6 +25,20 @@ final class CodableDocumentStore {
             completion(error)
         }
     }
+    
+    func load(completion: @escaping (Result<CodableDocument, Error>) -> Void) {
+        do {
+            guard let data = try? Data(contentsOf: storeURL) else {
+                return completion(.success(CodableDocument(name: "", shapes: [])))
+            }
+            
+            let decoder = JSONDecoder()
+            let document = try decoder.decode(CodableDocument.self, from: data)
+            completion(.success(document))
+        } catch {
+            completion(.failure(error))
+        }
+    }
 }
 
 final class CodableDocumentStoreTests: XCTestCase {
@@ -59,6 +73,28 @@ final class CodableDocumentStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1)
         
         XCTAssertNotNil(try? Data(contentsOf: testSpecificStoreURL()))
+    }
+    
+    func test_load_LoadsDocument() {
+        let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
+        let document = CodableDocument(name: "a document", shapes: [
+            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
+            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
+        ])
+        sut.save(document: document) { _ in }
+        
+        let exp = expectation(description: "Wait for a document loading completion")
+        
+        sut.load { result in
+            switch result {
+            case let .success(receivedDocument):
+                XCTAssertEqual(receivedDocument, document)
+            default:
+                XCTFail("Expected a document loading to complete successfully")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
     }
     
     // MARK: - Helpers
