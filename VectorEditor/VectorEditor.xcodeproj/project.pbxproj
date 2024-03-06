@@ -10,7 +10,6 @@
 		2EA410C72B988BD90066E79E /* CodableDocument+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */; };
 		2EA4849D2B97305F0080C233 /* VectorEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA484942B97305E0080C233 /* VectorEditor.framework */; };
 		2EA484A32B97305F0080C233 /* VectorEditor.h in Headers */ = {isa = PBXBuildFile; fileRef = 2EA484972B97305E0080C233 /* VectorEditor.h */; settings = {ATTRIBUTES = (Public, ); }; };
-		2EA484B12B9741CE0080C233 /* DocumentStoreProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */; };
 		2EA484B72B9747A60080C233 /* CodableDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */; };
 		2EA484B92B975F830080C233 /* CodableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B82B975F830080C233 /* CodableDocument.swift */; };
 		2EA484BB2B97645D0080C233 /* CodableDocumentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */; };
@@ -31,7 +30,6 @@
 		2EA484942B97305E0080C233 /* VectorEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2EA484972B97305E0080C233 /* VectorEditor.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorEditor.h; sourceTree = "<group>"; };
 		2EA4849C2B97305F0080C233 /* VectorEditorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorEditorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStoreProtocol.swift; sourceTree = "<group>"; };
 		2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentTests.swift; sourceTree = "<group>"; };
 		2EA484B82B975F830080C233 /* CodableDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocument.swift; sourceTree = "<group>"; };
 		2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentStoreTests.swift; sourceTree = "<group>"; };
@@ -86,7 +84,6 @@
 			isa = PBXGroup;
 			children = (
 				2EA484972B97305E0080C233 /* VectorEditor.h */,
-				2EA484B02B9741CE0080C233 /* DocumentStoreProtocol.swift */,
 				2EA484B82B975F830080C233 /* CodableDocument.swift */,
 			);
 			path = VectorEditor;
@@ -212,7 +209,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2EA484B12B9741CE0080C233 /* DocumentStoreProtocol.swift in Sources */,
 				2EA484B92B975F830080C233 /* CodableDocument.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
