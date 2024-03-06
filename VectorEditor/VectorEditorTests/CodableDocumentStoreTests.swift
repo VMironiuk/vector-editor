@@ -8,33 +8,6 @@
 import XCTest
 import VectorEditor
 
-final class CodableDocumentStore {
-    func save(document: CodableDocument, to storeURL: URL, completion: @escaping (Error?) -> Void) {
-        do {
-            let encoder = JSONEncoder()
-            let encodedDocument = try encoder.encode(document)
-            try encodedDocument.write(to: storeURL)
-            completion(nil)
-        } catch {
-            completion(error)
-        }
-    }
-    
-    func load(from storeURL: URL, completion: @escaping (Result<CodableDocument, Error>) -> Void) {
-        do {
-            guard let data = try? Data(contentsOf: storeURL) else {
-                return completion(.success(CodableDocument(name: "", shapes: [])))
-            }
-            
-            let decoder = JSONDecoder()
-            let document = try decoder.decode(CodableDocument.self, from: data)
-            completion(.success(document))
-        } catch {
-            completion(.failure(error))
-        }
-    }
-}
-
 final class CodableDocumentStoreTests: XCTestCase {
     override func setUp() {
         super.setUp()
