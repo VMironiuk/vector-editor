@@ -8,10 +8,29 @@
 import CoreGraphics
 
 public struct CodableDocument: Codable {
+    public struct Circle: Codable {
+        public let id: UUID
+        public let createdAt: Date
+        public let frame: NSRect
+        public init(id: UUID, createdAt: Date, frame: NSRect) {
+            self.id = id
+            self.createdAt = createdAt
+            self.frame = frame
+        }
+    }
+    public struct Rectangle: Codable {
+        public let id: UUID
+        public let createdAt: Date
+        public let frame: NSRect
+        public init(id: UUID, createdAt: Date, frame: NSRect) {
+            self.id = id
+            self.createdAt = createdAt
+            self.frame = frame
+        }
+    }
     public enum Shape: Codable {
-        case circle(NSRect)
-        case rectangle(NSRect)
-        case triangle(NSPoint, NSPoint, NSPoint)
+        case circle(Circle)
+        case rectangle(Rectangle)
     }
 
     public let name: String

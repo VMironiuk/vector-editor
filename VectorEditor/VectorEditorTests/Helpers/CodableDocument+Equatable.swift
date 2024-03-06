@@ -22,11 +22,20 @@ extension CodableDocument.Shape: Equatable {
         case let (.rectangle(lhsRect), .rectangle(rhsRect)):
             return lhsRect == rhsRect
             
-        case let (.triangle(lhsPt1, lhsPt2, lhsPt3), .triangle(rhsPt1, rhsPt2, rhsPt3)):
-            return lhsPt1 == rhsPt1 && lhsPt2 == rhsPt2 && lhsPt3 == rhsPt3
-            
         default:
             return false
         }
+    }
+}
+
+extension CodableDocument.Circle: Equatable {
+    public static func == (lhs: CodableDocument.Circle, rhs: CodableDocument.Circle) -> Bool {
+        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt && lhs.frame == rhs.frame
+    }
+}
+
+extension CodableDocument.Rectangle: Equatable {
+    public static func == (lhs: CodableDocument.Rectangle, rhs: CodableDocument.Rectangle) -> Bool {
+        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt && lhs.frame == rhs.frame
     }
 }
