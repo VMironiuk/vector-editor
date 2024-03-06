@@ -14,6 +14,7 @@
 		2EA484B32B9742250080C233 /* DocumentManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B22B9742250080C233 /* DocumentManager.swift */; };
 		2EA484B72B9747A60080C233 /* CodableDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */; };
 		2EA484B92B975F830080C233 /* CodableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B82B975F830080C233 /* CodableDocument.swift */; };
+		2EA484BB2B97645D0080C233 /* CodableDocumentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +36,7 @@
 		2EA484B22B9742250080C233 /* DocumentManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentManager.swift; sourceTree = "<group>"; };
 		2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentTests.swift; sourceTree = "<group>"; };
 		2EA484B82B975F830080C233 /* CodableDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocument.swift; sourceTree = "<group>"; };
+		2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentStoreTests.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -90,6 +92,7 @@
 			children = (
 				2EA484AE2B973E8A0080C233 /* DocumentManagerTests.swift */,
 				2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */,
+				2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */,
 			);
 			path = VectorEditorTests;
 			sourceTree = "<group>";
@@ -215,6 +218,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				2EA484AF2B973E8A0080C233 /* DocumentManagerTests.swift in Sources */,
+				2EA484BB2B97645D0080C233 /* CodableDocumentStoreTests.swift in Sources */,
 				2EA484B72B9747A60080C233 /* CodableDocumentTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
