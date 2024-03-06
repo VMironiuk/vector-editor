@@ -9,13 +9,7 @@ import XCTest
 import VectorEditor
 
 final class CodableDocumentStore {
-    private let storeURL: URL
-    
-    init(storeURL: URL) {
-        self.storeURL = storeURL
-    }
-    
-    func save(document: CodableDocument, completion: @escaping (Error?) -> Void) {
+    func save(document: CodableDocument, to storeURL: URL, completion: @escaping (Error?) -> Void) {
         do {
             let encoder = JSONEncoder()
             let encodedDocument = try encoder.encode(document)
@@ -26,7 +20,7 @@ final class CodableDocumentStore {
         }
     }
     
-    func load(completion: @escaping (Result<CodableDocument, Error>) -> Void) {
+    func load(from storeURL: URL, completion: @escaping (Result<CodableDocument, Error>) -> Void) {
         do {
             guard let data = try? Data(contentsOf: storeURL) else {
                 return completion(.success(CodableDocument(name: "", shapes: [])))
@@ -62,7 +56,7 @@ final class CodableDocumentStoreTests: XCTestCase {
         let sut = makeSUT()
         let exp = expectation(description: "Wait for a document saving completion")
         
-        sut.save(document: anyCodableDocument()) { error in
+        sut.save(document: anyCodableDocument(), to: testSpecificStoreURL()) { error in
             XCTAssertNil(error, "Expected a document saving to complete successfully")
             exp.fulfill()
         }
@@ -74,11 +68,11 @@ final class CodableDocumentStoreTests: XCTestCase {
     func test_load_LoadsDocument() {
         let sut = makeSUT()
         let document = anyCodableDocument()
-        sut.save(document: document) { _ in }
+        sut.save(document: document, to: testSpecificStoreURL()) { _ in }
         
         let exp = expectation(description: "Wait for a document loading completion")
         
-        sut.load { result in
+        sut.load(from: testSpecificStoreURL()) { result in
             switch result {
             case let .success(receivedDocument):
                 XCTAssertEqual(receivedDocument, document)
@@ -93,7 +87,7 @@ final class CodableDocumentStoreTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT() -> CodableDocumentStore {
-        CodableDocumentStore(storeURL: testSpecificStoreURL())
+        CodableDocumentStore()
     }
     
     private func anyCodableDocument() -> CodableDocument {
