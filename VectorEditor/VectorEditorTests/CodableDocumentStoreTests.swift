@@ -65,8 +65,8 @@ final class CodableDocumentStoreTests: XCTestCase {
     
     private func anyCodableDocument() -> CodableDocument {
         CodableDocument(name: "a document", shapes: [
-            .circle(.init(id: UUID(), createdAt: .now, frame: NSRect(x: 3, y: 3, width: 21, height: 21))),
-            .rectangle(.init(id: UUID(), createdAt: .now, frame: NSRect(x: 14, y: 21, width: 42, height: 42)))
+            .circle(.init(id: UUID(), createdAt: .now), .init(x: 3, y: 3, width: 21, height: 21)),
+            .rectangle(.init(id: UUID(), createdAt: .now), .init(x: 14, y: 21, width: 42, height: 42))
         ])
     }
     

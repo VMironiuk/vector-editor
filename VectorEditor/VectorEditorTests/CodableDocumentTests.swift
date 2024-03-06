@@ -13,9 +13,9 @@ final class CodableDocumentTests: XCTestCase {
         let document = CodableDocument(
             name: "A document",
             shapes: [
-                .circle(.init(id: UUID(), createdAt: .now, frame: .init(x: 0, y: 0, width: 100, height: 100))),
-                .circle(.init(id: UUID(), createdAt: .now, frame: .init(x: 3, y: 3, width: 42, height: 42))),
-                .rectangle(.init(id: UUID(), createdAt: .now, frame: .init(x: 42, y: 42, width: 21, height: 21)))
+                .circle(.init(id: UUID(), createdAt: .now), .init(x: 0, y: 0, width: 100, height: 100)),
+                .circle(.init(id: UUID(), createdAt: .now), .init(x: 3, y: 3, width: 42, height: 42)),
+                .rectangle(.init(id: UUID(), createdAt: .now), .init(x: 42, y: 42, width: 21, height: 21))
             ])
         
         let data = try JSONEncoder().encode(document)

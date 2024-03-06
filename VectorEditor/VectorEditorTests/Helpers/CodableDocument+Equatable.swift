@@ -16,26 +16,20 @@ extension CodableDocument: Equatable {
 extension CodableDocument.Shape: Equatable {
     public static func == (lhs: CodableDocument.Shape, rhs: CodableDocument.Shape) -> Bool {
         switch (lhs, rhs) {
-        case let (.circle(lhsRect), .circle(rhsRect)):
-            return lhsRect == rhsRect
+        case let (.circle(lhsMetadata, lhsFrame), .circle(rhsMetadata, rhsFrame)):
+            return lhsMetadata == rhsMetadata && lhsFrame == rhsFrame
             
-        case let (.rectangle(lhsRect), .rectangle(rhsRect)):
-            return lhsRect == rhsRect
-            
+        case let (.rectangle(lhsMetadata, lhsFrame), .rectangle(rhsMetadata, rhsFrame)):
+            return lhsMetadata == rhsMetadata && lhsFrame == rhsFrame
+
         default:
             return false
         }
     }
 }
 
-extension CodableDocument.Circle: Equatable {
-    public static func == (lhs: CodableDocument.Circle, rhs: CodableDocument.Circle) -> Bool {
-        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt && lhs.frame == rhs.frame
-    }
-}
-
-extension CodableDocument.Rectangle: Equatable {
-    public static func == (lhs: CodableDocument.Rectangle, rhs: CodableDocument.Rectangle) -> Bool {
-        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt && lhs.frame == rhs.frame
+extension CodableDocument.Shape.Metadata: Equatable {
+    public static func == (lhs: CodableDocument.Shape.Metadata, rhs: CodableDocument.Shape.Metadata) -> Bool {
+        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt
     }
 }
