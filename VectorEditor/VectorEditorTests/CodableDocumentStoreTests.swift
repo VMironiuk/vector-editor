@@ -60,13 +60,9 @@ final class CodableDocumentStoreTests: XCTestCase {
     
     func test_save_savesDocument() {
         let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
-        let document = CodableDocument(name: "a document", shapes: [
-            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
-            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
-        ])
         let exp = expectation(description: "Wait for a document saving completion")
         
-        sut.save(document: document) { error in
+        sut.save(document: anyCodableDocument()) { error in
             XCTAssertNil(error, "Expected a document saving to complete successfully")
             exp.fulfill()
         }
@@ -77,10 +73,7 @@ final class CodableDocumentStoreTests: XCTestCase {
     
     func test_load_LoadsDocument() {
         let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
-        let document = CodableDocument(name: "a document", shapes: [
-            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
-            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
-        ])
+        let document = anyCodableDocument()
         sut.save(document: document) { _ in }
         
         let exp = expectation(description: "Wait for a document loading completion")
@@ -98,6 +91,13 @@ final class CodableDocumentStoreTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func anyCodableDocument() -> CodableDocument {
+        CodableDocument(name: "a document", shapes: [
+            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
+            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
+        ])
+    }
     
     private func setupEmptyStoreState() {
         deleteStoreArtifacts()
