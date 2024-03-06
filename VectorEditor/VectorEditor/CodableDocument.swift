@@ -7,17 +7,17 @@
 
 import CoreGraphics
 
-public enum CodableShape: Codable {
-    case circle(NSRect)
-    case rectangle(NSRect)
-    case triangle(NSPoint, NSPoint, NSPoint)
-}
-
 public struct CodableDocument: Codable {
+    public enum Shape: Codable {
+        case circle(NSRect)
+        case rectangle(NSRect)
+        case triangle(NSPoint, NSPoint, NSPoint)
+    }
+
     public let name: String
-    public let shapes: [CodableShape]
+    public let shapes: [Shape]
     
-    public init(name: String, shapes: [CodableShape]) {
+    public init(name: String, shapes: [Shape]) {
         self.name = name
         self.shapes = shapes
     }

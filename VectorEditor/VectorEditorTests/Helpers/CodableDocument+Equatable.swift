@@ -13,8 +13,8 @@ extension CodableDocument: Equatable {
     }
 }
 
-extension CodableShape: Equatable {
-    public static func == (lhs: CodableShape, rhs: CodableShape) -> Bool {
+extension CodableDocument.Shape: Equatable {
+    public static func == (lhs: CodableDocument.Shape, rhs: CodableDocument.Shape) -> Bool {
         switch (lhs, rhs) {
         case let (.circle(lhsRect), .circle(rhsRect)):
             return lhsRect == rhsRect
