@@ -15,12 +15,7 @@ final class CodableDocumentStore {
         self.storeURL = storeURL
     }
     
-    func save(completion: @escaping (Error?) -> Void) {
-        let document = CodableDocument(name: "a document", shapes: [
-            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
-            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
-        ])
-        
+    func save(document: CodableDocument, completion: @escaping (Error?) -> Void) {
         do {
             let encoder = JSONEncoder()
             let encodedDocument = try encoder.encode(document)
@@ -51,8 +46,17 @@ final class CodableDocumentStoreTests: XCTestCase {
     
     func test_save_savesDocument() {
         let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
+        let document = CodableDocument(name: "a document", shapes: [
+            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
+            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
+        ])
+        let exp = expectation(description: "Wait for a document saving completion")
         
-        sut.save { _ in }
+        sut.save(document: document) { error in
+            XCTAssertNil(error, "Expected a document saving to complete successfully")
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
         
         XCTAssertNotNil(try? Data(contentsOf: testSpecificStoreURL()))
     }
