@@ -53,13 +53,13 @@ final class CodableDocumentStoreTests: XCTestCase {
     }
     
     func test_init_doesNotSaveDocument() {
-        _ = CodableDocumentStore(storeURL: testSpecificStoreURL())
+        _ = makeSUT()
         
         XCTAssertNil(try? Data(contentsOf: testSpecificStoreURL()))
     }
     
     func test_save_savesDocument() {
-        let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
+        let sut = makeSUT()
         let exp = expectation(description: "Wait for a document saving completion")
         
         sut.save(document: anyCodableDocument()) { error in
@@ -72,7 +72,7 @@ final class CodableDocumentStoreTests: XCTestCase {
     }
     
     func test_load_LoadsDocument() {
-        let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
+        let sut = makeSUT()
         let document = anyCodableDocument()
         sut.save(document: document) { _ in }
         
@@ -91,6 +91,10 @@ final class CodableDocumentStoreTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT() -> CodableDocumentStore {
+        CodableDocumentStore(storeURL: testSpecificStoreURL())
+    }
     
     private func anyCodableDocument() -> CodableDocument {
         CodableDocument(name: "a document", shapes: [
