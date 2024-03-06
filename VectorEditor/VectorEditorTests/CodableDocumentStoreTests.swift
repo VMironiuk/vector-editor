@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import VectorEditor
 
 final class CodableDocumentStore {
     private let storeURL: URL
@@ -14,7 +15,20 @@ final class CodableDocumentStore {
         self.storeURL = storeURL
     }
     
-    func save() {
+    func save(completion: @escaping (Error?) -> Void) {
+        let document = CodableDocument(name: "a document", shapes: [
+            .circle(NSRect(x: 3, y: 3, width: 21, height: 21)),
+            .rectangle(NSRect(x: 14, y: 21, width: 42, height: 42))
+        ])
+        
+        do {
+            let encoder = JSONEncoder()
+            let encodedDocument = try encoder.encode(document)
+            try encodedDocument.write(to: storeURL)
+            completion(nil)
+        } catch {
+            completion(error)
+        }
     }
 }
 
@@ -33,6 +47,14 @@ final class CodableDocumentStoreTests: XCTestCase {
         _ = CodableDocumentStore(storeURL: testSpecificStoreURL())
         
         XCTAssertNil(try? Data(contentsOf: testSpecificStoreURL()))
+    }
+    
+    func test_save_savesDocument() {
+        let sut = CodableDocumentStore(storeURL: testSpecificStoreURL())
+        
+        sut.save { _ in }
+        
+        XCTAssertNotNil(try? Data(contentsOf: testSpecificStoreURL()))
     }
     
     // MARK: - Helpers
