@@ -36,7 +36,5 @@ public final class ToolbarViewModel {
         delegate?.didSelectShape(shape)
         onShapeSelected?(shape)
         selectedShape = shape
-        
-        print(shape)
     }
 }
