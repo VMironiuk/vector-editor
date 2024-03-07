@@ -22,6 +22,8 @@ final class ToolbarViewModel {
     
     weak var delegate: ToolbarViewModelDelegate?
     
+    var onShapeSelected: ((SupportedShape) -> Void)?
+    
     init(documentName: String, supportedShapes: [SupportedShape]) {
         self.documentName = documentName
         self.supportedShapes = supportedShapes
@@ -49,6 +51,14 @@ final class ToolbarViewModelTests: XCTestCase {
         sut.delegate = delegate
         
         XCTAssertEqual(delegate.didSelectShapeCallCount, 0)
+    }
+    
+    func test_init_doesNotInformObserverAboutSelectedShape() {
+        var onShapeSelectedCallCount = 0
+        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
+        sut.onShapeSelected = { _ in onShapeSelectedCallCount += 1 }
+        
+        XCTAssertEqual(onShapeSelectedCallCount, 0)
     }
     
     // MARK: - Helpers
