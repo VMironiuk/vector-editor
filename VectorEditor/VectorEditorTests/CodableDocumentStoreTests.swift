@@ -58,48 +58,47 @@ final class CodableDocumentStoreTests: XCTestCase {
     
     func test_load_failsOnLoadingNonExistingDocumentFile() {
         let sut = makeSUT()
-        let document = anyCodableDocument()
-        sut.save(document: document, to: testSpecificStoreURL()) { _ in }
-        let exp = expectation(description: "Wait for a document loading completion")
-        undoStoreSideEffects()
-        
-        sut.load(from: testSpecificStoreURL()) { result in
-            switch result {
-            case let .failure(error):
-                XCTAssertNotNil(error, "Expected loading error not to be nil")
-            default:
-                XCTFail("Expected a document loading to fail")
-            }
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1)
+        expect(sut, toFailOnDestructiveAction: {
+            undoStoreSideEffects()
+        })
     }
     
     func test_load_failsOnLoadingInvalidDocumentFile() {
         let sut = makeSUT()
-        let document = anyCodableDocument()
-        sut.save(document: document, to: testSpecificStoreURL()) { _ in }
-        let exp = expectation(description: "Wait for a document loading completion")
-        undoStoreSideEffects()
-        let invalidDocumentData = "invalid document".data(using: .utf8)!
-        try! invalidDocumentData.write(to: testSpecificStoreURL())
-        
-        sut.load(from: testSpecificStoreURL()) { result in
-            switch result {
-            case let .failure(error):
-                XCTAssertNotNil(error, "Expected loading error not to be nil")
-            default:
-                XCTFail("Expected a document loading to fail")
-            }
-            exp.fulfill()
-        }
-        wait(for: [exp], timeout: 1)
+        expect(sut, toFailOnDestructiveAction: {
+            undoStoreSideEffects()
+            let invalidDocumentData = "invalid document".data(using: .utf8)!
+            try! invalidDocumentData.write(to: testSpecificStoreURL())
+        })
     }
     
     // MARK: - Helpers
     
     private func makeSUT() -> CodableDocumentStore {
         CodableDocumentStore()
+    }
+    
+    private func expect(
+        _ sut: CodableDocumentStore,
+        toFailOnDestructiveAction destructiveAction: () -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let document = anyCodableDocument()
+        sut.save(document: document, to: testSpecificStoreURL()) { _ in }
+        let exp = expectation(description: "Wait for a document loading completion")
+        destructiveAction()
+        
+        sut.load(from: testSpecificStoreURL()) { result in
+            switch result {
+            case let .failure(error):
+                XCTAssertNotNil(error, "Expected loading error not to be nil", file: file, line: line)
+            default:
+                XCTFail("Expected a document loading to fail", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
     }
     
     private func anyCodableDocument() -> CodableDocument {
