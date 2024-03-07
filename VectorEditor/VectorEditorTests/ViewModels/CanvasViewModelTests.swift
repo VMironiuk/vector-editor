@@ -31,17 +31,26 @@ public struct Document {
 }
 
 final class DocumentStoreCoordinatorSpy {
-    var saveDocumentCallCount: Int { completions.count }
-    private(set) var loadDocumentCallCount = 0
+    var saveDocumentCallCount: Int { saveCompletions.count }
+    var loadDocumentCallCount: Int { loadCompletions.count }
     
-    private var completions = [((Error?) -> Void)]()
+    private var saveCompletions = [(Error?) -> Void]()
+    private var loadCompletions = [(Result<Document, Error>) -> Void]()
     
     func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void) {
-        completions.append(completion)
+        saveCompletions.append(completion)
     }
     
-    func complete(with error: Error?, at index: Int = 0) {
-        completions[index](error)
+    func loadDocument(from storeURL: URL, completion: @escaping (Result<Document, Error>) -> Void) {
+        loadCompletions.append(completion)
+    }
+    
+    func completeDocumentSaving(with error: Error?, at index: Int = 0) {
+        saveCompletions[index](error)
+    }
+    
+    func completeDocumentLoading(with result: Result<Document, Error>, at index: Int  = 0) {
+        loadCompletions[index](result)
     }
 }
 
@@ -54,6 +63,10 @@ final class CanvasViewModel {
     
     func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void) {
         storeCoordinator.saveDocument(document, completion: completion)
+    }
+    
+    func loadDocument(from storeURL: URL, completion: @escaping (Result<Document, Error>) -> Void) {
+        storeCoordinator.loadDocument(from: storeURL, completion: completion)
     }
 }
 
@@ -80,6 +93,10 @@ final class CanvasViewModelTests: XCTestCase {
         expectSaveDocument(toCompleteWith: anyNSError())
     }
     
+    func test_loadDocument_succeedsOnSuccessfulStoreCoordinatorDocumentLoad() {
+        expectLoadDocument(toCompleteWith: .success(anyDocument()))
+    }
+    
     // MARK: - Helper
     
     private func expectSaveDocument(
@@ -95,7 +112,31 @@ final class CanvasViewModelTests: XCTestCase {
             XCTAssertEqual(expectedError as? NSError, receivedError as? NSError, file: file, line: line)
             exp.fulfill()
         }
-        storeCoordinator.complete(with: expectedError)
+        storeCoordinator.completeDocumentSaving(with: expectedError)
+        wait(for: [exp], timeout: 1)
+    }
+    
+    private func expectLoadDocument(
+        toCompleteWith expectedResult: Result<Document, Error>,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let exp = expectation(description: "Wait for load completion")
+                
+        sut.loadDocument(from: anyURL()) { receivedResult in
+            switch (receivedResult, expectedResult) {
+            case let (.success(receivedDocument), .success(expectedDocument)):
+                XCTAssertEqual(receivedDocument, expectedDocument, file: file, line: line)
+            case let (.failure(receivedError), .failure(expectedError)):
+                XCTAssertEqual(receivedError as NSError, expectedError as NSError, file: file, line: line)
+            default:
+                XCTFail("Expected \(expectedResult), got \(receivedResult) instead", file: file, line: line)
+            }
+            exp.fulfill()
+        }
+        storeCoordinator.completeDocumentLoading(with: expectedResult)
         wait(for: [exp], timeout: 1)
     }
     
@@ -108,5 +149,36 @@ final class CanvasViewModelTests: XCTestCase {
     
     private func anyNSError() -> NSError {
         NSError(domain: "any domain", code: 1)
+    }
+    
+    private func anyURL() -> URL {
+        URL(string: "http://any-url.com")!
+    }
+}
+
+extension Document: Equatable {
+    public static func == (lhs: Document, rhs: Document) -> Bool {
+        lhs.name == rhs.name && lhs.shapes == rhs.shapes
+    }
+}
+
+extension Document.Shape: Equatable {
+    public static func == (lhs: Document.Shape, rhs: Document.Shape) -> Bool {
+        switch (lhs, rhs) {
+        case let (.circle(lhsMetadata, lhsFrame), .circle(rhsMetadata, rhsFrame)):
+            return lhsMetadata == rhsMetadata && lhsFrame == rhsFrame
+            
+        case let (.rectangle(lhsMetadata, lhsFrame), .rectangle(rhsMetadata, rhsFrame)):
+            return lhsMetadata == rhsMetadata && lhsFrame == rhsFrame
+
+        default:
+            return false
+        }
+    }
+}
+
+extension Document.Shape.Metadata: Equatable {
+    public static func == (lhs: Document.Shape.Metadata, rhs: Document.Shape.Metadata) -> Bool {
+        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt
     }
 }
