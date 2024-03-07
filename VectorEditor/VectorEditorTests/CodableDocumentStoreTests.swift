@@ -42,7 +42,6 @@ final class CodableDocumentStoreTests: XCTestCase {
         let sut = makeSUT()
         let document = anyCodableDocument()
         sut.save(document: document, to: testSpecificStoreURL()) { _ in }
-        
         let exp = expectation(description: "Wait for a document loading completion")
         
         sut.load(from: testSpecificStoreURL()) { result in
@@ -51,6 +50,25 @@ final class CodableDocumentStoreTests: XCTestCase {
                 XCTAssertEqual(receivedDocument, document)
             default:
                 XCTFail("Expected a document loading to complete successfully")
+            }
+            exp.fulfill()
+        }
+        wait(for: [exp], timeout: 1)
+    }
+    
+    func test_load_failsOnFailedLoading() {
+        let sut = makeSUT()
+        let document = anyCodableDocument()
+        sut.save(document: document, to: testSpecificStoreURL()) { _ in }
+        let exp = expectation(description: "Wait for a document loading completion")
+        undoStoreSideEffects()
+        
+        sut.load(from: testSpecificStoreURL()) { result in
+            switch result {
+            case let .failure(error):
+                XCTAssertNotNil(error, "Expected loading error not to be nil")
+            default:
+                XCTFail("Expected a document loading to fail")
             }
             exp.fulfill()
         }

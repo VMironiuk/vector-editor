@@ -23,10 +23,7 @@ public final class CodableDocumentStore {
     
     public func load(from storeURL: URL, completion: @escaping (Result<CodableDocument, Error>) -> Void) {
         do {
-            guard let data = try? Data(contentsOf: storeURL) else {
-                return completion(.success(CodableDocument(name: "", shapes: [])))
-            }
-            
+            let data = try Data(contentsOf: storeURL)
             let decoder = JSONDecoder()
             let document = try decoder.decode(CodableDocument.self, from: data)
             completion(.success(document))
