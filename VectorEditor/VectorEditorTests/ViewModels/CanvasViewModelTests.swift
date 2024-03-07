@@ -31,11 +31,17 @@ public struct Document {
 }
 
 final class DocumentStoreCoordinatorSpy {
-    private(set) var saveDocumentCallCount = 0
+    var saveDocumentCallCount: Int { completions.count }
     private(set) var loadDocumentCallCount = 0
     
+    private var completions = [((Error?) -> Void)]()
+    
     func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void) {
-        saveDocumentCallCount += 1
+        completions.append(completion)
+    }
+    
+    func complete(with error: Error?, at index: Int = 0) {
+        completions[index](error)
     }
 }
 
@@ -66,13 +72,17 @@ final class CanvasViewModelTests: XCTestCase {
         XCTAssertEqual(storeCoordinator.loadDocumentCallCount, 0)
     }
     
-    func test_saveDocument_asksStoreCoordinatorToSaveDocument() {
+    func test_saveDocument_succeedsOnSuccessfulStoreCoordinatorDocumentSave() {
         let storeCoordinator = DocumentStoreCoordinatorSpy()
         let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let exp = expectation(description: "Wait for save completion")
         
-        sut.saveDocument(anyDocument()) { _ in }
-        
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1)
+        sut.saveDocument(anyDocument()) { error in
+            XCTAssertNil(error, "Expected to save document successfully")
+            exp.fulfill()
+        }
+        storeCoordinator.complete(with: nil)
+        wait(for: [exp], timeout: 1)
     }
     
     // MARK: - Helper
