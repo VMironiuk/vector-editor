@@ -29,6 +29,10 @@ final class ToolbarViewController: UIViewController {
         bundle.loadNibNamed("ToolbarView", owner: self)
         
         documentNameLabel.text = viewModel.documentName
+        
+        viewModel.onShapeSelected = { shape in
+            print("Select \(shape)!")
+        }
     }
     
     @IBAction private func circleButtonTapped(_ sender: UIButton) {
