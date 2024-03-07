@@ -14,6 +14,8 @@
 		2E7A826B2B99D4A600CCB043 /* VectorEditoriOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E7A825F2B99D4A500CCB043 /* VectorEditoriOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		2E7A82732B99D50500CCB043 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */; };
 		2E7A82752B99D51C00CCB043 /* ToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A82742B99D51C00CCB043 /* ToolbarView.xib */; };
+		2E7A82FB2B99DB3400CCB043 /* ToolbarComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82FA2B99DB3400CCB043 /* ToolbarComposer.swift */; };
+		2E7A82FD2B99DC1C00CCB043 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */; };
 		2EA410C72B988BD90066E79E /* CodableDocument+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */; };
 		2EA410C92B9891C50066E79E /* CodableDocumentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C82B9891C50066E79E /* CodableDocumentStore.swift */; };
 		2EA4849D2B97305F0080C233 /* VectorEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA484942B97305E0080C233 /* VectorEditor.framework */; };
@@ -49,6 +51,7 @@
 		2E7A82692B99D4A600CCB043 /* VectorEditoriOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorEditoriOSTests.swift; sourceTree = "<group>"; };
 		2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
 		2E7A82742B99D51C00CCB043 /* ToolbarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarView.xib; sourceTree = "<group>"; };
+		2E7A82FA2B99DB3400CCB043 /* ToolbarComposer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarComposer.swift; sourceTree = "<group>"; };
 		2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableDocument+Equatable.swift"; sourceTree = "<group>"; };
 		2EA410C82B9891C50066E79E /* CodableDocumentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentStore.swift; sourceTree = "<group>"; };
 		2EA484942B97305E0080C233 /* VectorEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -132,6 +135,7 @@
 			isa = PBXGroup;
 			children = (
 				2E7A825F2B99D4A500CCB043 /* VectorEditoriOS.h */,
+				2E7A82FA2B99DB3400CCB043 /* ToolbarComposer.swift */,
 				2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */,
 				2E7A82742B99D51C00CCB043 /* ToolbarView.xib */,
 			);
@@ -374,6 +378,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				2E7A82732B99D50500CCB043 /* ToolbarViewController.swift in Sources */,
+				2E7A82FB2B99DB3400CCB043 /* ToolbarComposer.swift in Sources */,
+				2E7A82FD2B99DC1C00CCB043 /* ToolbarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

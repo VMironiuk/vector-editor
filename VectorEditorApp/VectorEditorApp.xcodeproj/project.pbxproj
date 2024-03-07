@@ -16,6 +16,8 @@
 		2E7A82E22B99D7ED00CCB043 /* VectorEditorAppTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82E12B99D7ED00CCB043 /* VectorEditorAppTests.swift */; };
 		2E7A82EC2B99D7ED00CCB043 /* VectorEditorAppUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82EB2B99D7ED00CCB043 /* VectorEditorAppUITests.swift */; };
 		2E7A82EE2B99D7ED00CCB043 /* VectorEditorAppUITestsLaunchTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82ED2B99D7ED00CCB043 /* VectorEditorAppUITestsLaunchTests.swift */; };
+		2E7A83032B99DD4700CCB043 /* VectorEditoriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7A83002B99DD4700CCB043 /* VectorEditoriOS.framework */; };
+		2E7A83042B99DD4700CCB043 /* VectorEditoriOS.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7A83002B99DD4700CCB043 /* VectorEditoriOS.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -35,6 +37,20 @@
 		};
 /* End PBXContainerItemProxy section */
 
+/* Begin PBXCopyFilesBuildPhase section */
+		2E7A83052B99DD4700CCB043 /* Embed Frameworks */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 10;
+			files = (
+				2E7A83042B99DD4700CCB043 /* VectorEditoriOS.framework in Embed Frameworks */,
+			);
+			name = "Embed Frameworks";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
 /* Begin PBXFileReference section */
 		2E7A82C72B99D7EA00CCB043 /* VectorEditorApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = VectorEditorApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7A82CA2B99D7EA00CCB043 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -49,6 +65,8 @@
 		2E7A82E72B99D7ED00CCB043 /* VectorEditorAppUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorEditorAppUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E7A82EB2B99D7ED00CCB043 /* VectorEditorAppUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorEditorAppUITests.swift; sourceTree = "<group>"; };
 		2E7A82ED2B99D7ED00CCB043 /* VectorEditorAppUITestsLaunchTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorEditorAppUITestsLaunchTests.swift; sourceTree = "<group>"; };
+		2E7A82FF2B99DD4700CCB043 /* VectorEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VectorEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E7A83002B99DD4700CCB043 /* VectorEditoriOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = VectorEditoriOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,6 +74,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2E7A83032B99DD4700CCB043 /* VectorEditoriOS.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -83,6 +102,7 @@
 				2E7A82E02B99D7ED00CCB043 /* VectorEditorAppTests */,
 				2E7A82EA2B99D7ED00CCB043 /* VectorEditorAppUITests */,
 				2E7A82C82B99D7EA00CCB043 /* Products */,
+				2E7A82FE2B99DD4700CCB043 /* Frameworks */,
 			);
 			sourceTree = "<group>";
 		};
@@ -127,6 +147,15 @@
 			path = VectorEditorAppUITests;
 			sourceTree = "<group>";
 		};
+		2E7A82FE2B99DD4700CCB043 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82FF2B99DD4700CCB043 /* VectorEditor.framework */,
+				2E7A83002B99DD4700CCB043 /* VectorEditoriOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -137,6 +166,7 @@
 				2E7A82C32B99D7EA00CCB043 /* Sources */,
 				2E7A82C42B99D7EA00CCB043 /* Frameworks */,
 				2E7A82C52B99D7EA00CCB043 /* Resources */,
+				2E7A83052B99DD4700CCB043 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
