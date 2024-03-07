@@ -2,6 +2,9 @@
 <Workspace
    version = "1.0">
    <FileRef
+      location = "group:VectorEditorApp/VectorEditorApp.xcodeproj">
+   </FileRef>
+   <FileRef
       location = "group:VectorEditor/VectorEditor.xcodeproj">
    </FileRef>
 </Workspace>
