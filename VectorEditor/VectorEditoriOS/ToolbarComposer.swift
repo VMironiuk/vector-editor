@@ -13,8 +13,8 @@ public final class ToolbarComposer {
     
     public var view: UIView { viewController.view }
     
-    public init(documentName: String, supportedShapes: [SupportedShape]) {
-        self.viewModel = ToolbarViewModel(documentName: documentName, supportedShapes: supportedShapes)
+    public init(documentName: String) {
+        self.viewModel = ToolbarViewModel(documentName: documentName, supportedShapes: SupportedShape.allCases)
         self.viewController = ToolbarViewController(viewModel: viewModel)
     }
 }

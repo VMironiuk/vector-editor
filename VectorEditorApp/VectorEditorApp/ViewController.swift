@@ -11,7 +11,7 @@ import VectorEditoriOS
 class ViewController: UIViewController {
     @IBOutlet private weak var toolbarContainer: UIView!
     
-    private let toolbarComposer = ToolbarComposer(documentName: "", supportedShapes: [])
+    private let toolbarComposer = ToolbarComposer(documentName: "Test")
     
     override func viewDidLoad() {
         super.viewDidLoad()

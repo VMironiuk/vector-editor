@@ -9,6 +9,7 @@
     <objects>
         <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner" customClass="ToolbarViewController" customModule="VectorEditoriOS" customModuleProvider="target">
             <connections>
+                <outlet property="documentNameLabel" destination="Lqq-Za-yMF" id="h4v-TS-QHG"/>
                 <outlet property="view" destination="iN0-l3-epB" id="Ac4-a0-xVY"/>
             </connections>
         </placeholder>

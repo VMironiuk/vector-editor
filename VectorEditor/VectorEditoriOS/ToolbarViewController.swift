@@ -10,6 +10,8 @@ import UIKit
 final class ToolbarViewController: UIViewController {
     private let viewModel: ToolbarViewModel
     
+    @IBOutlet private weak var documentNameLabel: UILabel!
+    
     init(viewModel: ToolbarViewModel) {
         self.viewModel = viewModel
         
@@ -25,5 +27,7 @@ final class ToolbarViewController: UIViewController {
         
         let bundle = Bundle(for: type(of: self))
         bundle.loadNibNamed("ToolbarView", owner: self)
+        
+        documentNameLabel.text = viewModel.documentName
     }
 }
