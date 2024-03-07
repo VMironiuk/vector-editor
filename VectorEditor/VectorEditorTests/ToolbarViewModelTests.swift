@@ -10,9 +10,7 @@ import VectorEditor
 
 final class ToolbarViewModelTests: XCTestCase {
     func test_selectShape_informsDelegateAboutSelectingShape() {
-        let delegate = ToolbarViewModelDelegateSpy()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.delegate = delegate
+        let (sut, delegate) = makeSUT()
         
         sut.selectShape(.circle)
         
@@ -20,9 +18,7 @@ final class ToolbarViewModelTests: XCTestCase {
     }
     
     func test_selectShape_informsDelegateAboutSelectingTwoDifferentShapes() {
-        let delegate = ToolbarViewModelDelegateSpy()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.delegate = delegate
+        let (sut, delegate) = makeSUT()
         
         sut.selectShape(.circle)
         sut.selectShape(.rectangle)
@@ -31,9 +27,7 @@ final class ToolbarViewModelTests: XCTestCase {
     }
     
     func test_selectShape_doesNotInformDelegateOnSelectingSameShape() {
-        let delegate = ToolbarViewModelDelegateSpy()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.delegate = delegate
+        let (sut, delegate) = makeSUT()
         
         sut.selectShape(.circle)
         sut.selectShape(.circle)
@@ -43,8 +37,7 @@ final class ToolbarViewModelTests: XCTestCase {
     
     func test_selectShape_informsObserverAboutSelectingShape() {
         var selectedShapes = [SupportedShape]()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.onShapeSelected = { selectedShapes.append($0) }
+        let (sut, _) = makeSUT { selectedShapes.append($0) }
         
         sut.selectShape(.circle)
         
@@ -53,8 +46,7 @@ final class ToolbarViewModelTests: XCTestCase {
     
     func test_selectShape_informsObserverAboutSelectingTwoDifferentShapes() {
         var selectedShapes = [SupportedShape]()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.onShapeSelected = { selectedShapes.append($0) }
+        let (sut, _) = makeSUT { selectedShapes.append($0) }
         
         sut.selectShape(.circle)
         sut.selectShape(.rectangle)
@@ -64,9 +56,8 @@ final class ToolbarViewModelTests: XCTestCase {
     
     func test_selectShape_doesNotInformObserverOnSelectingSameShape() {
         var selectedShapes = [SupportedShape]()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.onShapeSelected = { selectedShapes.append($0) }
-        
+        let (sut, _) = makeSUT { selectedShapes.append($0) }
+
         sut.selectShape(.circle)
         sut.selectShape(.circle)
         
@@ -74,6 +65,17 @@ final class ToolbarViewModelTests: XCTestCase {
     }
     
     // MARK: - Helpers
+    
+    private func makeSUT(
+        onShapeSelected: @escaping (SupportedShape) -> Void = { _ in }
+    ) -> (ToolbarViewModel, ToolbarViewModelDelegateSpy) {
+        let delegate = ToolbarViewModelDelegateSpy()
+        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
+        sut.delegate = delegate
+        sut.onShapeSelected = onShapeSelected
+
+        return (sut, delegate)
+    }
     
     private class ToolbarViewModelDelegateSpy: ToolbarViewModelDelegate {
         private(set) var selectedShapes = [SupportedShape]()
