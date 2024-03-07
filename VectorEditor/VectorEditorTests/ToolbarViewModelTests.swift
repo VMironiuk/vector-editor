@@ -63,11 +63,11 @@ final class ToolbarViewModelTests: XCTestCase {
     }
     
     func test_init_doesNotInformObserverAboutSelectedShape() {
-        var onShapeSelectedCallCount = 0
+        var selectedShapes = [SupportedShape]()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.onShapeSelected = { _ in onShapeSelectedCallCount += 1 }
+        sut.onShapeSelected = { selectedShapes.append($0) }
         
-        XCTAssertEqual(onShapeSelectedCallCount, 0)
+        XCTAssertEqual(selectedShapes, [])
     }
     
     func test_selectShape_informsDelegateAboutSelectedShape() {
@@ -103,13 +103,13 @@ final class ToolbarViewModelTests: XCTestCase {
     }
     
     func test_selectShape_informsObserverAboutSelectedShape() {
-        var onShapeSelectedCallCount = 0
+        var selectedShapes = [SupportedShape]()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.onShapeSelected = { _ in onShapeSelectedCallCount += 1 }
+        sut.onShapeSelected = { selectedShapes.append($0) }
         
         sut.selectShape(.circle)
         
-        XCTAssertEqual(onShapeSelectedCallCount, 1)
+        XCTAssertEqual(selectedShapes, [.circle])
     }
     
     // MARK: - Helpers
