@@ -9,6 +9,7 @@ import XCTest
 
 final class DocumentStoreCoordinatorSpy {
     private(set) var saveDocumentCallCount = 0
+    private(set) var loadDocumentCallCount = 0
 }
 
 final class CanvasViewModel {
@@ -25,5 +26,12 @@ final class CanvasViewModelTests: XCTestCase {
         let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         
         XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0)
+    }
+    
+    func test_init_doesNotAskStoreCoordinatorToLoadDocument() {
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        
+        XCTAssertEqual(storeCoordinator.loadDocumentCallCount, 0)
     }
 }
