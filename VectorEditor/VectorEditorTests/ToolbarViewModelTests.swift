@@ -75,6 +75,17 @@ final class ToolbarViewModelTests: XCTestCase {
         XCTAssertEqual(delegate.selectedShapes, [.circle])
     }
     
+    func test_selectShape_informsDelegateAboutSelectedShapeTwice() {
+        let delegate = ToolbarViewModelDelegateSpy()
+        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
+        sut.delegate = delegate
+        
+        sut.selectShape(.circle)
+        sut.selectShape(.rectangle)
+        
+        XCTAssertEqual(delegate.selectedShapes, [.circle, .rectangle])
+    }
+    
     // MARK: - Helpers
     
     private class ToolbarViewModelDelegateSpy: ToolbarViewModelDelegate {
