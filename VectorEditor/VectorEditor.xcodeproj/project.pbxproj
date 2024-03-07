@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		2E7A82552B99B71400CCB043 /* ToolbarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */; };
+		2E7A82572B99C60400CCB043 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */; };
 		2EA410C72B988BD90066E79E /* CodableDocument+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */; };
 		2EA410C92B9891C50066E79E /* CodableDocumentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C82B9891C50066E79E /* CodableDocumentStore.swift */; };
 		2EA4849D2B97305F0080C233 /* VectorEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA484942B97305E0080C233 /* VectorEditor.framework */; };
@@ -29,6 +30,7 @@
 
 /* Begin PBXFileReference section */
 		2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModelTests.swift; sourceTree = "<group>"; };
+		2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
 		2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableDocument+Equatable.swift"; sourceTree = "<group>"; };
 		2EA410C82B9891C50066E79E /* CodableDocumentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentStore.swift; sourceTree = "<group>"; };
 		2EA484942B97305E0080C233 /* VectorEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -123,6 +125,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA484972B97305E0080C233 /* VectorEditor.h */,
+				2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */,
 				2E7A82512B99B63000CCB043 /* Infrastructure */,
 			);
 			path = VectorEditor;
@@ -249,6 +252,7 @@
 			files = (
 				2EA484B92B975F830080C233 /* CodableDocument.swift in Sources */,
 				2EA410C92B9891C50066E79E /* CodableDocumentStore.swift in Sources */,
+				2E7A82572B99C60400CCB043 /* ToolbarViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

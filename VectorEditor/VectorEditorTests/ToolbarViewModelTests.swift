@@ -6,38 +6,7 @@
 //
 
 import XCTest
-
-enum SupportedShape: CaseIterable {
-    case circle
-    case rectangle
-}
-
-protocol ToolbarViewModelDelegate: AnyObject {
-    func didSelectShape(_ shape: SupportedShape)
-}
-
-final class ToolbarViewModel {
-    private var selectedShape: SupportedShape?
-    
-    let documentName: String
-    let supportedShapes: [SupportedShape]
-    
-    weak var delegate: ToolbarViewModelDelegate?
-    
-    var onShapeSelected: ((SupportedShape) -> Void)?
-    
-    init(documentName: String, supportedShapes: [SupportedShape]) {
-        self.documentName = documentName
-        self.supportedShapes = supportedShapes
-    }
-    
-    func selectShape(_ shape: SupportedShape) {
-        guard selectedShape != shape else { return }
-        delegate?.didSelectShape(shape)
-        onShapeSelected?(shape)
-        selectedShape = shape
-    }
-}
+import VectorEditor
 
 final class ToolbarViewModelTests: XCTestCase {
     func test_selectShape_informsDelegateAboutSelectingShape() {
@@ -114,5 +83,3 @@ final class ToolbarViewModelTests: XCTestCase {
         }
     }
 }
-
-extension SupportedShape: Equatable {}
