@@ -9,6 +9,11 @@
 /* Begin PBXBuildFile section */
 		2E7A82552B99B71400CCB043 /* ToolbarViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */; };
 		2E7A82572B99C60400CCB043 /* ToolbarViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */; };
+		2E7A82652B99D4A600CCB043 /* VectorEditoriOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2E7A825D2B99D4A500CCB043 /* VectorEditoriOS.framework */; };
+		2E7A826A2B99D4A600CCB043 /* VectorEditoriOSTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82692B99D4A600CCB043 /* VectorEditoriOSTests.swift */; };
+		2E7A826B2B99D4A600CCB043 /* VectorEditoriOS.h in Headers */ = {isa = PBXBuildFile; fileRef = 2E7A825F2B99D4A500CCB043 /* VectorEditoriOS.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		2E7A82732B99D50500CCB043 /* ToolbarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */; };
+		2E7A82752B99D51C00CCB043 /* ToolbarView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 2E7A82742B99D51C00CCB043 /* ToolbarView.xib */; };
 		2EA410C72B988BD90066E79E /* CodableDocument+Equatable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */; };
 		2EA410C92B9891C50066E79E /* CodableDocumentStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA410C82B9891C50066E79E /* CodableDocumentStore.swift */; };
 		2EA4849D2B97305F0080C233 /* VectorEditor.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2EA484942B97305E0080C233 /* VectorEditor.framework */; };
@@ -19,6 +24,13 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
+		2E7A82662B99D4A600CCB043 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 2EA4848B2B97305E0080C233 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 2E7A825C2B99D4A500CCB043;
+			remoteInfo = VectorEditoriOS;
+		};
 		2EA4849E2B97305F0080C233 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
 			containerPortal = 2EA4848B2B97305E0080C233 /* Project object */;
@@ -31,6 +43,12 @@
 /* Begin PBXFileReference section */
 		2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModelTests.swift; sourceTree = "<group>"; };
 		2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewModel.swift; sourceTree = "<group>"; };
+		2E7A825D2B99D4A500CCB043 /* VectorEditoriOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorEditoriOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E7A825F2B99D4A500CCB043 /* VectorEditoriOS.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = VectorEditoriOS.h; sourceTree = "<group>"; };
+		2E7A82642B99D4A600CCB043 /* VectorEditoriOSTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = VectorEditoriOSTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		2E7A82692B99D4A600CCB043 /* VectorEditoriOSTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VectorEditoriOSTests.swift; sourceTree = "<group>"; };
+		2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolbarViewController.swift; sourceTree = "<group>"; };
+		2E7A82742B99D51C00CCB043 /* ToolbarView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ToolbarView.xib; sourceTree = "<group>"; };
 		2EA410C62B988BD90066E79E /* CodableDocument+Equatable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CodableDocument+Equatable.swift"; sourceTree = "<group>"; };
 		2EA410C82B9891C50066E79E /* CodableDocumentStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentStore.swift; sourceTree = "<group>"; };
 		2EA484942B97305E0080C233 /* VectorEditor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = VectorEditor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -42,6 +60,21 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		2E7A825A2B99D4A500CCB043 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E7A82612B99D4A600CCB043 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E7A82652B99D4A600CCB043 /* VectorEditoriOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2EA484912B97305E0080C233 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -95,6 +128,24 @@
 			path = Infrastructure;
 			sourceTree = "<group>";
 		};
+		2E7A825E2B99D4A500CCB043 /* VectorEditoriOS */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A825F2B99D4A500CCB043 /* VectorEditoriOS.h */,
+				2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */,
+				2E7A82742B99D51C00CCB043 /* ToolbarView.xib */,
+			);
+			path = VectorEditoriOS;
+			sourceTree = "<group>";
+		};
+		2E7A82682B99D4A600CCB043 /* VectorEditoriOSTests */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82692B99D4A600CCB043 /* VectorEditoriOSTests.swift */,
+			);
+			path = VectorEditoriOSTests;
+			sourceTree = "<group>";
+		};
 		2EA410C52B988BA20066E79E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -108,6 +159,8 @@
 			children = (
 				2EA484962B97305E0080C233 /* VectorEditor */,
 				2EA484A02B97305F0080C233 /* VectorEditorTests */,
+				2E7A825E2B99D4A500CCB043 /* VectorEditoriOS */,
+				2E7A82682B99D4A600CCB043 /* VectorEditoriOSTests */,
 				2EA484952B97305E0080C233 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -117,6 +170,8 @@
 			children = (
 				2EA484942B97305E0080C233 /* VectorEditor.framework */,
 				2EA4849C2B97305F0080C233 /* VectorEditorTests.xctest */,
+				2E7A825D2B99D4A500CCB043 /* VectorEditoriOS.framework */,
+				2E7A82642B99D4A600CCB043 /* VectorEditoriOSTests.xctest */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -143,6 +198,14 @@
 /* End PBXGroup section */
 
 /* Begin PBXHeadersBuildPhase section */
+		2E7A82582B99D4A500CCB043 /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E7A826B2B99D4A600CCB043 /* VectorEditoriOS.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2EA4848F2B97305E0080C233 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -154,6 +217,42 @@
 /* End PBXHeadersBuildPhase section */
 
 /* Begin PBXNativeTarget section */
+		2E7A825C2B99D4A500CCB043 /* VectorEditoriOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E7A826C2B99D4A600CCB043 /* Build configuration list for PBXNativeTarget "VectorEditoriOS" */;
+			buildPhases = (
+				2E7A82582B99D4A500CCB043 /* Headers */,
+				2E7A82592B99D4A500CCB043 /* Sources */,
+				2E7A825A2B99D4A500CCB043 /* Frameworks */,
+				2E7A825B2B99D4A500CCB043 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = VectorEditoriOS;
+			productName = VectorEditoriOS;
+			productReference = 2E7A825D2B99D4A500CCB043 /* VectorEditoriOS.framework */;
+			productType = "com.apple.product-type.framework";
+		};
+		2E7A82632B99D4A600CCB043 /* VectorEditoriOSTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 2E7A826F2B99D4A600CCB043 /* Build configuration list for PBXNativeTarget "VectorEditoriOSTests" */;
+			buildPhases = (
+				2E7A82602B99D4A600CCB043 /* Sources */,
+				2E7A82612B99D4A600CCB043 /* Frameworks */,
+				2E7A82622B99D4A600CCB043 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				2E7A82672B99D4A600CCB043 /* PBXTargetDependency */,
+			);
+			name = VectorEditoriOSTests;
+			productName = VectorEditoriOSTests;
+			productReference = 2E7A82642B99D4A600CCB043 /* VectorEditoriOSTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
 		2EA484932B97305E0080C233 /* VectorEditor */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 2EA484A62B97305F0080C233 /* Build configuration list for PBXNativeTarget "VectorEditor" */;
@@ -197,9 +296,16 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1520;
+				LastSwiftUpdateCheck = 1530;
 				LastUpgradeCheck = 1520;
 				TargetAttributes = {
+					2E7A825C2B99D4A500CCB043 = {
+						CreatedOnToolsVersion = 15.3;
+						LastSwiftMigration = 1530;
+					};
+					2E7A82632B99D4A600CCB043 = {
+						CreatedOnToolsVersion = 15.3;
+					};
 					2EA484932B97305E0080C233 = {
 						CreatedOnToolsVersion = 15.2;
 						LastSwiftMigration = 1520;
@@ -224,11 +330,28 @@
 			targets = (
 				2EA484932B97305E0080C233 /* VectorEditor */,
 				2EA4849B2B97305F0080C233 /* VectorEditorTests */,
+				2E7A825C2B99D4A500CCB043 /* VectorEditoriOS */,
+				2E7A82632B99D4A600CCB043 /* VectorEditoriOSTests */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		2E7A825B2B99D4A500CCB043 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E7A82752B99D51C00CCB043 /* ToolbarView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E7A82622B99D4A600CCB043 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2EA484922B97305E0080C233 /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -246,6 +369,22 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		2E7A82592B99D4A500CCB043 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E7A82732B99D50500CCB043 /* ToolbarViewController.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		2E7A82602B99D4A600CCB043 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				2E7A826A2B99D4A600CCB043 /* VectorEditoriOSTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		2EA484902B97305E0080C233 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -270,6 +409,11 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXTargetDependency section */
+		2E7A82672B99D4A600CCB043 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 2E7A825C2B99D4A500CCB043 /* VectorEditoriOS */;
+			targetProxy = 2E7A82662B99D4A600CCB043 /* PBXContainerItemProxy */;
+		};
 		2EA4849F2B97305F0080C233 /* PBXTargetDependency */ = {
 			isa = PBXTargetDependency;
 			target = 2EA484932B97305E0080C233 /* VectorEditor */;
@@ -278,6 +422,119 @@
 /* End PBXTargetDependency section */
 
 /* Begin XCBuildConfiguration section */
+		2E7A826D2B99D4A600CCB043 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8U849676MP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.volodymyroniuk.VectorEditoriOS;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E7A826E2B99D4A600CCB043 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUILD_LIBRARY_FOR_DISTRIBUTION = YES;
+				CLANG_ENABLE_MODULES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEFINES_MODULE = YES;
+				DEVELOPMENT_TEAM = 8U849676MP;
+				DYLIB_COMPATIBILITY_VERSION = 1;
+				DYLIB_CURRENT_VERSION = 1;
+				DYLIB_INSTALL_NAME_BASE = "@rpath";
+				ENABLE_MODULE_VERIFIER = YES;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				INSTALL_PATH = "$(LOCAL_LIBRARY_DIR)/Frameworks";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@loader_path/Frameworks",
+				);
+				MARKETING_VERSION = 1.0;
+				MODULE_VERIFIER_SUPPORTED_LANGUAGES = "objective-c objective-c++";
+				MODULE_VERIFIER_SUPPORTED_LANGUAGE_STANDARDS = "gnu17 gnu++20";
+				PRODUCT_BUNDLE_IDENTIFIER = com.volodymyroniuk.VectorEditoriOS;
+				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
+				SDKROOT = iphoneos;
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_INSTALL_OBJC_HEADER = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		2E7A82702B99D4A600CCB043 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8U849676MP;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.volodymyroniuk.VectorEditoriOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		2E7A82712B99D4A600CCB043 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 8U849676MP;
+				GENERATE_INFOPLIST_FILE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.4;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = com.volodymyroniuk.VectorEditoriOSTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SDKROOT = iphoneos;
+				SWIFT_EMIT_LOC_STRINGS = NO;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
 		2EA484A42B97305F0080C233 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -502,6 +759,24 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		2E7A826C2B99D4A600CCB043 /* Build configuration list for PBXNativeTarget "VectorEditoriOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E7A826D2B99D4A600CCB043 /* Debug */,
+				2E7A826E2B99D4A600CCB043 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		2E7A826F2B99D4A600CCB043 /* Build configuration list for PBXNativeTarget "VectorEditoriOSTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				2E7A82702B99D4A600CCB043 /* Debug */,
+				2E7A82712B99D4A600CCB043 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		2EA4848E2B97305E0080C233 /* Build configuration list for PBXProject "VectorEditor" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
