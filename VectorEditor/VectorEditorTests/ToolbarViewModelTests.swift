@@ -40,7 +40,7 @@ final class ToolbarViewModel {
 }
 
 final class ToolbarViewModelTests: XCTestCase {
-    func test_selectShape_informsDelegateAboutSelectedShape() {
+    func test_selectShape_informsDelegateAboutSelectingShape() {
         let delegate = ToolbarViewModelDelegateSpy()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.delegate = delegate
@@ -50,7 +50,7 @@ final class ToolbarViewModelTests: XCTestCase {
         XCTAssertEqual(delegate.selectedShapes, [.circle])
     }
     
-    func test_selectShape_informsDelegateAboutSelectedShapeTwice() {
+    func test_selectShape_informsDelegateAboutSelectingTwoDifferentShapes() {
         let delegate = ToolbarViewModelDelegateSpy()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.delegate = delegate
@@ -61,7 +61,7 @@ final class ToolbarViewModelTests: XCTestCase {
         XCTAssertEqual(delegate.selectedShapes, [.circle, .rectangle])
     }
     
-    func test_selectShape_doesNotInformDelegateIfSelectedSameShape() {
+    func test_selectShape_doesNotInformDelegateOnSelectingSameShape() {
         let delegate = ToolbarViewModelDelegateSpy()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.delegate = delegate
@@ -72,7 +72,7 @@ final class ToolbarViewModelTests: XCTestCase {
         XCTAssertEqual(delegate.selectedShapes, [.circle])
     }
     
-    func test_selectShape_informsObserverAboutSelectedShape() {
+    func test_selectShape_informsObserverAboutSelectingShape() {
         var selectedShapes = [SupportedShape]()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.onShapeSelected = { selectedShapes.append($0) }
@@ -82,7 +82,7 @@ final class ToolbarViewModelTests: XCTestCase {
         XCTAssertEqual(selectedShapes, [.circle])
     }
     
-    func test_selectShape_informsObserverAboutSelectedShapeTwice() {
+    func test_selectShape_informsObserverAboutSelectingTwoDifferentShapes() {
         var selectedShapes = [SupportedShape]()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.onShapeSelected = { selectedShapes.append($0) }
@@ -93,7 +93,7 @@ final class ToolbarViewModelTests: XCTestCase {
         XCTAssertEqual(selectedShapes, [.circle, .rectangle])
     }
     
-    func test_selectShape_doesNotInformObserverIfSelectedSameShape() {
+    func test_selectShape_doesNotInformObserverOnSelectingSameShape() {
         var selectedShapes = [SupportedShape]()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.onShapeSelected = { selectedShapes.append($0) }
