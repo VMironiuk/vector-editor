@@ -54,7 +54,7 @@ final class ToolbarViewModelTests: XCTestCase {
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.delegate = delegate
         
-        XCTAssertEqual(delegate.didSelectShapeCallCount, 0)
+        XCTAssertEqual(delegate.selectedShapes, [])
     }
     
     func test_init_doesNotInformObserverAboutSelectedShape() {
@@ -72,16 +72,16 @@ final class ToolbarViewModelTests: XCTestCase {
         
         sut.selectShape(.circle)
         
-        XCTAssertEqual(delegate.didSelectShapeCallCount, 1)
+        XCTAssertEqual(delegate.selectedShapes, [.circle])
     }
     
     // MARK: - Helpers
     
     private class ToolbarViewModelDelegateSpy: ToolbarViewModelDelegate {
-        private(set) var didSelectShapeCallCount = 0
+        private(set) var selectedShapes = [SupportedShape]()
         
         func didSelectShape(_ shape: SupportedShape) {
-            didSelectShapeCallCount += 1
+            selectedShapes.append(shape)
         }
     }
 }
