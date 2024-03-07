@@ -85,6 +85,19 @@ final class CanvasViewModelTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
+    func test_saveDocument_failsOnFailedStoreCoordinatorDocumentSave() {
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let exp = expectation(description: "Wait for save completion")
+        
+        sut.saveDocument(anyDocument()) { error in
+            XCTAssertNotNil(error, "Expected document saving to fail")
+            exp.fulfill()
+        }
+        storeCoordinator.complete(with: anyNSError())
+        wait(for: [exp], timeout: 1)
+    }
+    
     // MARK: - Helper
     
     private func anyDocument() -> Document {
@@ -92,5 +105,9 @@ final class CanvasViewModelTests: XCTestCase {
             .circle(.init(id: UUID(), createdAt: .now), .init(x: 3, y: 3, width: 14, height: 14)),
             .rectangle(.init(id: UUID(), createdAt: .now), .init(x: 14, y: 14, width: 42, height: 42))
         ])
+    }
+    
+    private func anyNSError() -> Error {
+        NSError(domain: "any domain", code: 1)
     }
 }
