@@ -67,14 +67,25 @@ final class ToolbarViewModelTests: XCTestCase {
     // MARK: - Helpers
     
     private func makeSUT(
-        onShapeSelected: @escaping (SupportedShape) -> Void = { _ in }
+        onShapeSelected: @escaping (SupportedShape) -> Void = { _ in },
+        file: StaticString = #filePath,
+        line: UInt = #line
     ) -> (ToolbarViewModel, ToolbarViewModelDelegateSpy) {
         let delegate = ToolbarViewModelDelegateSpy()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
         sut.delegate = delegate
         sut.onShapeSelected = onShapeSelected
+        
+        trackForMemoryLeaks(delegate, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
 
         return (sut, delegate)
+    }
+    
+    private func trackForMemoryLeaks(_ object: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
+        addTeardownBlock { [weak object] in
+            XCTAssertNil(object, "Expected object to be nil, potential memory leak", file: file, line: line)
+        }
     }
     
     private class ToolbarViewModelDelegateSpy: ToolbarViewModelDelegate {
