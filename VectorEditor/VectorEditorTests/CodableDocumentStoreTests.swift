@@ -38,7 +38,7 @@ final class CodableDocumentStoreTests: XCTestCase {
         XCTAssertNotNil(try? Data(contentsOf: testSpecificStoreURL()))
     }
     
-    func test_load_LoadsDocument() {
+    func test_load_loadsDocument() {
         let sut = makeSUT()
         let document = anyCodableDocument()
         sut.save(document: document, to: testSpecificStoreURL()) { _ in }
