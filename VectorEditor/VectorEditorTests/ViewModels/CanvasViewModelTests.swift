@@ -73,32 +73,31 @@ final class CanvasViewModelTests: XCTestCase {
     }
     
     func test_saveDocument_succeedsOnSuccessfulStoreCoordinatorDocumentSave() {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
-        let exp = expectation(description: "Wait for save completion")
-        
-        sut.saveDocument(anyDocument()) { error in
-            XCTAssertNil(error, "Expected to save document successfully")
-            exp.fulfill()
-        }
-        storeCoordinator.complete(with: nil)
-        wait(for: [exp], timeout: 1)
+        expectSaveDocument(toCompleteWith: nil)
     }
     
     func test_saveDocument_failsOnFailedStoreCoordinatorDocumentSave() {
+        expectSaveDocument(toCompleteWith: anyNSError())
+    }
+    
+    // MARK: - Helper
+    
+    private func expectSaveDocument(
+        toCompleteWith expectedError: Error?,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
         let storeCoordinator = DocumentStoreCoordinatorSpy()
         let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         let exp = expectation(description: "Wait for save completion")
         
-        sut.saveDocument(anyDocument()) { error in
-            XCTAssertNotNil(error, "Expected document saving to fail")
+        sut.saveDocument(anyDocument()) { receivedError in
+            XCTAssertEqual(expectedError as? NSError, receivedError as? NSError, file: file, line: line)
             exp.fulfill()
         }
-        storeCoordinator.complete(with: anyNSError())
+        storeCoordinator.complete(with: expectedError)
         wait(for: [exp], timeout: 1)
     }
-    
-    // MARK: - Helper
     
     private func anyDocument() -> Document {
         Document(name: "a document", shapes: [
@@ -107,7 +106,7 @@ final class CanvasViewModelTests: XCTestCase {
         ])
     }
     
-    private func anyNSError() -> Error {
+    private func anyNSError() -> NSError {
         NSError(domain: "any domain", code: 1)
     }
 }
