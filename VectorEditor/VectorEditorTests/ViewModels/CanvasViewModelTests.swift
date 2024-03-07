@@ -7,9 +7,36 @@
 
 import XCTest
 
+public struct Document {
+    public enum Shape {
+        public struct Metadata {
+            public let id: UUID
+            public let createdAt: Date
+            public init(id: UUID, createdAt: Date) {
+                self.id = id
+                self.createdAt = createdAt
+            }
+        }
+        case circle(Metadata, NSRect)
+        case rectangle(Metadata, NSRect)
+    }
+
+    public let name: String
+    public let shapes: [Shape]
+    
+    public init(name: String, shapes: [Shape]) {
+        self.name = name
+        self.shapes = shapes
+    }
+}
+
 final class DocumentStoreCoordinatorSpy {
     private(set) var saveDocumentCallCount = 0
     private(set) var loadDocumentCallCount = 0
+    
+    func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void) {
+        saveDocumentCallCount += 1
+    }
 }
 
 final class CanvasViewModel {
@@ -17,6 +44,10 @@ final class CanvasViewModel {
     
     init(storeCoordinator: DocumentStoreCoordinatorSpy) {
         self.storeCoordinator = storeCoordinator
+    }
+    
+    func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void) {
+        storeCoordinator.saveDocument(document, completion: completion)
     }
 }
 
@@ -33,5 +64,23 @@ final class CanvasViewModelTests: XCTestCase {
         _ = CanvasViewModel(storeCoordinator: storeCoordinator)
         
         XCTAssertEqual(storeCoordinator.loadDocumentCallCount, 0)
+    }
+    
+    func test_saveDocument_asksStoreCoordinatorToSaveDocument() {
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        
+        sut.saveDocument(anyDocument()) { _ in }
+        
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1)
+    }
+    
+    // MARK: - Helper
+    
+    private func anyDocument() -> Document {
+        Document(name: "a document", shapes: [
+            .circle(.init(id: UUID(), createdAt: .now), .init(x: 3, y: 3, width: 14, height: 14)),
+            .rectangle(.init(id: UUID(), createdAt: .now), .init(x: 14, y: 14, width: 42, height: 42))
+        ])
     }
 }
