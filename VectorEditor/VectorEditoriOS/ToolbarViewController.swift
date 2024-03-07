@@ -30,4 +30,12 @@ final class ToolbarViewController: UIViewController {
         
         documentNameLabel.text = viewModel.documentName
     }
+    
+    @IBAction private func circleButtonTapped(_ sender: UIButton) {
+        viewModel.selectShape(.circle)
+    }
+    
+    @IBAction private func rectangleButtonTapped(_ sender: UIButton) {
+        viewModel.selectShape(.rectangle)
+    }
 }
