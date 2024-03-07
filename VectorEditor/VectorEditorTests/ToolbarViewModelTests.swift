@@ -17,6 +17,8 @@ protocol ToolbarViewModelDelegate: AnyObject {
 }
 
 final class ToolbarViewModel {
+    private var selectedShape: SupportedShape?
+    
     let documentName: String
     let supportedShapes: [SupportedShape]
     
@@ -30,7 +32,9 @@ final class ToolbarViewModel {
     }
     
     func selectShape(_ shape: SupportedShape) {
+        guard selectedShape != shape else { return }
         delegate?.didSelectShape(shape)
+        selectedShape = shape
     }
 }
 
@@ -84,6 +88,17 @@ final class ToolbarViewModelTests: XCTestCase {
         sut.selectShape(.rectangle)
         
         XCTAssertEqual(delegate.selectedShapes, [.circle, .rectangle])
+    }
+    
+    func test_selectShape_doesNotInformDelegateIfSelectedSameShape() {
+        let delegate = ToolbarViewModelDelegateSpy()
+        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
+        sut.delegate = delegate
+        
+        sut.selectShape(.circle)
+        sut.selectShape(.circle)
+        
+        XCTAssertEqual(delegate.selectedShapes, [.circle])
     }
     
     // MARK: - Helpers
