@@ -28,6 +28,10 @@ final class ToolbarViewModel {
         self.documentName = documentName
         self.supportedShapes = supportedShapes
     }
+    
+    func selectShape(_ shape: SupportedShape) {
+        delegate?.didSelectShape(shape)
+    }
 }
 
 final class ToolbarViewModelTests: XCTestCase {
@@ -59,6 +63,16 @@ final class ToolbarViewModelTests: XCTestCase {
         sut.onShapeSelected = { _ in onShapeSelectedCallCount += 1 }
         
         XCTAssertEqual(onShapeSelectedCallCount, 0)
+    }
+    
+    func test_selectShape_informsDelegateAboutSelectedShape() {
+        let delegate = ToolbarViewModelDelegateSpy()
+        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
+        sut.delegate = delegate
+        
+        sut.selectShape(.circle)
+        
+        XCTAssertEqual(delegate.didSelectShapeCallCount, 1)
     }
     
     // MARK: - Helpers
