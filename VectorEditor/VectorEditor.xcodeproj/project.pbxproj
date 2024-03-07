@@ -135,9 +135,9 @@
 			isa = PBXGroup;
 			children = (
 				2E7A825F2B99D4A500CCB043 /* VectorEditoriOS.h */,
-				2E7A82FA2B99DB3400CCB043 /* ToolbarComposer.swift */,
-				2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */,
-				2E7A82742B99D51C00CCB043 /* ToolbarView.xib */,
+				2E7A83092B99ED7000CCB043 /* Composers */,
+				2E7A830A2B99ED8200CCB043 /* Controllers */,
+				2E7A830C2B99ED9700CCB043 /* Views */,
 			);
 			path = VectorEditoriOS;
 			sourceTree = "<group>";
@@ -148,6 +148,38 @@
 				2E7A82692B99D4A600CCB043 /* VectorEditoriOSTests.swift */,
 			);
 			path = VectorEditoriOSTests;
+			sourceTree = "<group>";
+		};
+		2E7A83082B99ED5800CCB043 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		2E7A83092B99ED7000CCB043 /* Composers */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82FA2B99DB3400CCB043 /* ToolbarComposer.swift */,
+			);
+			path = Composers;
+			sourceTree = "<group>";
+		};
+		2E7A830A2B99ED8200CCB043 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82722B99D50500CCB043 /* ToolbarViewController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		2E7A830C2B99ED9700CCB043 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82742B99D51C00CCB043 /* ToolbarView.xib */,
+			);
+			path = Views;
 			sourceTree = "<group>";
 		};
 		2EA410C52B988BA20066E79E /* Helpers */ = {
@@ -184,7 +216,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA484972B97305E0080C233 /* VectorEditor.h */,
-				2E7A82562B99C60400CCB043 /* ToolbarViewModel.swift */,
+				2E7A83082B99ED5800CCB043 /* ViewModels */,
 				2E7A82512B99B63000CCB043 /* Infrastructure */,
 			);
 			path = VectorEditor;
