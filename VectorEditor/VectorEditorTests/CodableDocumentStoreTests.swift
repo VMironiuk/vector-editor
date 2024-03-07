@@ -56,7 +56,7 @@ final class CodableDocumentStoreTests: XCTestCase {
         wait(for: [exp], timeout: 1)
     }
     
-    func test_load_failsOnFailedLoading() {
+    func test_load_failsOnLoadingNonExistingDocumentFile() {
         let sut = makeSUT()
         let document = anyCodableDocument()
         sut.save(document: document, to: testSpecificStoreURL()) { _ in }
