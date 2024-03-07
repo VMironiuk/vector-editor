@@ -182,6 +182,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		2E7A830D2B99FFDA00CCB043 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
 		2EA410C52B988BA20066E79E /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
@@ -226,7 +234,7 @@
 			isa = PBXGroup;
 			children = (
 				2E7A82532B99B65000CCB043 /* Infrastructure */,
-				2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */,
+				2E7A830D2B99FFDA00CCB043 /* ViewModels */,
 			);
 			path = VectorEditorTests;
 			sourceTree = "<group>";
