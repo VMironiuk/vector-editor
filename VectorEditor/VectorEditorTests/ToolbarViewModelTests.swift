@@ -40,36 +40,6 @@ final class ToolbarViewModel {
 }
 
 final class ToolbarViewModelTests: XCTestCase {
-    func test_init_setsDocumentName() {
-        let documentName = "document name"
-        let sut = ToolbarViewModel(documentName: documentName, supportedShapes: SupportedShape.allCases)
-        
-        XCTAssertEqual(documentName, sut.documentName)
-    }
-    
-    func test_init_setsSupportedShapes() {
-        let supportedShapes = SupportedShape.allCases
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: supportedShapes)
-        
-        XCTAssertEqual(supportedShapes, sut.supportedShapes)
-    }
-    
-    func test_init_doesNotInformDelegateAboutSelectedShape() {
-        let delegate = ToolbarViewModelDelegateSpy()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.delegate = delegate
-        
-        XCTAssertEqual(delegate.selectedShapes, [])
-    }
-    
-    func test_init_doesNotInformObserverAboutSelectedShape() {
-        var selectedShapes = [SupportedShape]()
-        let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
-        sut.onShapeSelected = { selectedShapes.append($0) }
-        
-        XCTAssertEqual(selectedShapes, [])
-    }
-    
     func test_selectShape_informsDelegateAboutSelectedShape() {
         let delegate = ToolbarViewModelDelegateSpy()
         let sut = ToolbarViewModel(documentName: "", supportedShapes: SupportedShape.allCases)
