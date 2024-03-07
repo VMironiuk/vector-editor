@@ -97,6 +97,10 @@ final class CanvasViewModelTests: XCTestCase {
         expectLoadDocument(toCompleteWith: .success(anyDocument()))
     }
     
+    func test_loadDocument_failsOnFailedStoreCoordinatorDocumentLoad() {
+        expectLoadDocument(toCompleteWith: .failure(anyNSError()))
+    }
+    
     // MARK: - Helper
     
     private func expectSaveDocument(
