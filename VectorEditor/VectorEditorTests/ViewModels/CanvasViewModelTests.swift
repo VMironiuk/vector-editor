@@ -81,7 +81,7 @@ final class CanvasViewModel {
     }
     
     func addShape(_ shape: Document.Shape) {
-        guard let document = document else { return }
+        guard let document = document, !document.shapes.contains(shape) else { return }
         updateDocument(with: shape)
         onDocumentDidUpdate?(document)
     }
@@ -163,6 +163,36 @@ final class CanvasViewModelTests: XCTestCase {
         
         // when
         
+        sut.addShape(shapeToAdd)
+        
+        // then
+        
+        XCTAssertEqual(anyDocument, receivedDocument)
+    }
+    
+    func test_addShape_doesNotInformObserverAboutUpdatedDocumentWhenAddedSameShape() {
+        // given
+        
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        var receivedDocument: Document?
+        sut.onDocumentDidUpdate = { receivedDocument = $0  }
+        
+        XCTAssertNil(sut.document, "Expected the document to be nil initially")
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.loadDocument(from: anyURL()) { _ in exp.fulfill() }
+        
+        let anyDocument = anyDocument()
+        storeCoordinator.completeDocumentLoading(with: .success(anyDocument))
+        
+        wait(for: [exp], timeout: 1)
+        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes)
+        
+        // when
+        
+        sut.addShape(shapeToAdd)
         sut.addShape(shapeToAdd)
         
         // then
