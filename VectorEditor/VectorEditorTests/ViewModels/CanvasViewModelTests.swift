@@ -170,6 +170,11 @@ final class CanvasViewModelTests: XCTestCase {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         assertAddingShapesInformsDelegate([shapeToAdd])
     }
+    
+    func test_addShape_doesNotInformDelegateAboutUpdatedDocumentWhenAddedSameShape() {
+        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        assertAddingShapesInformsDelegate([shapeToAdd, shapeToAdd])
+    }
 
     // MARK: - Helper
     
