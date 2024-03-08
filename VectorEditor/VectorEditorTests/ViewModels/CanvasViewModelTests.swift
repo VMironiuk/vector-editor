@@ -84,7 +84,7 @@ final class CanvasViewModel {
     }
     
     private func updateDocument(with shape: Document.Shape) {
-        guard let document = document else { return }
+        guard let document = document, !document.shapes.contains(shape) else { return }
         var shapes = document.shapes
         shapes.append(shape)
         self.document = .init(name: document.name, shapes: shapes)
@@ -142,6 +142,36 @@ final class CanvasViewModelTests: XCTestCase {
         
         // when
         
+        sut.addShape(shapeToAdd)
+        
+        // then
+        
+        var expectedShapes = anyDocument.shapes
+        expectedShapes.append(shapeToAdd)
+        XCTAssertEqual(sut.document?.shapes, expectedShapes)
+    }
+    
+    func test_addShape_doesNotAddSameShapeToDocument() {
+        // given
+        
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        
+        XCTAssertNil(sut.document)
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.loadDocument(from: anyURL()) { _ in exp.fulfill() }
+        
+        let anyDocument = anyDocument()
+        storeCoordinator.completeDocumentLoading(with: .success(anyDocument))
+        
+        wait(for: [exp], timeout: 1)
+        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes)
+        
+        // when
+        
+        sut.addShape(shapeToAdd)
         sut.addShape(shapeToAdd)
         
         // then
