@@ -182,6 +182,13 @@ final class CanvasViewModelTests: XCTestCase {
         assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd])
     }
     
+    func test_addShape_asksStoreCoordinatorToSaveDocumentTwiceWhenAddingTwoDifferentShapes() {
+        assertAddingShapesAsksStoreCoordinatorToSaveDocument([
+            .circle(.init(id: UUID(), createdAt: .now), .zero),
+            .rectangle(.init(id: UUID(), createdAt: .now), .zero)
+        ])
+    }
+    
     func test_addShape_doesNotAskStoreCoordinatorToSaveDocumentWhenAddedSameShape() {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd, shapeToAdd])
