@@ -68,7 +68,14 @@ protocol CanvasViewModelDelegate: AnyObject {
 
 final class CanvasViewModel {
     private let storeCoordinator: DocumentStoreCoordinatorSpy
-    private(set) var document: Document?
+    private(set) var document: Document? {
+        didSet {
+            guard let document = document else { return }
+            onDocumentDidUpdate?(document)
+            delegate?.didUpdateDocument(document)
+            storeCoordinator.saveDocument(document) { _ in }
+        }
+    }
     
     var onDocumentDidUpdate: ((Document) -> Void)?
     
@@ -95,13 +102,6 @@ final class CanvasViewModel {
     }
     
     func addShape(_ shape: Document.Shape) {
-        guard let document = document, !document.shapes.contains(shape) else { return }
-        updateDocument(with: shape)
-        onDocumentDidUpdate?(document)
-        delegate?.didUpdateDocument(document)
-    }
-    
-    private func updateDocument(with shape: Document.Shape) {
         guard let document = document, !document.shapes.contains(shape) else { return }
         var shapes = document.shapes
         shapes.append(shape)
@@ -158,22 +158,27 @@ final class CanvasViewModelTests: XCTestCase {
     
     func test_addShape_informsObserverAboutUpdatedDocument() {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapesInformsObserver([shapeToAdd])
+        assertAddingShapes([shapeToAdd], informsObserverAboutAddedShapes: [shapeToAdd])
     }
     
     func test_addShape_doesNotInformObserverAboutUpdatedDocumentWhenAddedSameShape() {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapesInformsObserver([shapeToAdd, shapeToAdd])
+        assertAddingShapes([shapeToAdd, shapeToAdd], informsObserverAboutAddedShapes: [shapeToAdd])
     }
     
     func test_addShape_informsDelegateAboutUpdatedDocument() {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapesInformsDelegate([shapeToAdd])
+        assertAddingShapes([shapeToAdd], informsDelegateAboutAddedShapes: [shapeToAdd])
     }
     
     func test_addShape_doesNotInformDelegateAboutUpdatedDocumentWhenAddedSameShape() {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapesInformsDelegate([shapeToAdd, shapeToAdd])
+        assertAddingShapes([shapeToAdd, shapeToAdd], informsDelegateAboutAddedShapes: [shapeToAdd])
+    }
+    
+    func test_addShape_asksStoreCoordinatorToSaveDocument() {
+        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd])
     }
 
     // MARK: - Helper
@@ -249,11 +254,13 @@ final class CanvasViewModelTests: XCTestCase {
         
         var expectedShapes = anyDocument.shapes
         addedShapes.forEach { expectedShapes.append($0) }
+        XCTAssertEqual(sut.document?.shapes.count, expectedShapes.count, file: file, line: line)
         XCTAssertEqual(sut.document?.shapes, expectedShapes, file: file, line: line)
     }
     
-    private func assertAddingShapesInformsObserver(
+    private func assertAddingShapes(
         _ shapesToAdd: [Document.Shape],
+        informsObserverAboutAddedShapes addedShapes: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
@@ -262,16 +269,16 @@ final class CanvasViewModelTests: XCTestCase {
         var receivedDocument: Document?
         sut.onDocumentDidUpdate = { receivedDocument = $0  }
         
-        XCTAssertNil(sut.document, "Expected the document to be nil initially")
+        XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
         
         let exp = expectation(description: "Wait for load completion")
         sut.loadDocument(from: anyURL()) { _ in exp.fulfill() }
         
-        let anyDocument = anyDocument()
-        storeCoordinator.completeDocumentLoading(with: .success(anyDocument))
+        let initialDocument = emptyDocument()
+        storeCoordinator.completeDocumentLoading(with: .success(initialDocument))
         
         wait(for: [exp], timeout: 1)
-        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes)
+        XCTAssertEqual(sut.document?.shapes, initialDocument.shapes, file: file, line: line)
         
         // when
         
@@ -279,11 +286,16 @@ final class CanvasViewModelTests: XCTestCase {
         
         // then
         
-        XCTAssertEqual(anyDocument, receivedDocument)
+        var expectedShapes = initialDocument.shapes
+        addedShapes.forEach { expectedShapes.append($0) }
+        let expectedDocument = Document(name: initialDocument.name, shapes: expectedShapes)
+        XCTAssertEqual(expectedDocument.shapes.count, receivedDocument?.shapes.count, file: file, line: line)
+        XCTAssertEqual(expectedDocument, receivedDocument, file: file, line: line)
     }
     
-    private func assertAddingShapesInformsDelegate(
+    private func assertAddingShapes(
         _ shapesToAdd: [Document.Shape],
+        informsDelegateAboutAddedShapes addedShapes: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
@@ -297,11 +309,11 @@ final class CanvasViewModelTests: XCTestCase {
         let exp = expectation(description: "Wait for load completion")
         sut.loadDocument(from: anyURL()) { _ in exp.fulfill() }
         
-        let anyDocument = anyDocument()
-        storeCoordinator.completeDocumentLoading(with: .success(anyDocument))
+        let initialDocument = anyDocument()
+        storeCoordinator.completeDocumentLoading(with: .success(initialDocument))
         
         wait(for: [exp], timeout: 1)
-        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes, file: file, line: line)
+        XCTAssertEqual(sut.document?.shapes, initialDocument.shapes, file: file, line: line)
         
         // when
         
@@ -309,7 +321,52 @@ final class CanvasViewModelTests: XCTestCase {
         
         // then
         
-        XCTAssertEqual(anyDocument, delegate.document, file: file, line: line)
+        var expectedShapes = initialDocument.shapes
+        addedShapes.forEach { expectedShapes.append($0) }
+        let expectedDocument = Document(name: initialDocument.name, shapes: expectedShapes)
+        XCTAssertEqual(expectedDocument.shapes.count, delegate.document?.shapes.count, file: file, line: line)
+        XCTAssertEqual(expectedDocument, delegate.document, file: file, line: line)
+    }
+    
+    private func assertAddingShapesAsksStoreCoordinatorToSaveDocument(
+        _ shapesToAdd: [Document.Shape],
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let delegate = CanvasViewModelDelegateSpy()
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        sut.delegate = delegate
+        
+        XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save requests", file: file, line: line)
+        
+        let exp = expectation(description: "Wait for load completion")
+        sut.loadDocument(from: anyURL()) { _ in exp.fulfill() }
+        
+        let initialDocument = anyDocument()
+        storeCoordinator.completeDocumentLoading(with: .success(initialDocument))
+        
+        XCTAssertEqual(
+            storeCoordinator.saveDocumentCallCount, 1,
+            "Expected to ask for save \(1) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
+            file: file,
+            line: line)
+        
+        wait(for: [exp], timeout: 1)
+//        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes, file: file, line: line)
+        
+        // when
+        
+        shapesToAdd.forEach { sut.addShape($0) }
+        
+        // then
+        
+        XCTAssertEqual(
+            storeCoordinator.saveDocumentCallCount, 2,
+            "Expected to ask for save \(2) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
+            file: file,
+            line: line)
     }
     
     private func anyDocument() -> Document {
@@ -317,6 +374,10 @@ final class CanvasViewModelTests: XCTestCase {
             .circle(.init(id: UUID(), createdAt: .now), .init(x: 3, y: 3, width: 14, height: 14)),
             .rectangle(.init(id: UUID(), createdAt: .now), .init(x: 14, y: 14, width: 42, height: 42))
         ])
+    }
+    
+    private func emptyDocument() -> Document {
+        Document(name: "initially empty document", shapes: [])
     }
     
     private func anyNSError() -> NSError {
