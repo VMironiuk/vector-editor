@@ -77,6 +77,7 @@ final class CanvasViewModel {
     private(set) var document: Document?
     
     var onDocumentDidUpdate: ((Document) -> Void)?
+    var onDocumentSaveDidFail: ((Error) -> Void)?
     
     weak var delegate: CanvasViewModelDelegate?
     
@@ -115,6 +116,7 @@ final class CanvasViewModel {
         storeCoordinator.saveDocument(document) { [weak self] error in
             guard let error = error else { return }
             self?.delegate?.didFailToSaveDocument(with: error)
+            self?.onDocumentSaveDidFail?(error)
         }
     }
 }
@@ -216,7 +218,21 @@ final class CanvasViewModelTests: XCTestCase {
         storeCoordinator.completeDocumentSaving(with: savingError)
         
         XCTAssertEqual(delegate.savingErrors.map { $0 as NSError }, [savingError])
+    }
+    
+    func test_addShape_informsItsObserverAboutFailedDocumentSaving() {
+        let savingError = anyNSError()
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         
+        sut.onDocumentSaveDidFail = {
+            XCTAssertEqual($0 as NSError, savingError)
+        }
+        
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
+        sut.addShape(anyShape())
+        storeCoordinator.completeDocumentSaving(with: savingError)
     }
 
     // MARK: - Helper
