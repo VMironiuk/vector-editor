@@ -123,22 +123,19 @@ final class CanvasViewModel {
 
 final class CanvasViewModelTests: XCTestCase {
     func test_init_doesNotAskStoreCoordinatorToSaveDocument() {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        _ = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let (_, storeCoordinator) = makeSUT()
         
         XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0)
     }
     
     func test_init_doesNotAskStoreCoordinatorToLoadDocument() {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        _ = CanvasViewModel(storeCoordinator: storeCoordinator)
-        
+        let (_, storeCoordinator) = makeSUT()
+
         XCTAssertEqual(storeCoordinator.loadDocumentCallCount, 0)
     }
     
     func test_init_desNotInitializeDocument() {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        let (sut, _) = makeSUT()
 
         XCTAssertNil(sut.document)
     }
@@ -243,6 +240,16 @@ final class CanvasViewModelTests: XCTestCase {
     }
 
     // MARK: - Helper
+    
+    private func makeSUT(file: StaticString = #filePath, line: UInt = #line) -> (CanvasViewModel, DocumentStoreCoordinatorSpy) {
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+
+        trackForMemoryLeaks(storeCoordinator, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        
+        return (sut, storeCoordinator)
+    }
     
     private func expectSaveDocument(
         toCompleteWith expectedError: Error?,
