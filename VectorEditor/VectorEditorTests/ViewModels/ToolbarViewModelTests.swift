@@ -82,12 +82,6 @@ final class ToolbarViewModelTests: XCTestCase {
         return (sut, delegate)
     }
     
-    private func trackForMemoryLeaks(_ object: AnyObject, file: StaticString = #filePath, line: UInt = #line) {
-        addTeardownBlock { [weak object] in
-            XCTAssertNil(object, "Expected object to be nil, potential memory leak", file: file, line: line)
-        }
-    }
-    
     private class ToolbarViewModelDelegateSpy: ToolbarViewModelDelegate {
         private(set) var selectedShapes = [SupportedShape]()
         
