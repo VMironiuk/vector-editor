@@ -68,14 +68,7 @@ protocol CanvasViewModelDelegate: AnyObject {
 
 final class CanvasViewModel {
     private let storeCoordinator: DocumentStoreCoordinatorSpy
-    private(set) var document: Document? {
-        didSet {
-            guard let document = document else { return }
-            onDocumentDidUpdate?(document)
-            delegate?.didUpdateDocument(document)
-            storeCoordinator.saveDocument(document) { _ in }
-        }
-    }
+    private(set) var document: Document?
     
     var onDocumentDidUpdate: ((Document) -> Void)?
     
@@ -106,6 +99,14 @@ final class CanvasViewModel {
         var shapes = document.shapes
         shapes.append(shape)
         self.document = .init(name: document.name, shapes: shapes)
+        notifyDocumentDidUpdate()
+    }
+    
+    private func notifyDocumentDidUpdate() {
+        guard let document = document else { return }
+        onDocumentDidUpdate?(document)
+        delegate?.didUpdateDocument(document)
+        storeCoordinator.saveDocument(document) { _ in }
     }
 }
 
@@ -347,12 +348,6 @@ final class CanvasViewModelTests: XCTestCase {
         let initialDocument = anyDocument()
         storeCoordinator.completeDocumentLoading(with: .success(initialDocument))
         
-        XCTAssertEqual(
-            storeCoordinator.saveDocumentCallCount, 1,
-            "Expected to ask for save \(1) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
-            file: file,
-            line: line)
-        
         wait(for: [exp], timeout: 1)
 //        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes, file: file, line: line)
         
@@ -363,8 +358,8 @@ final class CanvasViewModelTests: XCTestCase {
         // then
         
         XCTAssertEqual(
-            storeCoordinator.saveDocumentCallCount, 2,
-            "Expected to ask for save \(2) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
+            storeCoordinator.saveDocumentCallCount, 1,
+            "Expected to ask for save \(1) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
             file: file,
             line: line)
     }
