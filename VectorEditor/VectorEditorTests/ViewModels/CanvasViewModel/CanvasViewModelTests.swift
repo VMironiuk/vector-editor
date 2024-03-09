@@ -121,7 +121,7 @@ final class CanvasViewModel {
     }
 }
 
-final class CanvasViewModelTests: XCTestCase {
+final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_init_doesNotAskStoreCoordinatorToSaveDocument() {
         let (_, storeCoordinator) = makeSUT()
         
