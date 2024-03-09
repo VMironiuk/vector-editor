@@ -181,6 +181,11 @@ final class CanvasViewModelTests: XCTestCase {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd])
     }
+    
+    func test_addShape_doesNotAskStoreCoordinatorToSaveDocumentWhenAddedSameShape() {
+        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd, shapeToAdd])
+    }
 
     // MARK: - Helper
     
@@ -349,17 +354,17 @@ final class CanvasViewModelTests: XCTestCase {
         storeCoordinator.completeDocumentLoading(with: .success(initialDocument))
         
         wait(for: [exp], timeout: 1)
-//        XCTAssertEqual(sut.document?.shapes, anyDocument.shapes, file: file, line: line)
         
         // when
         
-        shapesToAdd.forEach { sut.addShape($0) }
+        let uniqueShapesToAdd = Array(Set(shapesToAdd))
+        uniqueShapesToAdd.forEach { sut.addShape($0) }
         
         // then
         
         XCTAssertEqual(
-            storeCoordinator.saveDocumentCallCount, 1,
-            "Expected to ask for save \(1) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
+            storeCoordinator.saveDocumentCallCount, uniqueShapesToAdd.count,
+            "Expected to ask for save \(uniqueShapesToAdd.count) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
             file: file,
             line: line)
     }
@@ -384,13 +389,13 @@ final class CanvasViewModelTests: XCTestCase {
     }
 }
 
-extension Document: Equatable {
+extension Document: Equatable, Hashable {
     public static func == (lhs: Document, rhs: Document) -> Bool {
         lhs.name == rhs.name && lhs.shapes == rhs.shapes
     }
 }
 
-extension Document.Shape: Equatable {
+extension Document.Shape: Equatable, Hashable {
     public static func == (lhs: Document.Shape, rhs: Document.Shape) -> Bool {
         switch (lhs, rhs) {
         case let (.circle(lhsMetadata, lhsFrame), .circle(rhsMetadata, rhsFrame)):
@@ -403,10 +408,30 @@ extension Document.Shape: Equatable {
             return false
         }
     }
+    
+    public func hash(into hasher: inout Hasher) {
+        switch self {
+        case let .circle(metadata, frame):
+            hasher.combine(metadata)
+            hasher.combine(frame)
+        case let .rectangle(metadata, frame):
+            hasher.combine(metadata)
+            hasher.combine(frame)
+        }
+    }
 }
 
-extension Document.Shape.Metadata: Equatable {
+extension Document.Shape.Metadata: Equatable, Hashable {
     public static func == (lhs: Document.Shape.Metadata, rhs: Document.Shape.Metadata) -> Bool {
         lhs.id == rhs.id && lhs.createdAt == rhs.createdAt
+    }
+}
+
+extension NSRect: Hashable {
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(origin.x)
+        hasher.combine(origin.y)
+        hasher.combine(width)
+        hasher.combine(height)
     }
 }
