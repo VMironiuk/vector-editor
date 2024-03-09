@@ -189,7 +189,7 @@
 		2E7A830D2B99FFDA00CCB043 /* ViewModels */ = {
 			isa = PBXGroup;
 			children = (
-				2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */,
+				2E7A83572B9C8B9200CCB043 /* ToolbarViewModel */,
 				2E7A83562B9C8B5800CCB043 /* CanvasViewModel */,
 			);
 			path = ViewModels;
@@ -209,6 +209,14 @@
 				2E7A830E2B9A001E00CCB043 /* CanvasViewModelTests.swift */,
 			);
 			path = CanvasViewModel;
+			sourceTree = "<group>";
+		};
+		2E7A83572B9C8B9200CCB043 /* ToolbarViewModel */ = {
+			isa = PBXGroup;
+			children = (
+				2E7A82542B99B71400CCB043 /* ToolbarViewModelTests.swift */,
+			);
+			path = ToolbarViewModel;
 			sourceTree = "<group>";
 		};
 		2EA410C52B988BA20066E79E /* Helpers */ = {
