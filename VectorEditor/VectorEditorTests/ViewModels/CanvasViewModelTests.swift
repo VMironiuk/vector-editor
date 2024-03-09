@@ -136,6 +136,13 @@ final class CanvasViewModelTests: XCTestCase {
         XCTAssertEqual(storeCoordinator.loadDocumentCallCount, 0)
     }
     
+    func test_init_desNotInitializeDocument() {
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+
+        XCTAssertNil(sut.document)
+    }
+    
     func test_saveDocument_succeedsOnSuccessfulStoreCoordinatorDocumentSave() {
         expectSaveDocument(toCompleteWith: nil)
     }
