@@ -56,14 +56,20 @@ final class DocumentStoreCoordinatorSpy {
 
 final class CanvasViewModelDelegateSpy: CanvasViewModelDelegate {
     private(set) var document: Document?
+    private(set) var savingErrors = [Error]()
     
     func didUpdateDocument(_ document: Document) {
         self.document = document
+    }
+    
+    func didFailToSaveDocument(with error: any Error) {
+        savingErrors.append(error)
     }
 }
 
 protocol CanvasViewModelDelegate: AnyObject {
     func didUpdateDocument(_ document: Document)
+    func didFailToSaveDocument(with error: Error)
 }
 
 final class CanvasViewModel {
@@ -106,7 +112,10 @@ final class CanvasViewModel {
         guard let document = document else { return }
         onDocumentDidUpdate?(document)
         delegate?.didUpdateDocument(document)
-        storeCoordinator.saveDocument(document) { _ in }
+        storeCoordinator.saveDocument(document) { [weak self] error in
+            guard let error = error else { return }
+            self?.delegate?.didFailToSaveDocument(with: error)
+        }
     }
 }
 
@@ -192,6 +201,22 @@ final class CanvasViewModelTests: XCTestCase {
     func test_addShape_doesNotAskStoreCoordinatorToSaveDocumentWhenAddedSameShape() {
         let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd, shapeToAdd])
+    }
+    
+    func test_addShape_informsItsDelegateAboutFailedDocumentSaving() {
+        let savingError = anyNSError()
+        let delegate = CanvasViewModelDelegateSpy()
+        let storeCoordinator = DocumentStoreCoordinatorSpy()
+        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        sut.delegate = delegate
+        
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
+        sut.addShape(anyShape())
+        storeCoordinator.completeDocumentSaving(with: savingError)
+        
+        XCTAssertEqual(delegate.savingErrors.map { $0 as NSError }, [savingError])
+        
     }
 
     // MARK: - Helper
@@ -385,6 +410,10 @@ final class CanvasViewModelTests: XCTestCase {
     
     private func emptyDocument() -> Document {
         Document(name: "initially empty document", shapes: [])
+    }
+    
+    private func anyShape() -> Document.Shape {
+        .circle(.init(id: UUID(), createdAt: .now), .zero)
     }
     
     private func anyNSError() -> NSError {
