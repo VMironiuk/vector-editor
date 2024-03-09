@@ -14,4 +14,7 @@ protocol CanvasViewModelSpecs {
     
     func test_saveDocument_succeedsOnSuccessfulStoreCoordinatorDocumentSave()
     func test_saveDocument_failsOnFailedStoreCoordinatorDocumentSave()
+    
+    func test_loadDocument_succeedsOnSuccessfulStoreCoordinatorDocumentLoad()
+    func test_loadDocument_failsOnFailedStoreCoordinatorDocumentLoad()
 }

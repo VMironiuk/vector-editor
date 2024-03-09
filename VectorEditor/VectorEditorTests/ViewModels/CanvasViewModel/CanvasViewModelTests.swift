@@ -156,11 +156,19 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     }
     
     func test_loadDocument_succeedsOnSuccessfulStoreCoordinatorDocumentLoad() {
-        expectLoadDocument(toCompleteWith: .success(anyDocument()))
+        let (sut, storeCoordinator) = makeSUT()
+        let successfulResult: Result<Document, Error> = .success(anyDocument())
+        expect(sut, toLoadDocumentFromURL: anyURL(), withResult: successfulResult, action: {
+            storeCoordinator.completeDocumentLoading(with: successfulResult)
+        })
     }
     
     func test_loadDocument_failsOnFailedStoreCoordinatorDocumentLoad() {
-        expectLoadDocument(toCompleteWith: .failure(anyNSError()))
+        let (sut, storeCoordinator) = makeSUT()
+        let failedResult: Result<Document, Error> = .failure(anyNSError())
+        expect(sut, toLoadDocumentFromURL: anyURL(), withResult: failedResult, action: {
+            storeCoordinator.completeDocumentLoading(with: failedResult)
+        })
     }
     
     func test_addShape_addsShapeToDocument() {
@@ -276,15 +284,15 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         wait(for: [exp], timeout: 1)
     }
     
-    private func expectLoadDocument(
-        toCompleteWith expectedResult: Result<Document, Error>,
+    private func expect(
+        _ sut: CanvasViewModel,
+        toLoadDocumentFromURL storeURL: URL,
+        withResult expectedResult: Result<Document, Error>,
+        action: () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         let exp = expectation(description: "Wait for load completion")
-                
         sut.loadDocument(from: anyURL()) { receivedResult in
             switch (receivedResult, expectedResult) {
             case let (.success(receivedDocument), .success(expectedDocument)):
@@ -296,7 +304,8 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
             }
             exp.fulfill()
         }
-        storeCoordinator.completeDocumentLoading(with: expectedResult)
+        
+        action()
         wait(for: [exp], timeout: 1)
     }
     
