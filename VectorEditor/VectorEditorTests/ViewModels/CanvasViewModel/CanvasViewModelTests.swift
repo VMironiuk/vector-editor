@@ -141,11 +141,18 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     }
     
     func test_saveDocument_succeedsOnSuccessfulStoreCoordinatorDocumentSave() {
-        expectSaveDocument(toCompleteWith: nil)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, toSaveDocument: anyDocument(), withError: nil, action: {
+            storeCoordinator.completeDocumentSaving(with: nil)
+        })
     }
     
     func test_saveDocument_failsOnFailedStoreCoordinatorDocumentSave() {
-        expectSaveDocument(toCompleteWith: anyNSError())
+        let (sut, storeCoordinator) = makeSUT()
+        let anyNSError = anyNSError()
+        expect(sut, toSaveDocument: anyDocument(), withError: anyNSError, action: {
+            storeCoordinator.completeDocumentSaving(with: anyNSError)
+        })
     }
     
     func test_loadDocument_succeedsOnSuccessfulStoreCoordinatorDocumentLoad() {
@@ -251,20 +258,21 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         return (sut, storeCoordinator)
     }
     
-    private func expectSaveDocument(
-        toCompleteWith expectedError: Error?,
+    private func expect(
+        _ sut: CanvasViewModel,
+        toSaveDocument document: Document,
+        withError expectedError: Error?,
+        action: () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         let exp = expectation(description: "Wait for save completion")
-        
-        sut.saveDocument(anyDocument()) { receivedError in
+        sut.saveDocument(document) { receivedError in
             XCTAssertEqual(expectedError as? NSError, receivedError as? NSError, file: file, line: line)
             exp.fulfill()
         }
-        storeCoordinator.completeDocumentSaving(with: expectedError)
+
+        action()
         wait(for: [exp], timeout: 1)
     }
     
