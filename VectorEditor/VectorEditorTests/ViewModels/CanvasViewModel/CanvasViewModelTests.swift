@@ -172,86 +172,76 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     }
     
     func test_addShape_addsShapeToDocument() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd], didAddShapes: [shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, updatesDocumentWithShapes: [shape], whenAddsShapes: [shape])
     }
     
     func test_addShape_doesNotAddSameShapeToDocument() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd, shapeToAdd], didAddShapes: [shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, updatesDocumentWithShapes: [shape], whenAddsShapes: [shape, shape])
     }
     
     func test_addShape_addsDiferentShapeToDocument() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        let anotherShapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd, anotherShapeToAdd], didAddShapes: [shapeToAdd, anotherShapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let anotherShape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, updatesDocumentWithShapes: [shape, anotherShape], whenAddsShapes: [shape, anotherShape])
     }
     
     func test_addShape_informsObserverAboutUpdatedDocument() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd], informsObserverAboutAddedShapes: [shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutAddedShapes: [shape], whenAddsShapes: [shape])
     }
     
     func test_addShape_doesNotInformObserverAboutUpdatedDocumentWhenAddedSameShape() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd, shapeToAdd], informsObserverAboutAddedShapes: [shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutAddedShapes: [shape], whenAddsShapes: [shape, shape])
     }
     
     func test_addShape_informsDelegateAboutUpdatedDocument() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd], informsDelegateAboutAddedShapes: [shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, informsDelegateAboutAddedShapes: [shape], whenAddsShapes: [shape])
     }
     
     func test_addShape_doesNotInformDelegateAboutUpdatedDocumentWhenAddedSameShape() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapes([shapeToAdd, shapeToAdd], informsDelegateAboutAddedShapes: [shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, informsDelegateAboutAddedShapes: [shape], whenAddsShapes: [shape])
     }
     
     func test_addShape_asksStoreCoordinatorToSaveDocument() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, asksStoreCoordinatorToSaveDocumentWhenAddsShapes: [shape])
     }
     
     func test_addShape_asksStoreCoordinatorToSaveDocumentTwiceWhenAddingTwoDifferentShapes() {
-        assertAddingShapesAsksStoreCoordinatorToSaveDocument([
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, asksStoreCoordinatorToSaveDocumentWhenAddsShapes: [
             .circle(.init(id: UUID(), createdAt: .now), .zero),
             .rectangle(.init(id: UUID(), createdAt: .now), .zero)
         ])
     }
     
     func test_addShape_doesNotAskStoreCoordinatorToSaveDocumentWhenAddedSameShape() {
-        let shapeToAdd = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        assertAddingShapesAsksStoreCoordinatorToSaveDocument([shapeToAdd, shapeToAdd])
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, asksStoreCoordinatorToSaveDocumentWhenAddsShapes: [shape, shape])
     }
     
     func test_addShape_informsItsDelegateAboutFailedDocumentSaving() {
-        let savingError = anyNSError()
-        let delegate = CanvasViewModelDelegateSpy()
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
-        sut.delegate = delegate
-        
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
-        sut.addShape(anyShape())
-        storeCoordinator.completeDocumentSaving(with: savingError)
-        
-        XCTAssertEqual(delegate.savingErrors.map { $0 as NSError }, [savingError])
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, informsDelegateAboutFailedDocumentSavingWithError: anyNSError())
     }
     
     func test_addShape_informsItsObserverAboutFailedDocumentSaving() {
-        let savingError = anyNSError()
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
-        
-        sut.onDocumentSaveDidFail = {
-            XCTAssertEqual($0 as NSError, savingError)
-        }
-        
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
-        sut.addShape(anyShape())
-        storeCoordinator.completeDocumentSaving(with: savingError)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutFailedDocumentSavingWithError: anyNSError())
     }
 
     // MARK: - Helper
@@ -309,16 +299,15 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         wait(for: [exp], timeout: 1)
     }
     
-    private func assertAddingShapes(
-        _ shapesToAdd: [Document.Shape],
-        didAddShapes addedShapes: [Document.Shape],
+    private func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        updatesDocumentWithShapes addedShapes: [Document.Shape],
+        whenAddsShapes shapesToAdd: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         // given
-        
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         
         XCTAssertNil(sut.document, "Expected the document to be nil initially",  file: file, line: line)
         
@@ -343,14 +332,16 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         XCTAssertEqual(sut.document?.shapes, expectedShapes, file: file, line: line)
     }
     
-    private func assertAddingShapes(
-        _ shapesToAdd: [Document.Shape],
+    private func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
         informsObserverAboutAddedShapes addedShapes: [Document.Shape],
+        whenAddsShapes shapesToAdd: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
+        // given
+        
         var receivedDocument: Document?
         sut.onDocumentDidUpdate = { receivedDocument = $0  }
         
@@ -378,15 +369,15 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         XCTAssertEqual(expectedDocument, receivedDocument, file: file, line: line)
     }
     
-    private func assertAddingShapes(
-        _ shapesToAdd: [Document.Shape],
+    private func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
         informsDelegateAboutAddedShapes addedShapes: [Document.Shape],
+        whenAddsShapes shapesToAdd: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let delegate = CanvasViewModelDelegateSpy()
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         sut.delegate = delegate
         
         XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
@@ -413,14 +404,14 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         XCTAssertEqual(expectedDocument, delegate.document, file: file, line: line)
     }
     
-    private func assertAddingShapesAsksStoreCoordinatorToSaveDocument(
-        _ shapesToAdd: [Document.Shape],
+    private func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        asksStoreCoordinatorToSaveDocumentWhenAddsShapes  shapesToAdd: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let delegate = CanvasViewModelDelegateSpy()
-        let storeCoordinator = DocumentStoreCoordinatorSpy()
-        let sut = CanvasViewModel(storeCoordinator: storeCoordinator)
         sut.delegate = delegate
         
         XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
@@ -446,6 +437,54 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
             "Expected to ask for save \(uniqueShapesToAdd.count) time(s), but called \(storeCoordinator.saveDocumentCallCount) time(s)",
             file: file,
             line: line)
+    }
+    
+    func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        informsDelegateAboutFailedDocumentSavingWithError savingError: NSError,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        // given
+        
+        let delegate = CanvasViewModelDelegateSpy()
+        sut.delegate = delegate
+        
+        // when
+        
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
+        sut.addShape(anyShape())
+        storeCoordinator.completeDocumentSaving(with: savingError)
+        
+        // then
+        
+        XCTAssertEqual(delegate.savingErrors.map { $0 as NSError }, [savingError])
+    }
+    
+    func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        informsObserverAboutFailedDocumentSavingWithError savingError: NSError,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        // given
+        
+        let savingError = anyNSError()
+        
+        sut.onDocumentSaveDidFail = {
+            // then
+            XCTAssertEqual($0 as NSError, savingError)
+        }
+        
+        // when
+        
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
+        sut.addShape(anyShape())
+        storeCoordinator.completeDocumentSaving(with: savingError)
     }
     
     private func anyDocument() -> Document {
