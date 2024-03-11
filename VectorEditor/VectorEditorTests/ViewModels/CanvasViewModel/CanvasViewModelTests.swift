@@ -142,7 +142,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     
     func test_saveDocument_succeedsOnSuccessfulStoreCoordinatorDocumentSave() {
         let (sut, storeCoordinator) = makeSUT()
-        expect(sut, toSaveDocument: anyDocument(), withError: nil, action: {
+        expect(sut, toSaveDocument: anyDocument(), withError: nil, when: {
             storeCoordinator.completeDocumentSaving(with: nil)
         })
     }
@@ -150,7 +150,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_saveDocument_failsOnFailedStoreCoordinatorDocumentSave() {
         let (sut, storeCoordinator) = makeSUT()
         let anyNSError = anyNSError()
-        expect(sut, toSaveDocument: anyDocument(), withError: anyNSError, action: {
+        expect(sut, toSaveDocument: anyDocument(), withError: anyNSError, when: {
             storeCoordinator.completeDocumentSaving(with: anyNSError)
         })
     }
@@ -158,7 +158,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_loadDocument_succeedsOnSuccessfulStoreCoordinatorDocumentLoad() {
         let (sut, storeCoordinator) = makeSUT()
         let successfulResult: Result<Document, Error> = .success(anyDocument())
-        expect(sut, toLoadDocumentFromURL: anyURL(), withResult: successfulResult, action: {
+        expect(sut, toLoadDocumentFromURL: anyURL(), withResult: successfulResult, when: {
             storeCoordinator.completeDocumentLoading(with: successfulResult)
         })
     }
@@ -166,7 +166,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_loadDocument_failsOnFailedStoreCoordinatorDocumentLoad() {
         let (sut, storeCoordinator) = makeSUT()
         let failedResult: Result<Document, Error> = .failure(anyNSError())
-        expect(sut, toLoadDocumentFromURL: anyURL(), withResult: failedResult, action: {
+        expect(sut, toLoadDocumentFromURL: anyURL(), withResult: failedResult, when: {
             storeCoordinator.completeDocumentLoading(with: failedResult)
         })
     }
@@ -270,7 +270,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         _ sut: CanvasViewModel,
         toSaveDocument document: Document,
         withError expectedError: Error?,
-        action: () -> Void,
+        when action: () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
@@ -288,7 +288,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         _ sut: CanvasViewModel,
         toLoadDocumentFromURL storeURL: URL,
         withResult expectedResult: Result<Document, Error>,
-        action: () -> Void,
+        when action: () -> Void,
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
