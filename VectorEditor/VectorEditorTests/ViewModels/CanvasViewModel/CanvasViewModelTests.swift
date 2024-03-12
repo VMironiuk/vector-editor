@@ -8,77 +8,6 @@
 import XCTest
 import VectorEditor
 
-protocol DocumentStoreCoordinatorProtocol {
-    func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void)
-    func loadDocument(from storeURL: URL, completion: @escaping (Result<Document, Error>) -> Void)
-}
-
-protocol CanvasViewModelDelegate: AnyObject {
-    func didUpdateDocument(_ document: Document)
-    func didFailToSaveDocument(with error: Error)
-}
-
-final class CanvasViewModel {
-    private let storeCoordinator: DocumentStoreCoordinatorProtocol
-    private var multicastDelegate = MulticastDelegate<CanvasViewModelDelegate>()
-    
-    private(set) var document: Document?
-    
-    init(storeCoordinator: DocumentStoreCoordinatorProtocol) {
-        self.storeCoordinator = storeCoordinator
-    }
-    
-    func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void) {
-        storeCoordinator.saveDocument(document, completion: completion)
-    }
-    
-    func loadDocument(from storeURL: URL, completion: @escaping (Result<Document, Error>) -> Void) {
-        storeCoordinator.loadDocument(from: storeURL) { [weak self] result in
-            switch result {
-            case let .success(document):
-                self?.document = document
-                completion(.success(document))
-            case let .failure(error):
-                completion(.failure(error))
-            }
-        }
-    }
-    
-    func addShape(_ shape: Document.Shape) {
-        guard let document = document, !document.shapes.contains(shape) else { return }
-        var shapes = document.shapes
-        shapes.append(shape)
-        self.document = .init(name: document.name, shapes: shapes)
-        notifyDocumentDidUpdate()
-    }
-    
-    func removeShape(_ shape: Document.Shape) {
-        guard var shapes = document?.shapes,
-              let document = document,
-              let shapeIndex = shapes.firstIndex(of: shape) else { return }
-        shapes.remove(at: shapeIndex)
-        self.document = .init(name: document.name, shapes: shapes)
-        notifyDocumentDidUpdate()
-    }
-    
-    func registerObserver(_ observer: CanvasViewModelDelegate) {
-        multicastDelegate.add(observer)
-    }
-    
-    func removeObserver(_ observer: CanvasViewModelDelegate) {
-        multicastDelegate.remove(observer)
-    }
-    
-    private func notifyDocumentDidUpdate() {
-        guard let document = document else { return }
-        multicastDelegate.delegates.forEach { $0.didUpdateDocument(document) }
-        storeCoordinator.saveDocument(document) { [weak self] error in
-            guard let error = error else { return }
-            self?.multicastDelegate.delegates.forEach { $0.didFailToSaveDocument(with: error) }
-        }
-    }
-}
-
 final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_init_doesNotAskStoreCoordinatorToSaveDocument() {
         let (_, storeCoordinator) = makeSUT()
@@ -553,31 +482,14 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     }
 }
 
-extension Document: Equatable, Hashable {
-    public static func == (lhs: Document, rhs: Document) -> Bool {
-        lhs.name == rhs.name && lhs.shapes == rhs.shapes
-    }
-    
+extension Document: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(name)
         hasher.combine(shapes)
     }
 }
 
-extension Document.Shape: Equatable, Hashable {
-    public static func == (lhs: Document.Shape, rhs: Document.Shape) -> Bool {
-        switch (lhs, rhs) {
-        case let (.circle(lhsMetadata, lhsFrame), .circle(rhsMetadata, rhsFrame)):
-            return lhsMetadata == rhsMetadata && lhsFrame == rhsFrame
-            
-        case let (.rectangle(lhsMetadata, lhsFrame), .rectangle(rhsMetadata, rhsFrame)):
-            return lhsMetadata == rhsMetadata && lhsFrame == rhsFrame
-
-        default:
-            return false
-        }
-    }
-    
+extension Document.Shape: Hashable {
     public func hash(into hasher: inout Hasher) {
         switch self {
         case let .circle(metadata, frame):
@@ -590,11 +502,7 @@ extension Document.Shape: Equatable, Hashable {
     }
 }
 
-extension Document.Shape.Metadata: Equatable, Hashable {
-    public static func == (lhs: Document.Shape.Metadata, rhs: Document.Shape.Metadata) -> Bool {
-        lhs.id == rhs.id && lhs.createdAt == rhs.createdAt
-    }
-    
+extension Document.Shape.Metadata: Hashable {
     public func hash(into hasher: inout Hasher) {
         hasher.combine(id)
         hasher.combine(createdAt)
