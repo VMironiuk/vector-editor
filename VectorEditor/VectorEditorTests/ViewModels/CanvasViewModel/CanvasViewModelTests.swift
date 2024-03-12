@@ -290,7 +290,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_removeShape_doesNotRemoveNonExistingShapeFromDocument() {
         let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
-        expect(sut, withStoreCoordinator: storeCoordinator, andAddedShapes: [shape], toHasShapesInDocument: [], when: {
+        expect(sut, withStoreCoordinator: storeCoordinator, andAddedShapes: [shape], toHasShapesInDocument: [shape], when: {
             sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
         })
     }
@@ -510,7 +510,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         
         // when
         
-        addedShapes.forEach { sut.removeShape($0) }
+        action()
         
         // then
         
