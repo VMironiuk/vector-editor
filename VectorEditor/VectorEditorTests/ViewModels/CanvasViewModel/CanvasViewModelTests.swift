@@ -260,6 +260,19 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         
         XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0)
     }
+    
+    func test_removeShape_doesNotAskStoreCoordinatorToRemoveNonExistingShapeFromDocument() {
+        let (sut, storeCoordinator) = makeSUT()
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save document requests")
+        sut.addShape(.circle(.init(id: UUID(), createdAt: .now), .zero))
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected 1 save document request")
+        
+        sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
+        
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected no new save document requests")
+    }
 
     // MARK: - Helper
     
