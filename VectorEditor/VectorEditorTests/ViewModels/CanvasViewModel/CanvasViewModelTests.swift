@@ -109,6 +109,15 @@ final class CanvasViewModel {
         notifyDocumentDidUpdate()
     }
     
+    func removeShape(_ shape: Document.Shape) {
+        guard var shapes = document?.shapes,
+              let document = document,
+              let shapeIndex = shapes.firstIndex(of: shape) else { return }
+        shapes.remove(at: shapeIndex)
+        self.document = .init(name: document.name, shapes: shapes)
+        notifyDocumentDidUpdate()
+    }
+    
     private func notifyDocumentDidUpdate() {
         guard let document = document else { return }
         onDocumentDidUpdate?(document)
@@ -242,6 +251,14 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_addShape_informsItsObserverAboutFailedDocumentSaving() {
         let (sut, storeCoordinator) = makeSUT()
         expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutFailedDocumentSavingWithError: anyNSError())
+    }
+    
+    func test_removeShape_doesNotAskStoreCoordinatorToRemoveShapeFromEmptyDocument() {
+        let (sut, storeCoordinator) = makeSUT()
+        
+        sut.removeShape(.circle(.init(id: UUID(), createdAt: .now), .zero))
+        
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0)
     }
 
     // MARK: - Helper
