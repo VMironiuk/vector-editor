@@ -276,6 +276,20 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected no new save document requests")
     }
     
+    func test_removeShape_asksStoreCoordinatorToRemoveExistingShapeFromDocument() {
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save document requests")
+        sut.addShape(shape)
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected 1 save document request")
+        
+        sut.removeShape(shape)
+        
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 2, "Expected second save document request")
+    }
+    
     func test_removeShape_removesShapeFromDocument() {
         let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
@@ -300,6 +314,26 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
             sut.removeShape(shape1)
             sut.removeShape(shape2)
         })
+    }
+    
+    func test_removeShape_informsDelegateAboutUpdatedDocument() {
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let delegate = CanvasViewModelDelegateSpy()
+        let (sut, storeCoordinator) = makeSUT()
+        sut.registerObserver(delegate)
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertTrue(sut.document?.shapes.isEmpty ?? true, "Expected view model's document to be empty or nil")
+        XCTAssertTrue(delegate.document?.shapes.isEmpty ?? true, "Expected view models delegate's document to be empty or nil")
+        sut.addShape(shape)
+        XCTAssertEqual(sut.document?.shapes.count, 1, "Expected 1 shape added to view model's document")
+        XCTAssertEqual(delegate.document?.shapes.count, 1, "Expected 1 shape added to view model delegate's document")
+        
+        sut.removeShape(shape)
+        
+        XCTAssertEqual(sut.document?.shapes.count, 0)
+        XCTAssertEqual(delegate.document?.shapes.count, 0)
+        XCTAssertEqual(sut.document, delegate.document)
     }
 
     // MARK: - Helper
