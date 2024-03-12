@@ -8,21 +8,6 @@
 import XCTest
 import VectorEditor
 
-final class CanvasViewModelDelegateSpy: CanvasViewModelDelegate {
-    private(set) var document: Document?
-    private(set) var savingErrors = [Error]()
-    
-    var viewModelToCheckMemoryLeak: CanvasViewModel?
-    
-    func didUpdateDocument(_ document: Document) {
-        self.document = document
-    }
-    
-    func didFailToSaveDocument(with error: any Error) {
-        savingErrors.append(error)
-    }
-}
-
 protocol DocumentStoreCoordinatorProtocol {
     func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void)
     func loadDocument(from storeURL: URL, completion: @escaping (Result<Document, Error>) -> Void)

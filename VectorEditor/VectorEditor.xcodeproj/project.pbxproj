@@ -29,6 +29,7 @@
 		2EA62BFF2BA077B1001ECDFC /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA62BFE2BA077B1001ECDFC /* Document.swift */; };
 		2EA62C012BA07903001ECDFC /* DocumentStoreCoordinatorSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA62C002BA07903001ECDFC /* DocumentStoreCoordinatorSpy.swift */; };
 		2EA62C042BA07954001ECDFC /* MulticastDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA62C032BA07954001ECDFC /* MulticastDelegate.swift */; };
+		2EA62C062BA079C9001ECDFC /* CanvasViewModelDelegateSpy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA62C052BA079C9001ECDFC /* CanvasViewModelDelegateSpy.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -72,6 +73,7 @@
 		2EA62BFE2BA077B1001ECDFC /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		2EA62C002BA07903001ECDFC /* DocumentStoreCoordinatorSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentStoreCoordinatorSpy.swift; sourceTree = "<group>"; };
 		2EA62C032BA07954001ECDFC /* MulticastDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MulticastDelegate.swift; sourceTree = "<group>"; };
+		2EA62C052BA079C9001ECDFC /* CanvasViewModelDelegateSpy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CanvasViewModelDelegateSpy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -285,6 +287,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA62C002BA07903001ECDFC /* DocumentStoreCoordinatorSpy.swift */,
+				2EA62C052BA079C9001ECDFC /* CanvasViewModelDelegateSpy.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -500,6 +503,7 @@
 				2EA62C012BA07903001ECDFC /* DocumentStoreCoordinatorSpy.swift in Sources */,
 				2E7A82552B99B71400CCB043 /* ToolbarViewModelTests.swift in Sources */,
 				2E7A83552B9C89CB00CCB043 /* XCTestCase+MemoryLeaksTracking.swift in Sources */,
+				2EA62C062BA079C9001ECDFC /* CanvasViewModelDelegateSpy.swift in Sources */,
 				2EA484BB2B97645D0080C233 /* CodableDocumentStoreTests.swift in Sources */,
 				2E7A83592B9C8BFF00CCB043 /* CanvasViewModelSpecs.swift in Sources */,
 				2E7A830F2B9A001E00CCB043 /* CanvasViewModelTests.swift in Sources */,
