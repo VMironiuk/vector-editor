@@ -30,7 +30,7 @@ public struct Document {
     }
 }
 
-final class DocumentStoreCoordinatorSpy {
+final class DocumentStoreCoordinatorSpy: DocumentStoreCoordinatorProtocol {
     var saveDocumentCallCount: Int { saveCompletions.count }
     var loadDocumentCallCount: Int { loadCompletions.count }
     
@@ -85,18 +85,23 @@ final class CanvasViewModelDelegateSpy: CanvasViewModelDelegate {
     }
 }
 
+protocol DocumentStoreCoordinatorProtocol {
+    func saveDocument(_ document: Document, completion: @escaping (Error?) -> Void)
+    func loadDocument(from storeURL: URL, completion: @escaping (Result<Document, Error>) -> Void)
+}
+
 protocol CanvasViewModelDelegate: AnyObject {
     func didUpdateDocument(_ document: Document)
     func didFailToSaveDocument(with error: Error)
 }
 
 final class CanvasViewModel {
-    private let storeCoordinator: DocumentStoreCoordinatorSpy
+    private let storeCoordinator: DocumentStoreCoordinatorProtocol
     private var multicastDelegate = MulticastDelegate<CanvasViewModelDelegate>()
     
     private(set) var document: Document?
     
-    init(storeCoordinator: DocumentStoreCoordinatorSpy) {
+    init(storeCoordinator: DocumentStoreCoordinatorProtocol) {
         self.storeCoordinator = storeCoordinator
     }
     
