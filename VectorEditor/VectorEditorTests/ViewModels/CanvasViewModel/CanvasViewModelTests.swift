@@ -277,29 +277,17 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_removeShape_removesShapeFromDocument() {
         let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
-        XCTAssertEqual(sut.document?.shapes, [], "Expected no shapes in document initially")
-        sut.addShape(shape)
-        XCTAssertEqual(sut.document?.shapes, [shape], "Expected added shape to be in document")
-        
-        sut.removeShape(shape)
-        
-        XCTAssertEqual(sut.document?.shapes, [], "Expected to remove existed shape from document")
+        expect(sut, withStoreCoordinator: storeCoordinator, andAddedShapes: [shape], toHasShapesInDocument: [], when: {
+            sut.removeShape(shape)
+        })
     }
     
     func test_removeShape_doesNotRemoveShapeFromDocument() {
         let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
-        XCTAssertEqual(sut.document?.shapes, [], "Expected no shapes in document initially")
-        sut.addShape(shape)
-        XCTAssertEqual(sut.document?.shapes, [shape], "Expected added shape to be in document")
-        
-        sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
-        
-        XCTAssertEqual(sut.document?.shapes, [shape], "Expected not to remove non existed shape from document")
+        expect(sut, withStoreCoordinator: storeCoordinator, andAddedShapes: [shape], toHasShapesInDocument: [], when: {
+            sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
+        })
     }
 
     // MARK: - Helper
@@ -543,6 +531,32 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
         sut.addShape(anyShape())
         storeCoordinator.completeDocumentSaving(with: savingError)
+    }
+    
+    private func expect(
+        _ sut: CanvasViewModel,
+        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        andAddedShapes addedShapes: [Document.Shape],
+        toHasShapesInDocument expectedShapes: [Document.Shape],
+        when action: () -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        // given
+        
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertEqual(sut.document?.shapes, [], "Expected no shapes in document initially", file: file, line: line)
+        addedShapes.forEach { sut.addShape($0) }
+        XCTAssertEqual(sut.document?.shapes, addedShapes, "Expected added shapes to be in document", file: file, line: line)
+        
+        // when
+        
+        addedShapes.forEach { sut.removeShape($0) }
+        
+        // then
+        
+        XCTAssertEqual(sut.document?.shapes, expectedShapes, file: file, line: line)
     }
     
     private func anyDocument() -> Document {
