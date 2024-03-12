@@ -6,29 +6,7 @@
 //
 
 import XCTest
-
-public struct Document {
-    public enum Shape {
-        public struct Metadata {
-            public let id: UUID
-            public let createdAt: Date
-            public init(id: UUID, createdAt: Date) {
-                self.id = id
-                self.createdAt = createdAt
-            }
-        }
-        case circle(Metadata, NSRect)
-        case rectangle(Metadata, NSRect)
-    }
-
-    public let name: String
-    public let shapes: [Shape]
-    
-    public init(name: String, shapes: [Shape]) {
-        self.name = name
-        self.shapes = shapes
-    }
-}
+import VectorEditor
 
 final class DocumentStoreCoordinatorSpy: DocumentStoreCoordinatorProtocol {
     var saveDocumentCallCount: Int { saveCompletions.count }
@@ -634,6 +612,11 @@ extension Document: Equatable, Hashable {
     public static func == (lhs: Document, rhs: Document) -> Bool {
         lhs.name == rhs.name && lhs.shapes == rhs.shapes
     }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(name)
+        hasher.combine(shapes)
+    }
 }
 
 extension Document.Shape: Equatable, Hashable {
@@ -665,6 +648,11 @@ extension Document.Shape: Equatable, Hashable {
 extension Document.Shape.Metadata: Equatable, Hashable {
     public static func == (lhs: Document.Shape.Metadata, rhs: Document.Shape.Metadata) -> Bool {
         lhs.id == rhs.id && lhs.createdAt == rhs.createdAt
+    }
+    
+    public func hash(into hasher: inout Hasher) {
+        hasher.combine(id)
+        hasher.combine(createdAt)
     }
 }
 

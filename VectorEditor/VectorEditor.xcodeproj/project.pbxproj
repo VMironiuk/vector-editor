@@ -26,6 +26,7 @@
 		2EA484B72B9747A60080C233 /* CodableDocumentTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */; };
 		2EA484B92B975F830080C233 /* CodableDocument.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484B82B975F830080C233 /* CodableDocument.swift */; };
 		2EA484BB2B97645D0080C233 /* CodableDocumentStoreTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */; };
+		2EA62BFF2BA077B1001ECDFC /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2EA62BFE2BA077B1001ECDFC /* Document.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -66,6 +67,7 @@
 		2EA484B62B9747A60080C233 /* CodableDocumentTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentTests.swift; sourceTree = "<group>"; };
 		2EA484B82B975F830080C233 /* CodableDocument.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocument.swift; sourceTree = "<group>"; };
 		2EA484BA2B97645D0080C233 /* CodableDocumentStoreTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CodableDocumentStoreTests.swift; sourceTree = "<group>"; };
+		2EA62BFE2BA077B1001ECDFC /* Document.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -256,6 +258,7 @@
 			isa = PBXGroup;
 			children = (
 				2EA484972B97305E0080C233 /* VectorEditor.h */,
+				2EA62BFE2BA077B1001ECDFC /* Document.swift */,
 				2E7A83082B99ED5800CCB043 /* ViewModels */,
 				2E7A82512B99B63000CCB043 /* Infrastructure */,
 			);
@@ -468,6 +471,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2EA62BFF2BA077B1001ECDFC /* Document.swift in Sources */,
 				2EA484B92B975F830080C233 /* CodableDocument.swift in Sources */,
 				2EA410C92B9891C50066E79E /* CodableDocumentStore.swift in Sources */,
 				2E7A82572B99C60400CCB043 /* ToolbarViewModel.swift in Sources */,
