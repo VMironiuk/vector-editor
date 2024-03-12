@@ -74,6 +74,8 @@ final class CanvasViewModelDelegateSpy: CanvasViewModelDelegate {
     private(set) var document: Document?
     private(set) var savingErrors = [Error]()
     
+    var viewModelToCheckMemoryLeak: CanvasViewModel?
+    
     func didUpdateDocument(_ document: Document) {
         self.document = document
     }
@@ -308,6 +310,11 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_removeShape_informsDelegateAboutUpdatedDocument() {
         let (sut, storeCoordinator) = makeSUT()
         expect(sut, informsDelegateAboutShapeRemovingWithStoreCoordinator: storeCoordinator)
+    }
+    
+    func test_registerObserver_doesNotHaveMemoryLeak() {
+        let (sut, storeCoordinator) = makeSUT()
+        expectSUTDoesNotHaveMemoryLeakWithItsDelegate(sut, storeCoordinator: storeCoordinator)
     }
 
     // MARK: - Helper
@@ -570,6 +577,28 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         XCTAssertEqual(sut.document?.shapes.count, 0, file: file, line: line)
         XCTAssertEqual(delegate.document?.shapes.count, 0, file: file, line: line)
         XCTAssertEqual(sut.document, delegate.document, file: file, line: line)
+    }
+    
+    private func expectSUTDoesNotHaveMemoryLeakWithItsDelegate(
+        _ sut: CanvasViewModel,
+        storeCoordinator: DocumentStoreCoordinatorSpy,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        // given
+        
+        let delegate = CanvasViewModelDelegateSpy()
+        
+        // when
+        
+        sut.registerObserver(delegate)
+        delegate.viewModelToCheckMemoryLeak = sut
+        
+        // then
+        
+        trackForMemoryLeaks(delegate, file: file, line: line)
+        trackForMemoryLeaks(sut, file: file, line: line)
+        trackForMemoryLeaks(storeCoordinator, file: file, line: line)
     }
     
     private func anyDocument() -> Document {
