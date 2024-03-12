@@ -289,6 +289,16 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
             sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
         })
     }
+    
+    func test_removeShape_removesSecondShapeFromDocumentWhenCalledTwice() {
+        let shape1 = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let shape2 = Document.Shape.rectangle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        expect(sut, withStoreCoordinator: storeCoordinator, andAddedShapes: [shape1, shape2], toHasShapesInDocument: [], when: {
+            sut.removeShape(shape1)
+            sut.removeShape(shape2)
+        })
+    }
 
     // MARK: - Helper
     
