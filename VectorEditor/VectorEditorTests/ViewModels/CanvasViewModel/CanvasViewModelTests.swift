@@ -264,30 +264,19 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     }
     
     func test_removeShape_doesNotAskStoreCoordinatorToRemoveNonExistingShapeFromDocument() {
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save document requests")
-        sut.addShape(.circle(.init(id: UUID(), createdAt: .now), .zero))
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected 1 save document request")
-        
-        sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
-        
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected no new save document requests")
+        expect(sut, withDocumentShapes: [shape], toCallStoreCoordinator: storeCoordinator, times: 1, when: {
+            sut.removeShape(.rectangle(.init(id: UUID(), createdAt: .now), .zero))
+        })
     }
     
     func test_removeShape_asksStoreCoordinatorToRemoveExistingShapeFromDocument() {
         let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save document requests")
-        sut.addShape(shape)
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected 1 save document request")
-        
-        sut.removeShape(shape)
-        
-        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 2, "Expected second save document request")
+        expect(sut, withDocumentShapes: [shape], toCallStoreCoordinator: storeCoordinator, times: 2, when: {
+            sut.removeShape(shape)
+        })
     }
     
     func test_removeShape_removesShapeFromDocument() {
@@ -317,23 +306,8 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     }
     
     func test_removeShape_informsDelegateAboutUpdatedDocument() {
-        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        let delegate = CanvasViewModelDelegateSpy()
         let (sut, storeCoordinator) = makeSUT()
-        sut.registerObserver(delegate)
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
-        XCTAssertTrue(sut.document?.shapes.isEmpty ?? true, "Expected view model's document to be empty or nil")
-        XCTAssertTrue(delegate.document?.shapes.isEmpty ?? true, "Expected view models delegate's document to be empty or nil")
-        sut.addShape(shape)
-        XCTAssertEqual(sut.document?.shapes.count, 1, "Expected 1 shape added to view model's document")
-        XCTAssertEqual(delegate.document?.shapes.count, 1, "Expected 1 shape added to view model delegate's document")
-        
-        sut.removeShape(shape)
-        
-        XCTAssertEqual(sut.document?.shapes.count, 0)
-        XCTAssertEqual(delegate.document?.shapes.count, 0)
-        XCTAssertEqual(sut.document, delegate.document)
+        expect(sut, informsDelegateAboutShapeRemovingWithStoreCoordinator: storeCoordinator)
     }
 
     // MARK: - Helper
@@ -541,6 +515,61 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         // then
         
         XCTAssertEqual(sut.document?.shapes, expectedShapes, file: file, line: line)
+    }
+    
+    private func expect(
+        _ sut: CanvasViewModel,
+        withDocumentShapes shapes: [Document.Shape],
+        toCallStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        times saveCallCount: Int,
+        when action: () -> Void,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        // given
+        
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save document requests")
+        shapes.forEach { sut.addShape($0) }
+        XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected 1 save document request")
+        
+        // when
+        
+        action()
+        
+        // then
+        
+        XCTAssertEqual(
+            storeCoordinator.saveDocumentCallCount,
+            saveCallCount,
+            "Expected \(saveCallCount) save document requests, got \(storeCoordinator.saveDocumentCallCount) instead",
+            file: file,
+            line: line)
+    }
+    
+    private func expect(
+        _ sut: CanvasViewModel,
+        informsDelegateAboutShapeRemovingWithStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
+        file: StaticString = #filePath,
+        line: UInt = #line
+    ) {
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let delegate = CanvasViewModelDelegateSpy()
+        sut.registerObserver(delegate)
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertTrue(sut.document?.shapes.isEmpty ?? true, "Expected view model's document to be empty or nil", file: file, line: line)
+        XCTAssertTrue(delegate.document?.shapes.isEmpty ?? true, "Expected view models delegate's document to be empty or nil", file: file, line: line)
+        sut.addShape(shape)
+        XCTAssertEqual(sut.document?.shapes.count, 1, "Expected 1 shape added to view model's document", file: file, line: line)
+        XCTAssertEqual(delegate.document?.shapes.count, 1, "Expected 1 shape added to view model delegate's document", file: file, line: line)
+        
+        sut.removeShape(shape)
+        
+        XCTAssertEqual(sut.document?.shapes.count, 0, file: file, line: line)
+        XCTAssertEqual(delegate.document?.shapes.count, 0, file: file, line: line)
+        XCTAssertEqual(sut.document, delegate.document, file: file, line: line)
     }
     
     private func anyDocument() -> Document {
