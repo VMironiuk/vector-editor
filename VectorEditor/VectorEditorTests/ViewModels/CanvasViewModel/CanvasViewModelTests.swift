@@ -8,22 +8,6 @@
 import XCTest
 import VectorEditor
 
-final class MulticastDelegate<T> {
-    private var storedDelegates = NSHashTable<AnyObject>(options: .weakMemory)
-    
-    var delegates: [T] {
-        storedDelegates.allObjects as? [T] ?? []
-    }
-    
-    func add(_ delegate: T) {
-        storedDelegates.add(delegate as AnyObject)
-    }
-    
-    func remove(_ delegate: T) {
-        storedDelegates.remove(delegate as AnyObject)
-    }
-}
-
 final class CanvasViewModelDelegateSpy: CanvasViewModelDelegate {
     private(set) var document: Document?
     private(set) var savingErrors = [Error]()
