@@ -273,6 +273,20 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         
         XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 1, "Expected no new save document requests")
     }
+    
+    func test_removeShape_removesShapeFromDocument() {
+        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
+        let (sut, storeCoordinator) = makeSUT()
+        sut.loadDocument(from: anyURL()) { _ in }
+        storeCoordinator.completeDocumentLoading(with: .success(emptyDocument()))
+        XCTAssertEqual(sut.document?.shapes, [], "Expected no shapes in document initially")
+        sut.addShape(shape)
+        XCTAssertEqual(sut.document?.shapes, [shape], "Expected added shape to be in document")
+        
+        sut.removeShape(shape)
+        
+        XCTAssertEqual(sut.document?.shapes, [], "Expected to remove existed shape from document")
+    }
 
     // MARK: - Helper
     
