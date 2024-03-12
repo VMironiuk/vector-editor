@@ -54,6 +54,22 @@ final class DocumentStoreCoordinatorSpy {
     }
 }
 
+final class MulticastDelegate<T> {
+    private var storedDelegates = NSHashTable<AnyObject>(options: .weakMemory)
+    
+    var delegates: [T] {
+        storedDelegates.allObjects as? [T] ?? []
+    }
+    
+    func add(_ delegate: T) {
+        storedDelegates.add(delegate as AnyObject)
+    }
+    
+    func remove(_ delegate: T) {
+        storedDelegates.remove(delegate as AnyObject)
+    }
+}
+
 final class CanvasViewModelDelegateSpy: CanvasViewModelDelegate {
     private(set) var document: Document?
     private(set) var savingErrors = [Error]()
@@ -74,12 +90,9 @@ protocol CanvasViewModelDelegate: AnyObject {
 
 final class CanvasViewModel {
     private let storeCoordinator: DocumentStoreCoordinatorSpy
+    private var multicastDelegate = MulticastDelegate<CanvasViewModelDelegate>()
+    
     private(set) var document: Document?
-    
-    var onDocumentDidUpdate: ((Document) -> Void)?
-    var onDocumentSaveDidFail: ((Error) -> Void)?
-    
-    weak var delegate: CanvasViewModelDelegate?
     
     init(storeCoordinator: DocumentStoreCoordinatorSpy) {
         self.storeCoordinator = storeCoordinator
@@ -118,14 +131,20 @@ final class CanvasViewModel {
         notifyDocumentDidUpdate()
     }
     
+    func registerObserver(_ observer: CanvasViewModelDelegate) {
+        multicastDelegate.add(observer)
+    }
+    
+    func removeObserver(_ observer: CanvasViewModelDelegate) {
+        multicastDelegate.remove(observer)
+    }
+    
     private func notifyDocumentDidUpdate() {
         guard let document = document else { return }
-        onDocumentDidUpdate?(document)
-        delegate?.didUpdateDocument(document)
+        multicastDelegate.delegates.forEach { $0.didUpdateDocument(document) }
         storeCoordinator.saveDocument(document) { [weak self] error in
             guard let error = error else { return }
-            self?.delegate?.didFailToSaveDocument(with: error)
-            self?.onDocumentSaveDidFail?(error)
+            self?.multicastDelegate.delegates.forEach { $0.didFailToSaveDocument(with: error) }
         }
     }
 }
@@ -199,18 +218,6 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         expect(sut, withStoreCoordinator: storeCoordinator, updatesDocumentWithShapes: [shape, anotherShape], whenAddsShapes: [shape, anotherShape])
     }
     
-    func test_addShape_informsObserverAboutUpdatedDocument() {
-        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        let (sut, storeCoordinator) = makeSUT()
-        expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutAddedShapes: [shape], whenAddsShapes: [shape])
-    }
-    
-    func test_addShape_doesNotInformObserverAboutUpdatedDocumentWhenAddedSameShape() {
-        let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
-        let (sut, storeCoordinator) = makeSUT()
-        expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutAddedShapes: [shape], whenAddsShapes: [shape, shape])
-    }
-    
     func test_addShape_informsDelegateAboutUpdatedDocument() {
         let shape = Document.Shape.circle(.init(id: UUID(), createdAt: .now), .zero)
         let (sut, storeCoordinator) = makeSUT()
@@ -246,11 +253,6 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     func test_addShape_informsItsDelegateAboutFailedDocumentSaving() {
         let (sut, storeCoordinator) = makeSUT()
         expect(sut, withStoreCoordinator: storeCoordinator, informsDelegateAboutFailedDocumentSavingWithError: anyNSError())
-    }
-    
-    func test_addShape_informsItsObserverAboutFailedDocumentSaving() {
-        let (sut, storeCoordinator) = makeSUT()
-        expect(sut, withStoreCoordinator: storeCoordinator, informsObserverAboutFailedDocumentSavingWithError: anyNSError())
     }
     
     func test_removeShape_doesNotAskStoreCoordinatorToRemoveShapeFromEmptyDocument() {
@@ -391,50 +393,13 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
     private func expect(
         _ sut: CanvasViewModel,
         withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
-        informsObserverAboutAddedShapes addedShapes: [Document.Shape],
-        whenAddsShapes shapesToAdd: [Document.Shape],
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        // given
-        
-        var receivedDocument: Document?
-        sut.onDocumentDidUpdate = { receivedDocument = $0  }
-        
-        XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
-        
-        let exp = expectation(description: "Wait for load completion")
-        sut.loadDocument(from: anyURL()) { _ in exp.fulfill() }
-        
-        let initialDocument = emptyDocument()
-        storeCoordinator.completeDocumentLoading(with: .success(initialDocument))
-        
-        wait(for: [exp], timeout: 1)
-        XCTAssertEqual(sut.document?.shapes, initialDocument.shapes, file: file, line: line)
-        
-        // when
-        
-        shapesToAdd.forEach { sut.addShape($0) }
-        
-        // then
-        
-        var expectedShapes = initialDocument.shapes
-        addedShapes.forEach { expectedShapes.append($0) }
-        let expectedDocument = Document(name: initialDocument.name, shapes: expectedShapes)
-        XCTAssertEqual(expectedDocument.shapes.count, receivedDocument?.shapes.count, file: file, line: line)
-        XCTAssertEqual(expectedDocument, receivedDocument, file: file, line: line)
-    }
-    
-    private func expect(
-        _ sut: CanvasViewModel,
-        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
         informsDelegateAboutAddedShapes addedShapes: [Document.Shape],
         whenAddsShapes shapesToAdd: [Document.Shape],
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
         let delegate = CanvasViewModelDelegateSpy()
-        sut.delegate = delegate
+        sut.registerObserver(delegate)
         
         XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
         
@@ -467,8 +432,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         file: StaticString = #filePath,
         line: UInt = #line
     ) {
-        let delegate = CanvasViewModelDelegateSpy()
-        sut.delegate = delegate
+        // given
         
         XCTAssertNil(sut.document, "Expected the document to be nil initially", file: file, line: line)
         XCTAssertEqual(storeCoordinator.saveDocumentCallCount, 0, "Expected no save requests", file: file, line: line)
@@ -505,7 +469,7 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         // given
         
         let delegate = CanvasViewModelDelegateSpy()
-        sut.delegate = delegate
+        sut.registerObserver(delegate)
         
         // when
         
@@ -517,30 +481,6 @@ final class CanvasViewModelTests: XCTestCase, CanvasViewModelSpecs {
         // then
         
         XCTAssertEqual(delegate.savingErrors.map { $0 as NSError }, [savingError])
-    }
-    
-    func expect(
-        _ sut: CanvasViewModel,
-        withStoreCoordinator storeCoordinator: DocumentStoreCoordinatorSpy,
-        informsObserverAboutFailedDocumentSavingWithError savingError: NSError,
-        file: StaticString = #filePath,
-        line: UInt = #line
-    ) {
-        // given
-        
-        let savingError = anyNSError()
-        
-        sut.onDocumentSaveDidFail = {
-            // then
-            XCTAssertEqual($0 as NSError, savingError)
-        }
-        
-        // when
-        
-        sut.loadDocument(from: anyURL()) { _ in }
-        storeCoordinator.completeDocumentLoading(with: .success(anyDocument()))
-        sut.addShape(anyShape())
-        storeCoordinator.completeDocumentSaving(with: savingError)
     }
     
     private func expect(

@@ -21,13 +21,10 @@ protocol CanvasViewModelSpecs {
     func test_addShape_addsShapeToDocument()
     func test_addShape_doesNotAddSameShapeToDocument()
     func test_addShape_addsDiferentShapeToDocument()
-    func test_addShape_informsObserverAboutUpdatedDocument()
-    func test_addShape_doesNotInformObserverAboutUpdatedDocumentWhenAddedSameShape()
     func test_addShape_informsDelegateAboutUpdatedDocument()
     func test_addShape_doesNotInformDelegateAboutUpdatedDocumentWhenAddedSameShape()
     func test_addShape_asksStoreCoordinatorToSaveDocument()
     func test_addShape_asksStoreCoordinatorToSaveDocumentTwiceWhenAddingTwoDifferentShapes()
     func test_addShape_doesNotAskStoreCoordinatorToSaveDocumentWhenAddedSameShape()
     func test_addShape_informsItsDelegateAboutFailedDocumentSaving()
-    func test_addShape_informsItsObserverAboutFailedDocumentSaving()
 }
