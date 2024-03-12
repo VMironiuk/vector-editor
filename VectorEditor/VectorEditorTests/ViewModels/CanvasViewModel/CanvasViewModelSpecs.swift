@@ -27,4 +27,11 @@ protocol CanvasViewModelSpecs {
     func test_addShape_asksStoreCoordinatorToSaveDocumentTwiceWhenAddingTwoDifferentShapes()
     func test_addShape_doesNotAskStoreCoordinatorToSaveDocumentWhenAddedSameShape()
     func test_addShape_informsItsDelegateAboutFailedDocumentSaving()
+    
+    func test_removeShape_doesNotAskStoreCoordinatorToRemoveNonExistingShapeFromDocument()
+    func test_removeShape_asksStoreCoordinatorToRemoveExistingShapeFromDocument()
+    func test_removeShape_removesShapeFromDocument()
+    func test_removeShape_doesNotRemoveNonExistingShapeFromDocument()
+    func test_removeShape_removesSecondShapeFromDocumentWhenCalledTwice()
+    func test_removeShape_informsDelegateAboutUpdatedDocument()
 }
